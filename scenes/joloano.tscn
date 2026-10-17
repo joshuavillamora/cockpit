@@ -24,7 +24,7 @@ animations = [{
 "duration": 4.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"attack",
 "speed": 30.0
 }, {

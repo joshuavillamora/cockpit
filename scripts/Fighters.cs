@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 
 public partial class Fighters : CharacterBody2D {
-	public const float Speed = 200.0f;
+	public const float Speed = 300.0f;
 	public const float Acceleration = 1000.0f;
 	public const float Deceleration = 1500.0f;
-	public const float JumpVelocity = -250.0f;
+	public const float JumpVelocity = -500.0f;
 	public const float JumpCutMultiplier = 0.5f;
 
-	public const float AttackAccelMultiplier = 0.5f;
-	public const float AttackDecelMultiplier = 0.25f;
+	public const float AttackAccelMultiplier = 0.1f;
+	public const float AttackDecelMultiplier = 0.1f;
 	private const float AttackBufferTime = 0.15f;
 
 	[Export] public int PlayerId = 1;
