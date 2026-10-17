@@ -38,18 +38,22 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hnnho"]
-radius = 15.0
-height = 60.0
+radius = 11.0
+height = 32.0
 
 [node name="Joloano" unique_id=460291919 instance=ExtResource("1_20cxu")]
 PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
+scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_20cxu")
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
-position = Vector2(-1, 34)
+position = Vector2(0, 16)
 shape = SubResource("CapsuleShape2D_hnnho")
 
 [node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
 position = Vector2(0, 24)
+
+[node name="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=38610296]
+position = Vector2(0, -10)
