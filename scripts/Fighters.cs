@@ -14,6 +14,7 @@ public partial class Fighters : CharacterBody2D {
 	private const float AttackBufferTime = 0.15f;
 
 	[Export] public int PlayerId = 1;
+	[Export] public int MaxHealth = 100;
 
 	// ---------- Attack data (numbers come from the frame data workbook) ----------
 
@@ -51,6 +52,7 @@ public partial class Fighters : CharacterBody2D {
 	private CollisionShape2D hitboxShape;
 	private RectangleShape2D hitboxRect;
 	
+	public int Health { get; private set; }
 	private bool isAttacking = false;
 	private readonly HashSet<Node> alreadyHit = new();
 	private bool facingRight = true;
@@ -68,6 +70,7 @@ public partial class Fighters : CharacterBody2D {
 		attackHitbox = GetNode<Area2D>("AttackHitbox");
 		hitboxShape = attackHitbox.GetNode<CollisionShape2D>("CollisionShape2D");
 		hitboxVisual = attackHitbox.GetNode<Sprite2D>("HitboxVisual");
+		Health = MaxHealth;
 
 		// Hitbox area
 		hitboxRect = new RectangleShape2D();
@@ -206,5 +209,25 @@ public partial class Fighters : CharacterBody2D {
 
 		Vector2 offset = currentAttack.Offset;
 		attackHitbox.Position = new Vector2(right ? offset.X : -offset.X, offset.Y);
+	}
+
+	public void TakeDamage(int damage) {
+		if (Health <= 0) return;   // already knocked out
+
+		Health = Mathf.Max(Health - damage, 0);
+		GD.Print($"{Name} took {damage} damage ({Health}/{MaxHealth})");
+
+		// Quick red flash so you can see hits land
+		animatedSprite.Modulate = new Color(1f, 0.4f, 0.4f);
+		CreateTween().TweenProperty(animatedSprite, "modulate", Colors.White, 0.15);
+
+		if (Health == 0) {
+			Die();
+		}
+	}
+
+	private void Die() {
+		GD.Print($"{Name} was knocked out");
+		QueueFree();   // Remove existence if die
 	}
 }

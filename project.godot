@@ -73,6 +73,10 @@ p2_attack={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_3="hurtbox"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

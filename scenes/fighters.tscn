@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dxq0aow5s3qli" path="res://scripts/Fighters.cs" id="1_d2soj"]
 [ext_resource type="Texture2D" uid="uid://ojhpk74q6bqi" path="res://assets/dem-chiks.png" id="1_fbifi"]
+[ext_resource type="Texture2D" uid="uid://dcox8nbo5n43d" path="res://assets/banaba.png" id="3_1n3eb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1n3eb"]
 atlas = ExtResource("1_fbifi")
@@ -22,6 +23,10 @@ region = Rect2(32, 48, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_d2soj"]
 atlas = ExtResource("1_fbifi")
 region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5c4g"]
+atlas = ExtResource("3_1n3eb")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yqjtg"]
 animations = [{
@@ -45,6 +50,9 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d2soj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5c4g")
 }],
 "loop": 1,
 "name": &"idle",
@@ -59,19 +67,25 @@ size = Vector2(21.25, 20)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_d2soj"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1438b"]
+size = Vector2(23, 36)
+
 [node name="Fighter" type="CharacterBody2D" unique_id=460291919]
 script = ExtResource("1_d2soj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1306085506]
-scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_yqjtg")
 animation = &"idle"
+frame = 1
+frame_progress = 0.40978187
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1785863898]
 position = Vector2(0, 9)
 shape = SubResource("CircleShape2D_hnnho")
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=1993799062]
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=38610296]
 position = Vector2(0, 6)
@@ -79,3 +93,12 @@ shape = SubResource("RectangleShape2D_hnnho")
 
 [node name="HitboxVisual" type="Sprite2D" parent="AttackHitbox" unique_id=471564784]
 texture = SubResource("PlaceholderTexture2D_d2soj")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1989035223]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=826217368]
+position = Vector2(0.5, 14)
+shape = SubResource("RectangleShape2D_1438b")
