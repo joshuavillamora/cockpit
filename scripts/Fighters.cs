@@ -19,8 +19,7 @@ public partial class Fighters : CharacterBody2D {
 	// ---------- Attack data (numbers come from the frame data workbook) ----------
 
 	private enum AttackType {
-		GroundNeutral,
-		// GroundSide, GroundUp, GroundDown, AirNeutral, AirSide, AirUp, AirDown come later
+		NeutralAttack
 	}
 
 	private class AttackData {
@@ -42,7 +41,7 @@ public partial class Fighters : CharacterBody2D {
 
 	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
 		// Neutral Attack (jab): startup 2, active 2, recovery 4 = 8 frames
-		{ AttackType.GroundNeutral,
+		{ AttackType.NeutralAttack,
 		  new AttackData("attack", new Vector2(24, 24), new Vector2(36, 8), 2, 3, 4, 1.0f) },
 	};
 
@@ -57,7 +56,7 @@ public partial class Fighters : CharacterBody2D {
 	private readonly HashSet<Node> alreadyHit = new();
 	private bool facingRight = true;
 	private float attackBufferTimer = 0f;
-	private AttackData currentAttack = Attacks[AttackType.GroundNeutral];
+	private AttackData currentAttack = Attacks[AttackType.NeutralAttack];
 	private StringName moveLeft, moveRight, jumpKey, attackKey;
 	
 	public override void _Ready() {
@@ -152,7 +151,7 @@ public partial class Fighters : CharacterBody2D {
 
 	// Attack functions
 	private AttackType ChooseAttack() {
-		return AttackType.GroundNeutral;
+		return AttackType.NeutralAttack;
 	}
 
 	private void StartAttack() {
