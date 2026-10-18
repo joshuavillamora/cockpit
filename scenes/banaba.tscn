@@ -4,10 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://dcox8nbo5n43d" path="res://assets/banaba.png" id="2_kyjrd"]
 [ext_resource type="Texture2D" uid="uid://cdtm5h2wy5jej" path="res://assets/banaba_attack.png" id="2_m7p1d"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kyjrd"]
-atlas = ExtResource("2_kyjrd")
-region = Rect2(0, 0, 64, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jko6h"]
 atlas = ExtResource("2_m7p1d")
 region = Rect2(0, 0, 64, 64)
@@ -20,8 +16,26 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("2_m7p1d")
 region = Rect2(0, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyjrd"]
+atlas = ExtResource("2_kyjrd")
+region = Rect2(0, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_47mej"]
 animations = [{
+"frames": [{
+"duration": 7.0,
+"texture": SubResource("AtlasTexture_jko6h")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_m7p1d")
+}, {
+"duration": 12.0,
+"texture": SubResource("AtlasTexture_iv7gr")
+}],
+"loop": 0,
+"name": &"down_attack",
+"speed": 30.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kyjrd")
@@ -81,9 +95,7 @@ height = 26.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
-animation = &"side_attack"
-frame = 0
-frame_progress = 0.0
+animation = &"down_attack"
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 position = Vector2(0, 19)

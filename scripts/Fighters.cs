@@ -22,6 +22,7 @@ public partial class Fighters : CharacterBody2D {
 		NeutralAttack,
 		SideAttack,
 		UpAttack,
+		DownAttack,
 	}
 
 	private class AttackData {
@@ -46,6 +47,7 @@ public partial class Fighters : CharacterBody2D {
 		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8), 1, 1, 4, 1.0f) },
 		{ AttackType.SideAttack, new AttackData("side_attack", new Vector2(34, 16), new Vector2(82, 12), 1, 1, 8, 0.6f) },
 		{ AttackType.UpAttack, new AttackData("up_attack", new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7, 0.6f) },
+		{ AttackType.DownAttack, new AttackData("down_attack", new Vector2(56, 12), new Vector2(0, 32), 1, 1, 14, 0.2f) },
 	};
 
 	private AnimatedSprite2D animatedSprite;
@@ -60,7 +62,7 @@ public partial class Fighters : CharacterBody2D {
 	private bool facingRight = true;
 	private float attackBufferTimer = 0f;
 	private AttackData currentAttack = Attacks[AttackType.NeutralAttack];
-	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey;
+	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey, downKey;
 	
 	public override void _Ready() {
 		moveLeft = $"p{PlayerId}_move_left";
@@ -68,7 +70,7 @@ public partial class Fighters : CharacterBody2D {
 		jumpKey = $"p{PlayerId}_jump";
 		attackKey = $"p{PlayerId}_attack";
 		upKey = $"p{PlayerId}_up";
-		upKey = $"p{PlayerId}_down";
+		downKey = $"p{PlayerId}_down";
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		attackHitbox = GetNode<Area2D>("AttackHitbox");
@@ -159,6 +161,7 @@ public partial class Fighters : CharacterBody2D {
 		float direction = Input.GetAxis(moveLeft, moveRight);
 
 		if (Input.IsActionPressed(upKey)) return AttackType.UpAttack;
+		if (Input.IsActionPressed(downKey)) return AttackType.DownAttack;
 		if (Mathf.Abs(direction) > 0.5f) return AttackType.SideAttack;
 
 		return AttackType.NeutralAttack;
