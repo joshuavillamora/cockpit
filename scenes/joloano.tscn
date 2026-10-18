@@ -4,16 +4,24 @@
 [ext_resource type="Texture2D" uid="uid://d2xiq84o03wij" path="res://assets/joloano_attack.png" id="2_0e5kw"]
 [ext_resource type="Texture2D" uid="uid://bra6j772iwcrc" path="res://assets/joloano.png" id="3_xxxxp"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d2hy4"]
-atlas = ExtResource("2_0e5kw")
-region = Rect2(0, 0, 64, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_e6x2r"]
 atlas = ExtResource("3_xxxxp")
 region = Rect2(0, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2hy4"]
+atlas = ExtResource("2_0e5kw")
+region = Rect2(0, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_20cxu"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6x2r")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_d2hy4")
@@ -25,16 +33,22 @@ animations = [{
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
-"name": &"attack",
+"name": &"neutral_attack",
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e6x2r")
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 7.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_d2hy4")
 }],
-"loop": 1,
-"name": &"idle",
-"speed": 5.0
+"loop": 0,
+"name": &"side_attack",
+"speed": 30.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hnnho"]
@@ -45,8 +59,10 @@ height = 32.0
 PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
-scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_20cxu")
+animation = &"side_attack"
+frame = 0
+frame_progress = 0.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 position = Vector2(0, 16)

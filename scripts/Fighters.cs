@@ -19,7 +19,8 @@ public partial class Fighters : CharacterBody2D {
 	// ---------- Attack data (numbers come from the frame data workbook) ----------
 
 	private enum AttackType {
-		NeutralAttack
+		NeutralAttack,
+		SideAttack,
 	}
 
 	private class AttackData {
@@ -41,8 +42,8 @@ public partial class Fighters : CharacterBody2D {
 
 	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
 		// Neutral Attack (jab): startup 2, active 2, recovery 4 = 8 frames
-		{ AttackType.NeutralAttack,
-		  new AttackData("attack", new Vector2(24, 24), new Vector2(36, 8), 2, 3, 4, 1.0f) },
+		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8), 1, 1, 4, 1.0f) },
+		{ AttackType.SideAttack, new AttackData("side_attack", new Vector2(34, 16), new Vector2(82, 12), 1, 1, 8, 0.6f) },
 	};
 
 	private AnimatedSprite2D animatedSprite;
@@ -151,6 +152,10 @@ public partial class Fighters : CharacterBody2D {
 
 	// Attack functions
 	private AttackType ChooseAttack() {
+		float direction = Input.GetAxis(moveLeft, moveRight);
+
+		if (Mathf.Abs(direction) > 0.5f) return AttackType.SideAttack;
+
 		return AttackType.NeutralAttack;
 	}
 
