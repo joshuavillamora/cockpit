@@ -57,6 +57,20 @@ animations = [{
 "loop": 0,
 "name": &"side_attack",
 "speed": 30.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_jko6h")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_m7p1d")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_iv7gr")
+}],
+"loop": 0,
+"name": &"up_attack",
+"speed": 30.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hnnho"]

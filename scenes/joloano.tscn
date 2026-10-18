@@ -49,6 +49,20 @@ animations = [{
 "loop": 0,
 "name": &"side_attack",
 "speed": 30.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}],
+"loop": 0,
+"name": &"up_attack",
+"speed": 30.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hnnho"]
@@ -60,7 +74,7 @@ PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
-animation = &"side_attack"
+animation = &"up_attack"
 frame = 0
 frame_progress = 0.0
 
