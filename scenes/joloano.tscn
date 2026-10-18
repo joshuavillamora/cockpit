@@ -40,7 +40,7 @@ animations = [{
 "duration": 5.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
-"duration": 7.0,
+"duration": 3.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
 "duration": 8.0,
@@ -74,7 +74,7 @@ PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
-animation = &"up_attack"
+animation = &"side_attack"
 frame = 0
 frame_progress = 0.0
 

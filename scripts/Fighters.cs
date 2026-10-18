@@ -68,6 +68,7 @@ public partial class Fighters : CharacterBody2D {
 		jumpKey = $"p{PlayerId}_jump";
 		attackKey = $"p{PlayerId}_attack";
 		upKey = $"p{PlayerId}_up";
+		upKey = $"p{PlayerId}_down";
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		attackHitbox = GetNode<Area2D>("AttackHitbox");
