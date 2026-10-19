@@ -19,18 +19,20 @@ A local-multiplayer 2D arena brawler built around chicken fighting. Two players 
 1. Clone the repository.
 2. Open Godot (.NET), click **Import**, and select `project.godot`.
 3. Press **Build** (the hammer icon, top-right) once so the C# assembly compiles.
-4. Press **F5** to run. The main scene is `scenes/gameplay/game.tscn`.
+4. Press **F5** to run. The game starts at the loading screen (`scenes/ui/screens/loading_screen.tscn`).
+To test a match directly, open `scenes/gameplay/game.tscn` and press **F6**. It falls back to Banaba vs Joloano.
 
-The window starts fullscreen. Press **Alt+Enter** or change `display/window/size/mode` in Project Settings if you want a window while developing.
+The game starts fullscreen. Press **F11** to toggle windowed mode (the choice is saved).
 
 ## Controls (default)
 
 | Action | Player 1 | Player 2 |
 |--------|----------|----------|
 | Move left / right | `A` / `D` | `←` / `→` |
-| Up / Down (attack direction) | `W` / `S` | `↑` / `↓` |
+| Up / Down (attack direction, menus) | `W` / `S` | `↑` / `↓` |
 | Jump | `K` or `Space` | `N` |
 | Attack | `J` or `E` | `M` or `/` |
+| Pause | `Esc` or `P` | `Esc` or `P` |
 | Block / Air dash | *TBD* | *TBD* |
 | Ability | *TBD* | *TBD* |
 
@@ -96,15 +98,59 @@ Every chicken is an **inherited scene** of `scenes/characters/fighter.tscn`. To 
 3. Adjust the `CollisionShape2D` and `AttackHitbox` offsets to fit the sprite.
 4. Set `PlayerId` on the instance in the match scene.
 
-### Screen flow (planned)
+### Screen flow
 
 ```
-Title / Main Menu ─► Character Select ─► Gameplay (HUD) ─► Round End (K.O.) ─┐
-   ▲   (Play, Settings)                      ▲                              │
-   │                                         └──────── next round ◄─────────┤
-   │                                                                        ▼
-   └──────── Back to Main Menu ◄──── Victory (Rematch / Main Menu) ◄── Deathmatch
+Loading ─► Main Menu ─► Character Select ─► Map Select ─► Match ─► Victory
+(press     │ Play        (4 chickens left,    (2 arenas)    │        ├─ Rematch
+ start)    │ Settings     4 right, VS,                      │        └─ Back to Menu
+           │ Quit         picks in the middle)              ├─ Round intro ("ROUND N" / "FIGHT!")
+           └─ Settings overlay (volume, fullscreen, Controls)  ├─ K.O. screen, then the next round
+                                                            ├─ Deathmatch screen before the last round
+                                                            └─ Pause (Esc/P): Resume, Settings, Quit
 ```
+
+**Match rules:** first to **2 round wins**. At 1-1 the last round is the **Deathmatch**. A double KO is a draw and the round is replayed. The values live in `scripts/autoload/GameManager.cs` (`RoundsToWin`). The dots under the health bars are the round wins of the current match. The number in the HUD center is the match score: matches won since the last menu, so it grows across rematches.
+
+**Menu controls:** Menus use `W/S` or arrows plus `Enter`/`Space`. Character select uses each player's own keys: up/down to choose, attack to confirm, jump to cancel, then **`Enter`** (once both confirmed) goes to map select. On map select either player moves with left/right and **`Enter`** starts the match. `Esc` goes back.
+
+### UI code map
+
+| File | Role |
+|------|------|
+| `scripts/autoload/GameManager.cs` | Selected chickens and arena, round wins, scene paths. Call `SelectCharacters`, `StartMatch`, `Rematch`, `ReturnToMenu`. |
+| `scripts/autoload/SceneFlow.cs` | `GoTo(path)` fades between screens. Always use it to change screens. |
+| `scripts/autoload/SettingsManager.cs` | Volumes and fullscreen (F11), saved to `user://settings.cfg`. Audio buses: Master, Music, SFX (`default_bus_layout.tres`). |
+| `scripts/core/CharacterData.cs` + `resources/characters/*.tres` | One resource per chicken: name, portrait, ability icons, fighter scene, `Playable`. |
+| `scripts/core/ArenaData.cs` + `resources/arenas/*.tres` | One resource per arena: name, map thumbnail, background, tint. Add a path to `MapSelect.cs` for a new one. |
+| `scripts/core/MatchController.cs` | Round state machine in `game.tscn`: spawns fighters, intro, KO, score, victory. |
+| `scripts/ui/LoadingScreen.cs` | Preloads scenes and data, then "PRESS START". Add new scenes to its `Preload` list. |
+| `scripts/ui/GameHud.cs` | Health bars, portraits, score, round markers, center text. `SetAbilityState(player, state)` is ready for the ability system. |
+| `scripts/ui/OverlayScreen.cs` | Base for popups (`SettingsScreen`, `ControlsScreen`). Open with `OverlayScreen.Open(...)`. |
+| `scripts/ui/*.cs` | Main menu, character select, map select, pause, victory overlay. |
+| `resources/ui_theme.tres` | Project-wide theme: NES Cyrillic font, buttons, panels, `TextButton` variation. |
+
+### What the fighter code must provide (backend contract)
+
+`Fighters.cs` exposes these for the UI. Keep them when changing fighter code:
+
+- `HealthChanged(int current, int max)` signal: drives the health bars.
+- `Died` signal: ends the round. The fighter stays in the scene tree; `MatchController` frees it next round.
+- `InputLocked` (bool): frozen during round intro and after a KO.
+- `StartFacingRight` (bool) and `PlayerId` (int): set by `MatchController` before the fighter enters the tree.
+
+To make a new chicken selectable, create its scene, set `Playable = true` and `Scene` in its `resources/characters/<name>.tres`.
+
+### Current placeholders
+
+- Logo, buttons, panels, portraits and map thumbnails are the designer's wireframe skin. Swap the PNGs in `assets/ui/` and keep the filenames.
+- Menu backgrounds are flat sky and field colors (`scenes/ui/components/menu_background.tscn`). Replace with the field art.
+- The main menu roosters are placeholder boxes. The doc's feathery box outline is not applied yet (it needs a transparent, 9-slice PNG from the UI designer).
+- Both arenas currently use the same background (the second is tinted). Set `Background` in `resources/arenas/*.tres` when new arenas exist.
+- Font: NES Cyrillic (`assets/ui/fonts/NESCyrillic.ttf`). Use sizes that are multiples of 8 so it stays sharp.
+- Paraokan and Da Chik show as "SOON" on character select until their scenes exist.
+- No music or sound effects yet. Use the `Music` and `SFX` buses.
+- The ability icon in the HUD always shows "ready" until abilities are implemented.
 
 ---
 

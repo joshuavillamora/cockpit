@@ -15,6 +15,13 @@ public partial class Fighters : CharacterBody2D {
 
 	[Export] public int PlayerId = 1;
 	[Export] public int MaxHealth = 100;
+	[Export] public bool StartFacingRight = true;
+
+	// UI / match flow hooks (HUD and MatchController listen to these)
+	[Signal] public delegate void HealthChangedEventHandler(int current, int max);
+	[Signal] public delegate void DiedEventHandler();
+	public bool InputLocked { get; set; }
+	public bool IsDead => Health <= 0;
 
 	// ---------- Attack data (numbers come from the frame data workbook) ----------
 
@@ -97,7 +104,7 @@ public partial class Fighters : CharacterBody2D {
 		animatedSprite.FrameChanged += OnFrameChanged;
 		animatedSprite.AnimationFinished += OnAnimationFinished;
 
-		SetFacing(true);
+		SetFacing(StartFacingRight);
 		animatedSprite.Play("idle");
 	}
 	
@@ -110,6 +117,13 @@ public partial class Fighters : CharacterBody2D {
 		}
 		
 		Velocity = velocity;
+
+		// Match flow can freeze a fighter (round intro / KO) without removing it
+		if (InputLocked) {
+			Walk(Vector2.Zero, (float)delta);
+			MoveAndSlide();
+			return;
+		}
 
 		// Attack
 		if (Input.IsActionJustPressed(attackKey) && !isAttacking) {
@@ -240,6 +254,7 @@ public partial class Fighters : CharacterBody2D {
 		if (Health <= 0) return;   // already knocked out
 
 		Health = Mathf.Max(Health - damage, 0);
+		EmitSignal(SignalName.HealthChanged, Health, MaxHealth);
 		GD.Print($"{Name} took {damage} damage ({Health}/{MaxHealth})");
 
 		// Quick red flash so you can see hits land
@@ -253,6 +268,15 @@ public partial class Fighters : CharacterBody2D {
 
 	private void Die() {
 		GD.Print($"{Name} was knocked out");
-		QueueFree();   // Remove existence if die
+
+		// Stay in the tree (MatchController frees fighters between rounds) but stop fighting
+		SetPhysicsProcess(false);
+		attackHitbox.SetDeferred(Area2D.PropertyName.Monitoring, false);
+		GetNode<Area2D>("Hurtbox").SetDeferred(Area2D.PropertyName.Monitorable, false);
+		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		hitboxVisual.Visible = false;
+		CreateTween().TweenProperty(animatedSprite, "modulate:a", 0.0f, 0.4f);
+
+		EmitSignal(SignalName.Died);
 	}
 }

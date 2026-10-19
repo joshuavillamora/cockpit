@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/CharacterData.cs" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_portrait_chicken4.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken4_ready.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken4_cooling.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken4_unavailable.png" id="5"]
+
+
+[resource]
+script = ExtResource("1")
+Id = "da_chik"
+DisplayName = "DA CHIK"
+Portrait = ExtResource("2")
+AbilityReady = ExtResource("3")
+AbilityCooling = ExtResource("4")
+AbilityUnavailable = ExtResource("5")
+
+Playable = false

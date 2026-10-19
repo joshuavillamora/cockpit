@@ -1,0 +1,60 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/VictoryOverlay.cs" id="1"]
+
+[node name="VictoryOverlay" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1")
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="Winner" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 96.0
+offset_right = 640.0
+offset_bottom = 144.0
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 40
+text = "PLAYER 1 WINS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Menu" type="VBoxContainer" parent="Root"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 190.0
+offset_right = 440.0
+offset_bottom = 270.0
+theme_override_constants/separation = 16
+
+[node name="RematchButton" type="Button" parent="Root/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TextButton"
+theme_override_font_sizes/font_size = 24
+text = "REMATCH"
+
+[node name="MenuButton" type="Button" parent="Root/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TextButton"
+theme_override_font_sizes/font_size = 24
+text = "BACK TO MENU"
