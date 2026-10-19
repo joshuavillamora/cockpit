@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://yicge48108e0"]
 
 [ext_resource type="Texture2D" uid="uid://d2vmg0hhebutt" path="res://assets/arenas/main/background.png" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://bx0rabgl85mr8" path="res://scenes/characters/banaba.tscn" id="3_lnu2h"]
-[ext_resource type="PackedScene" uid="uid://brh4hevj733uw" path="res://scenes/characters/joloano.tscn" id="4_lbhrr"]
+[ext_resource type="Script" path="res://scripts/core/MatchController.cs" id="3_match"]
+[ext_resource type="PackedScene" path="res://scenes/ui/screens/game_hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/screens/pause_menu.tscn" id="5_pause"]
+[ext_resource type="PackedScene" path="res://scenes/ui/screens/victory_overlay.tscn" id="6_victory"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1438b"]
 
@@ -22,12 +24,6 @@ texture = ExtResource("2_yqjtg")
 position = Vector2(320.00003, 257.0001)
 shape = SubResource("WorldBoundaryShape2D_1438b")
 
-[node name="Banaba" parent="." unique_id=1319761722 instance=ExtResource("3_lnu2h")]
-position = Vector2(197, 220)
-
-[node name="Joloano" parent="." unique_id=48072279 instance=ExtResource("4_lbhrr")]
-position = Vector2(427, 220)
-
 [node name="Wall" type="StaticBody2D" parent="." unique_id=777238615]
 
 [node name="Left" type="CollisionShape2D" parent="Wall" unique_id=2139905109]
@@ -38,3 +34,18 @@ shape = SubResource("WorldBoundaryShape2D_hnnho")
 position = Vector2(640, 0)
 rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_gx6lm")
+
+[node name="SpawnP1" type="Marker2D" parent="."]
+position = Vector2(197, 220)
+
+[node name="SpawnP2" type="Marker2D" parent="."]
+position = Vector2(427, 220)
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="VictoryOverlay" parent="." instance=ExtResource("6_victory")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_pause")]
+
+[node name="MatchController" type="Node" parent="."]
+script = ExtResource("3_match")
