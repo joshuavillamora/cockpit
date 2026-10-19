@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bx0rabgl85mr8"]
 
-[ext_resource type="PackedScene" uid="uid://b55yl8grvgela" path="res://scenes/fighters.tscn" id="1_idp20"]
-[ext_resource type="Texture2D" uid="uid://dcox8nbo5n43d" path="res://assets/banaba.png" id="2_kyjrd"]
-[ext_resource type="Texture2D" uid="uid://cdtm5h2wy5jej" path="res://assets/banaba_attack.png" id="2_m7p1d"]
+[ext_resource type="PackedScene" uid="uid://b55yl8grvgela" path="res://scenes/characters/fighter.tscn" id="1_idp20"]
+[ext_resource type="Texture2D" uid="uid://dcox8nbo5n43d" path="res://assets/characters/banaba/banaba.png" id="2_kyjrd"]
+[ext_resource type="Texture2D" uid="uid://cdtm5h2wy5jej" path="res://assets/characters/banaba/banaba_attack.png" id="2_m7p1d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jko6h"]
 atlas = ExtResource("2_m7p1d")

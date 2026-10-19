@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcox8nbo5n43d"
-path="res://.godot/imported/banaba.png-61f3f74d01de6cfd5575c53b7f077d20.ctex"
+uid="uid://d2vmg0hhebutt"
+path="res://.godot/imported/background.png-5ab93eda6cf3f0a955858013648e134a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/banaba.png"
-dest_files=["res://.godot/imported/banaba.png-61f3f74d01de6cfd5575c53b7f077d20.ctex"]
+source_file="res://assets/arenas/main/background.png"
+dest_files=["res://.godot/imported/background.png-5ab93eda6cf3f0a955858013648e134a.ctex"]
 
 [params]
 

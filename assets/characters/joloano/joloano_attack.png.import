@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ojhpk74q6bqi"
-path="res://.godot/imported/dem-chiks.png-fc70268e203aac349108ed78375d3102.ctex"
+uid="uid://d2xiq84o03wij"
+path="res://.godot/imported/joloano_attack.png-1293164406546ce1e8efba0c1e1104f9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/dem-chiks.png"
-dest_files=["res://.godot/imported/dem-chiks.png-fc70268e203aac349108ed78375d3102.ctex"]
+source_file="res://assets/characters/joloano/joloano_attack.png"
+dest_files=["res://.godot/imported/joloano_attack.png-1293164406546ce1e8efba0c1e1104f9.ctex"]
 
 [params]
 

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b55yl8grvgela"]
 
-[ext_resource type="Script" uid="uid://dxq0aow5s3qli" path="res://scripts/Fighters.cs" id="1_d2soj"]
-[ext_resource type="Texture2D" uid="uid://ojhpk74q6bqi" path="res://assets/dem-chiks.png" id="1_fbifi"]
-[ext_resource type="Texture2D" uid="uid://dcox8nbo5n43d" path="res://assets/banaba.png" id="3_1n3eb"]
+[ext_resource type="Script" uid="uid://dxq0aow5s3qli" path="res://scripts/characters/Fighters.cs" id="1_d2soj"]
+[ext_resource type="Texture2D" uid="uid://ojhpk74q6bqi" path="res://assets/characters/placeholder/dem_chiks.png" id="1_fbifi"]
+[ext_resource type="Texture2D" uid="uid://dcox8nbo5n43d" path="res://assets/characters/banaba/banaba.png" id="3_1n3eb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1n3eb"]
 atlas = ExtResource("1_fbifi")

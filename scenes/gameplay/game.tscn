@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://yicge48108e0"]
 
-[ext_resource type="Texture2D" uid="uid://d2vmg0hhebutt" path="res://assets/background.png" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://bx0rabgl85mr8" path="res://scenes/banaba.tscn" id="3_lnu2h"]
-[ext_resource type="PackedScene" uid="uid://brh4hevj733uw" path="res://scenes/joloano.tscn" id="4_lbhrr"]
+[ext_resource type="Texture2D" uid="uid://d2vmg0hhebutt" path="res://assets/arenas/main/background.png" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://bx0rabgl85mr8" path="res://scenes/characters/banaba.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://brh4hevj733uw" path="res://scenes/characters/joloano.tscn" id="4_lbhrr"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1438b"]
 

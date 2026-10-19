@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2xiq84o03wij"
-path="res://.godot/imported/joloano_attack.png-99e69ee8d67a480ff8cfc470f3339f0c.ctex"
+uid="uid://dcox8nbo5n43d"
+path="res://.godot/imported/banaba.png-5cad8cebeb421be6106a319b3a5dbf95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/joloano_attack.png"
-dest_files=["res://.godot/imported/joloano_attack.png-99e69ee8d67a480ff8cfc470f3339f0c.ctex"]
+source_file="res://assets/characters/banaba/banaba.png"
+dest_files=["res://.godot/imported/banaba.png-5cad8cebeb421be6106a319b3a5dbf95.ctex"]
 
 [params]
 
