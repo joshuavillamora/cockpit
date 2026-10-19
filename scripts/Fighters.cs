@@ -23,6 +23,10 @@ public partial class Fighters : CharacterBody2D {
 		SideAttack,
 		UpAttack,
 		DownAttack,
+		NeutralAir,
+		SideAir,
+		UpAir,
+		DownAir,
 	}
 
 	private class AttackData {
@@ -43,11 +47,14 @@ public partial class Fighters : CharacterBody2D {
 	}
 
 	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
-		// Neutral Attack (jab): startup 2, active 2, recovery 4 = 8 frames
 		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8), 1, 1, 4, 1.0f) },
 		{ AttackType.SideAttack, new AttackData("side_attack", new Vector2(34, 16), new Vector2(82, 12), 1, 1, 8, 0.6f) },
 		{ AttackType.UpAttack, new AttackData("up_attack", new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7, 0.6f) },
 		{ AttackType.DownAttack, new AttackData("down_attack", new Vector2(56, 12), new Vector2(0, 32), 1, 1, 14, 0.2f) },
+		{ AttackType.NeutralAir, new AttackData("neutral_air", new Vector2(52, 44), new Vector2(0, 12), 1, 1, 5, 1.0f) },
+		{ AttackType.SideAir, new AttackData("side_air", new Vector2(36, 18), new Vector2(50, 10), 1, 1, 7, 0.6f) },
+		{ AttackType.UpAir, new AttackData("up_air", new Vector2(40, 30), new Vector2(0, -18), 1, 1, 6, 0.6f) },
+		{ AttackType.DownAir, new AttackData("down_air", new Vector2(40, 24), new Vector2(0, 40), 1, 1, 10, 0.2f) },
 	};
 
 	private AnimatedSprite2D animatedSprite;
@@ -111,7 +118,7 @@ public partial class Fighters : CharacterBody2D {
 		attackBufferTimer -= (float)delta;
 
 		// Grounded Attacks
-		if (attackBufferTimer > 0 && !isAttacking && IsOnFloor()) {
+		if (attackBufferTimer > 0 && !isAttacking) {
 			attackBufferTimer = 0;
 			StartAttack();
 		}
@@ -160,10 +167,16 @@ public partial class Fighters : CharacterBody2D {
 	private AttackType ChooseAttack() {
 		float direction = Input.GetAxis(moveLeft, moveRight);
 
+		if (!IsOnFloor()) {
+			if (Input.IsActionPressed(upKey)) return AttackType.UpAir;
+			if (Input.IsActionPressed(downKey)) return AttackType.DownAir;
+			if (Mathf.Abs(direction) > 0.5f) return AttackType.SideAir;
+			return AttackType.NeutralAir;
+		}
+
 		if (Input.IsActionPressed(upKey)) return AttackType.UpAttack;
 		if (Input.IsActionPressed(downKey)) return AttackType.DownAttack;
 		if (Mathf.Abs(direction) > 0.5f) return AttackType.SideAttack;
-
 		return AttackType.NeutralAttack;
 	}
 
