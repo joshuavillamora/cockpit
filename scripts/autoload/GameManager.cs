@@ -3,7 +3,7 @@ using Godot;
 // Global match state and screen paths. Registered as an autoload (see project.godot).
 // Players are 0-indexed here (0 = P1, 1 = P2); winner values elsewhere are 1/2, 0 = draw.
 //
-// Screen flow: Loading -> MainMenu -> CharacterSelect -> MapSelect -> Game (Victory overlay inside)
+// Screen flow: Loading -> MainMenu -> CharacterSelect -> MapSelect -> Lobby -> Game (Victory overlay inside)
 public partial class GameManager : Node {
 	public const int RoundsToWin = 2;   // 1-1 -> the last round is the Deathmatch
 
@@ -11,7 +11,8 @@ public partial class GameManager : Node {
 	public const string MainMenuScene = "res://scenes/ui/screens/main_menu.tscn";
 	public const string CharacterSelectScene = "res://scenes/ui/screens/character_select.tscn";
 	public const string MapSelectScene = "res://scenes/ui/screens/map_select.tscn";
-	public const string GameScene = "res://scenes/gameplay/game.tscn";
+	public const string LobbyScene = "res://scenes/ui/screens/lobby_tutorial.tscn";
+	public const string GameScene ="res://scenes/gameplay/game.tscn";
 
 	public static GameManager Instance { get; private set; }
 
@@ -43,12 +44,17 @@ public partial class GameManager : Node {
 		SceneFlow.Instance.GoTo(MapSelectScene);
 	}
 
-	// Map select -> match
-	public void StartMatch(ArenaData arena) {
+	// Map select -> lobby (a new series starts here)
+	public void SelectArena(ArenaData arena) {
 		SelectedArena = arena;
 		MatchWins[0] = 0;
 		MatchWins[1] = 0;
 		ResetScores();
+		SceneFlow.Instance.GoTo(LobbyScene);
+	}
+
+	// Lobby -> match (both players walked through the door)
+	public void EnterMatch() {
 		SceneFlow.Instance.GoTo(GameScene);
 	}
 

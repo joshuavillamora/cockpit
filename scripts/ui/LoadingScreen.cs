@@ -9,6 +9,8 @@ public partial class LoadingScreen : Control {
 		GameManager.MainMenuScene,
 		GameManager.CharacterSelectScene,
 		GameManager.MapSelectScene,
+		GameManager.LobbyScene,
+		"res://scenes/gameplay/training_dummy.tscn",
 		GameManager.GameScene,
 		SettingsScreen.ScenePath,
 		ControlsScreen.ScenePath,
