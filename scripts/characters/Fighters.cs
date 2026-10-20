@@ -44,25 +44,26 @@ public partial class Fighters : CharacterBody2D {
 		public int EndFrame;
 		public int Damage;
 		public float Mobility;   // 0 = commits you, 1 = keeps nearly full movement
+		public float MomentumKeep;
     	public Vector2 Knockback;
     	public float Hitstun; 
 
-		public AttackData(string animation, Vector2 size, Vector2 offset, int startFrame, int endFrame, int damage, float mobility, Vector2 knockback, float hitstun) {
+		public AttackData(string animation, Vector2 size, Vector2 offset, int startFrame, int endFrame, int damage, float mobility, float momentumKeep, Vector2 knockback, float hitstun) {
 			Animation = animation; Size = size; Offset = offset;
 			StartFrame = startFrame; EndFrame = endFrame;
-			Damage = damage; Mobility = mobility; Knockback = knockback; Hitstun = hitstun;
+			Damage = damage; Mobility = mobility; MomentumKeep = momentumKeep; Knockback = knockback; Hitstun = hitstun;
 		}
 	}
 
 	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
-		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8),  1, 1, 4,  1.0f, new Vector2(200, -80),  0.50f) },
-		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(52, 16), new Vector2(52, 12), 1, 1, 8,  0.6f, new Vector2(440, -240), 0.70f) },
-		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7,  0.6f, new Vector2(80, -600),  0.80f) },
-		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(28, 20), new Vector2(40, 22), 1, 1, 14, 0.2f, new Vector2(400, -300), 1.00f) },
-		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(52, 44), new Vector2(0, 12),  1, 1, 5,  1.0f, new Vector2(280, -200), 0.60f) },
-		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(36, 18), new Vector2(50, 10), 1, 1, 7,  0.6f, new Vector2(440, -240), 0.70f) },
-		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18), 1, 1, 6,  0.6f, new Vector2(80, -560),  0.70f) },
-		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(0, 40),  1, 1, 10, 0.2f, new Vector2(120, 500),  0.80f) },
+		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8),  1, 1, 4,  1.0f, 0.9f, new Vector2(200, -80),  0.50f) },
+		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(52, 16), new Vector2(52, 12), 1, 1, 8,  0.6f, 0.7f, new Vector2(440, -240), 0.70f) },
+		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7,  0.6f, 0.6f, new Vector2(80, -600),  0.80f) },
+		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(28, 20), new Vector2(40, 22), 1, 1, 14, 0.2f, 0.3f, new Vector2(400, -300), 1.00f) },
+		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(52, 44), new Vector2(0, 12),  1, 1, 5,  1.0f, 1.0f, new Vector2(280, -200), 0.60f) },
+		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(36, 18), new Vector2(50, 10), 1, 1, 7,  0.6f, 0.8f, new Vector2(440, -240), 0.70f) },
+		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18), 1, 1, 6,  0.6f, 0.8f, new Vector2(80, -560),  0.70f) },
+		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(0, 40),  1, 1, 10, 0.2f, 0.5f, new Vector2(120, 500),  0.80f) },
 	};
 
 	private AnimatedSprite2D animatedSprite;
@@ -79,6 +80,7 @@ public partial class Fighters : CharacterBody2D {
 	private AttackData currentAttack = Attacks[AttackType.NeutralAttack];
 	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey, downKey;
 	private float hitstunTimer = 0f;
+	
 	
 	public override void _Ready() {
 		moveLeft = $"p{PlayerId}_move_left";
@@ -207,7 +209,7 @@ public partial class Fighters : CharacterBody2D {
 	private void StartAttack() {
 		float direction = Input.GetAxis(moveLeft, moveRight);
 		currentAttack = Attacks[ChooseAttack()];
-		
+		Velocity = new Vector2(Velocity.X * currentAttack.MomentumKeep, Velocity.Y);
 		SetFacing(direction != 0 ? direction > 0 : facingRight);
 
 		isAttacking = true;
