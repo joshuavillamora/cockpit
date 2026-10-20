@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://cbqicgof10igl"]
+
+[ext_resource type="Script" path="res://scripts/core/LobbyController.cs" id="1_lobby"]
+[ext_resource type="Texture2D" path="res://assets/arenas/main/background.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/training_dummy.tscn" id="3_dummy"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_floor"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_left"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_right"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(64, 72)
+
+[node name="LobbyTutorial" type="Node2D"]
+script = ExtResource("1_lobby")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(320, 180)
+texture = ExtResource("2_bg")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(320, 257)
+shape = SubResource("WorldBoundaryShape2D_floor")
+
+[node name="Wall" type="StaticBody2D" parent="."]
+
+[node name="Left" type="CollisionShape2D" parent="Wall"]
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_left")
+
+[node name="Right" type="CollisionShape2D" parent="Wall"]
+position = Vector2(640, 0)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_right")
+
+[node name="SpawnP1" type="Marker2D" parent="."]
+position = Vector2(130, 220)
+
+[node name="SpawnP2" type="Marker2D" parent="."]
+position = Vector2(200, 220)
+
+[node name="Dummy" parent="." instance=ExtResource("3_dummy")]
+position = Vector2(340, 257)
+
+[node name="Door" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(608, 257)
+collision_layer = 0
+
+[node name="Frame" type="ColorRect" parent="Door"]
+offset_left = -32.0
+offset_top = -76.0
+offset_right = 32.0
+offset_bottom = 0.0
+mouse_filter = 2
+color = Color(0.35, 0.22, 0.1, 1)
+
+[node name="Opening" type="ColorRect" parent="Door"]
+offset_left = -26.0
+offset_top = -70.0
+offset_right = 32.0
+offset_bottom = 0.0
+mouse_filter = 2
+color = Color(0.06, 0.04, 0.02, 1)
+
+[node name="Sign" type="Label" parent="Door"]
+offset_left = -26.0
+offset_top = -60.0
+offset_right = 32.0
+offset_bottom = -38.0
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "GO"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+position = Vector2(0, -36)
+shape = SubResource("RectangleShape2D_door")
+
+[node name="Ui" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Root" type="Control" parent="Ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Ui/Root"]
+layout_mode = 0
+offset_top = 6.0
+offset_right = 640.0
+offset_bottom = 28.0
+text = "TRAINING LOBBY"
+horizontal_alignment = 1
+
+[node name="BackHint" type="Label" parent="Ui/Root"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 160.0
+offset_bottom = 28.0
+text = "ESC: BACK"
+
+[node name="P1Panel" type="PanelContainer" parent="Ui/Root"]
+modulate = Color(1, 1, 1, 0.92)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 34.0
+offset_right = 268.0
+offset_bottom = 190.0
+
+[node name="Box" type="VBoxContainer" parent="Ui/Root/P1Panel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Heading" type="Label" parent="Ui/Root/P1Panel/Box"]
+layout_mode = 2
+text = "PLAYER 1"
+horizontal_alignment = 1
+
+[node name="Keys" type="Label" parent="Ui/Root/P1Panel/Box"]
+layout_mode = 2
+text = "MOVE A/D
+AIM  W/S
+JUMP K/SPACE
+ATTACK J/E"
+
+[node name="P1Status" type="Label" parent="Ui/Root/P1Panel/Box"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "GO TO THE DOOR"
+horizontal_alignment = 1
+
+[node name="P2Panel" type="PanelContainer" parent="Ui/Root"]
+modulate = Color(1, 1, 1, 0.92)
+layout_mode = 0
+offset_left = 372.0
+offset_top = 34.0
+offset_right = 632.0
+offset_bottom = 190.0
+
+[node name="Box" type="VBoxContainer" parent="Ui/Root/P2Panel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Heading" type="Label" parent="Ui/Root/P2Panel/Box"]
+layout_mode = 2
+text = "PLAYER 2"
+horizontal_alignment = 1
+
+[node name="Keys" type="Label" parent="Ui/Root/P2Panel/Box"]
+layout_mode = 2
+text = "MOVE ARROWS
+AIM  UP/DOWN
+JUMP N
+ATTACK M OR /"
+
+[node name="P2Status" type="Label" parent="Ui/Root/P2Panel/Box"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "GO TO THE DOOR"
+horizontal_alignment = 1
+
+[node name="TipLabel" type="Label" parent="Ui/Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 288.0
+offset_right = 640.0
+offset_bottom = 310.0
+text = "TIP"
+horizontal_alignment = 1
+
+[node name="DoorStatus" type="Label" parent="Ui/Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 326.0
+offset_right = 640.0
+offset_bottom = 348.0
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "BOTH PLAYERS: ENTER THE DOOR"
+horizontal_alignment = 1
