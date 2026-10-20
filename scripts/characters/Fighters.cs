@@ -44,24 +44,25 @@ public partial class Fighters : CharacterBody2D {
 		public int EndFrame;
 		public int Damage;
 		public float Mobility;   // 0 = commits you, 1 = keeps nearly full movement
+    	public Vector2 Knockback;
+    	public float Hitstun; 
 
-		public AttackData(string animation, Vector2 size, Vector2 offset,
-						  int startFrame, int endFrame, int damage, float mobility) {
+		public AttackData(string animation, Vector2 size, Vector2 offset, int startFrame, int endFrame, int damage, float mobility, Vector2 knockback, float hitstun) {
 			Animation = animation; Size = size; Offset = offset;
 			StartFrame = startFrame; EndFrame = endFrame;
-			Damage = damage; Mobility = mobility;
+			Damage = damage; Mobility = mobility; Knockback = knockback; Hitstun = hitstun;
 		}
 	}
 
 	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
-		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8), 1, 1, 4, 1.0f) },
-		{ AttackType.SideAttack, new AttackData("side_attack", new Vector2(34, 16), new Vector2(82, 12), 1, 1, 8, 0.6f) },
-		{ AttackType.UpAttack, new AttackData("up_attack", new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7, 0.6f) },
-		{ AttackType.DownAttack, new AttackData("down_attack", new Vector2(56, 12), new Vector2(0, 32), 1, 1, 14, 0.2f) },
-		{ AttackType.NeutralAir, new AttackData("neutral_air", new Vector2(52, 44), new Vector2(0, 12), 1, 1, 5, 1.0f) },
-		{ AttackType.SideAir, new AttackData("side_air", new Vector2(36, 18), new Vector2(50, 10), 1, 1, 7, 0.6f) },
-		{ AttackType.UpAir, new AttackData("up_air", new Vector2(40, 30), new Vector2(0, -18), 1, 1, 6, 0.6f) },
-		{ AttackType.DownAir, new AttackData("down_air", new Vector2(40, 24), new Vector2(0, 40), 1, 1, 10, 0.2f) },
+		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8),  1, 1, 4,  1.0f, new Vector2(200, -80),  0.50f) },
+		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(34, 16), new Vector2(82, 12),  1, 1, 8,  0.6f, new Vector2(440, -240), 0.70f) },
+		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 32), new Vector2(0, -14),  1, 1, 7,  0.6f, new Vector2(80, -600),  0.80f) },
+		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(28, 20), new Vector2(40, 22),  1, 1, 14, 0.2f, new Vector2(400, -300), 1.00f) },
+		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(52, 44), new Vector2(0, 12),   1, 1, 5,  1.0f, new Vector2(280, -200), 0.60f) },
+		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(36, 18), new Vector2(50, 10),  1, 1, 7,  0.6f, new Vector2(440, -240), 0.70f) },
+		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18),  1, 1, 6,  0.6f, new Vector2(80, -560),  0.70f) },
+		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(0, 40),   1, 1, 10, 0.2f, new Vector2(120, 500),  0.80f) },
 	};
 
 	private AnimatedSprite2D animatedSprite;
@@ -77,6 +78,7 @@ public partial class Fighters : CharacterBody2D {
 	private float attackBufferTimer = 0f;
 	private AttackData currentAttack = Attacks[AttackType.NeutralAttack];
 	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey, downKey;
+	private float hitstunTimer = 0f;
 	
 	public override void _Ready() {
 		moveLeft = $"p{PlayerId}_move_left";
@@ -125,6 +127,13 @@ public partial class Fighters : CharacterBody2D {
 			return;
 		}
 
+		// right after the gravity block
+		if (hitstunTimer > 0f) {
+			hitstunTimer -= (float)delta;
+			if (hitstunTimer <= 0f) animatedSprite.Play("idle");
+		}
+		bool stunned = hitstunTimer > 0f;
+
 		// Attack
 		if (Input.IsActionJustPressed(attackKey) && !isAttacking) {
 			attackBufferTimer = AttackBufferTime;
@@ -132,16 +141,17 @@ public partial class Fighters : CharacterBody2D {
 		attackBufferTimer -= (float)delta;
 
 		// Grounded Attacks
-		if (attackBufferTimer > 0 && !isAttacking) {
+		if (!stunned && attackBufferTimer > 0 && !isAttacking) {
 			attackBufferTimer = 0;
 			StartAttack();
 		}
 
 		// Jump
-		Jump();
+		if (!stunned) Jump();
 
 		// Horizontal movement
 		float direction = Input.GetAxis(moveLeft, moveRight);
+		if (stunned) HitstunDrift((float)delta);
 		Vector2 dir = new Vector2(direction, 0);
 
 		Walk(dir, (float)delta);
@@ -235,7 +245,11 @@ public partial class Fighters : CharacterBody2D {
 		if (target == this || alreadyHit.Contains(target)) return; // one hit per swing
 		alreadyHit.Add(target);
 
-		if (target.HasMethod("TakeDamage")) {
+		if (target is Fighters victim) {
+			Vector2 kb = currentAttack.Knockback;
+			kb.X *= facingRight ? 1 : -1;
+			victim.TakeHit(currentAttack.Damage, kb, currentAttack.Hitstun);
+		} else if (target.HasMethod("TakeDamage")) {
 			target.Call("TakeDamage", currentAttack.Damage);
 		}
 	}
@@ -264,6 +278,30 @@ public partial class Fighters : CharacterBody2D {
 		if (Health == 0) {
 			Die();
 		}
+	}
+	
+	public void TakeHit(int damage, Vector2 knockback, float hitstun) {
+		if (Health <= 0) return;
+
+		CancelAttack();
+		attackBufferTimer = 0f;
+		Velocity = knockback;
+		hitstunTimer = hitstun;
+
+		animatedSprite.Play("idle");
+		TakeDamage(damage);
+	}
+
+	private void CancelAttack() {
+		if (!isAttacking) return;
+		isAttacking = false;
+		attackHitbox.SetDeferred(Area2D.PropertyName.Monitoring, false);
+		hitboxVisual.Visible = false;
+	}
+	
+	private void HitstunDrift(float delta) {
+		float friction = IsOnFloor() ? 800f : 100f;
+		Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, friction * delta), Velocity.Y);
 	}
 
 	private void Die() {
