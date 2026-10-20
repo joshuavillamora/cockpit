@@ -62,7 +62,8 @@ Press `Esc` or `P` at any time during a match to pause.
 
 **Menus:** `W`/`S` or the arrow keys move, `Enter` or `Space` selects, `Esc` goes back.
 **Character select:** each player uses their own keys. Up/down chooses, Attack confirms, Jump cancels. Press `Enter` when both are ready.
-**Map select:** either player moves with left/right, and `Enter` starts the match.
+**Map select:** either player moves with left/right, and `Enter` continues to the lobby.
+**Lobby:** test movement and attacks, and hit the training dummy. Walk both chickens into the door to start the match. `Esc` goes back to map select.
 **Fullscreen:** `F11`. The same controls list is available in-game under **Settings → Controls**.
 
 ## Characters
@@ -79,14 +80,16 @@ Press `Esc` or `P` at any time during a match to pause.
 ## Game screens
 
 ```
-Loading ─► Main Menu ─► Character Select ─► Map Select ─► Match ─► Victory
-(press     │ Play        (4 chickens left,    (2 arenas)    │        ├─ Rematch
- start)    │ Settings     4 right, VS,                      │        └─ Back to Menu
-           │ Quit         picks in the middle)              ├─ Round intro ("ROUND N" / "FIGHT!")
-           └─ Settings (volume, fullscreen, Controls)       ├─ K.O. screen, then the next round
-                                                            ├─ Deathmatch screen before the last round
-                                                            └─ Pause: Resume, Settings, Quit
+Loading ─► Main Menu ─► Character Select ─► Map Select ─► Lobby ─► Match ─► Victory
 ```
+
+- **Loading:** preloads the game, then "PRESS START".
+- **Main Menu:** Play, Settings (volume, fullscreen, Controls) and Quit.
+- **Character Select:** 4 chickens on each side; each player's pick is shown large in the middle.
+- **Map Select:** choose the arena.
+- **Lobby:** a training room. Test movement and attacks, hit the dummy, then walk both players into the door to start the match.
+- **Match:** round intro, K.O. screen, a Deathmatch screen before the last round, and Pause (Esc / P).
+- **Victory:** Rematch (skips the lobby) or Back to Menu.
 
 ## Run the game
 

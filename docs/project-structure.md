@@ -36,6 +36,8 @@ cockpit/
 | Controls (popup) | `controls_screen.tscn` | `ControlsScreen.cs` | theme |
 | Character Select | `character_select.tscn` | `CharacterSelect.cs` | `ui_portrait_*`, `ui_select_frame_*` |
 | Map Select | `map_select.tscn` | `MapSelect.cs` | `ui_map_frame`, `ui_map_thumb_*` |
+| Lobby | `lobby_tutorial.tscn` | `scripts/core/LobbyController.cs` | arena background |
+| Training dummy (in the lobby) | `scenes/gameplay/training_dummy.tscn` | `scripts/core/TrainingDummy.cs` | none (placeholder boxes) |
 | Match | `scenes/gameplay/game.tscn` | `scripts/core/MatchController.cs` | arena background |
 | HUD | `game_hud.tscn` | `GameHud.cs` | `ui_healthbar_*`, `ui_round_marker_*`, portraits, ability icons |
 | Pause | `pause_menu.tscn` | `PauseMenu.cs` | theme |
@@ -68,6 +70,8 @@ Currently unused by any screen: `ui_banner_ko`, `ui_banner_round`, `ui_counter_f
 | Update the controls list | `ControlsScreen.cs` (`Rows`) |
 | Change intro / K.O. / Deathmatch text | `GameHud.cs` (`PlayRoundIntro`, `ShowKo`) |
 | Change what happens on KO / round end | `MatchController.cs` (`OnFighterDied`) |
+| Change the lobby tips | `LobbyController.cs` (`Tips`) |
+| Move or resize the lobby door | `lobby_tutorial.tscn` → `Door` (and its `CollisionShape2D`) |
 | Change health bar color | `GameHud.SetHealth` |
 | Change volume / fullscreen behavior | `SettingsManager.cs` |
 | Change combat, damage, movement | `scripts/characters/Fighters.cs` (backend's file) |

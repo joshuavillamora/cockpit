@@ -24,6 +24,10 @@ On death the fighter stays in the scene tree (it fades out and its collisions ar
 3. After the "ROUND N / FIGHT!" intro it sets `InputLocked = false`.
 4. When `Died` fires it waits 0.1 s (to catch a double KO), records the result in `GameManager`, then starts the next round or shows the victory screen.
 
+## The lobby also uses your code
+
+The training lobby (`LobbyController`) spawns the same fighters before the match, with `MaxHealth = 9999` so nobody is knocked out, and uses `PlayerId`, `StartFacingRight` and `InputLocked` the same way. It also has a training dummy that is not a `Fighters` node: keep the `HasMethod("TakeDamage")` branch in `OnHitboxAreaEntered`, because the dummy relies on it. When block and abilities exist, tell the frontend so the lobby tips can explain them.
+
 ## Ability icons on the HUD
 
 `GameHud.SetAbilityState(int player, AbilityState state)` switches a player's ability icon between `Ready`, `Cooling` and `Unavailable`. `player` is 0 for P1 and 1 for P2. It currently always shows `Ready`, so call it from your ability code once cooldowns exist.

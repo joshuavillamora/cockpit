@@ -15,14 +15,16 @@
 ## Screen flow
 
 ```
-Loading ─► Main Menu ─► Character Select ─► Map Select ─► Match ─► Victory
-(press     │ Play        (4 chickens left,    (2 arenas)    │        ├─ Rematch
- start)    │ Settings     4 right, VS,                      │        └─ Back to Menu
-           │ Quit         picks in the middle)              ├─ Round intro ("ROUND N" / "FIGHT!")
-           └─ Settings overlay (volume, fullscreen, Controls)  ├─ K.O. screen, then the next round
-                                                            ├─ Deathmatch screen before the last round
-                                                            └─ Pause (Esc/P): Resume, Settings, Quit
+Loading ─► Main Menu ─► Character Select ─► Map Select ─► Lobby ─► Match ─► Victory
 ```
+
+- **Loading:** preloads the game, then "PRESS START".
+- **Main Menu:** Play, Settings (volume, fullscreen, Controls) and Quit.
+- **Character Select:** 4 chickens on each side; each player's pick is shown large in the middle.
+- **Map Select:** choose the arena.
+- **Lobby:** a training room. Test movement and attacks, hit the dummy, then walk both players into the door to start the match.
+- **Match:** round intro, K.O. screen, a Deathmatch screen before the last round, and Pause (Esc / P).
+- **Victory:** Rematch (skips the lobby) or Back to Menu.
 
 ## Match rules
 
@@ -46,7 +48,7 @@ Loading ─► Main Menu ─► Character Select ─► Map Select ─► Match 
 
 Hold a direction while pressing Attack to choose the attack: neutral, side, up or down, on the ground or in the air.
 
-**Menus:** `W`/`S` or the arrow keys move, `Enter` or `Space` selects, `Esc` goes back. On character select each player uses their own keys (up/down to choose, attack to confirm, jump to cancel), then `Enter` goes on to map select. On map select either player moves with left/right and `Enter` starts the match. `F11` toggles fullscreen.
+**Menus:** `W`/`S` or the arrow keys move, `Enter` or `Space` selects, `Esc` goes back. On character select each player uses their own keys (up/down to choose, attack to confirm, jump to cancel), then `Enter` goes on to map select. On map select either player moves with left/right and `Enter` continues to the lobby. In the lobby, walk both chickens into the door to start the match, or press `Esc` to go back to map select. `F11` toggles fullscreen.
 
 ## Characters
 
