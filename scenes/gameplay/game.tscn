@@ -1,9 +1,10 @@
-[gd_scene format=3 uid="uid://yicge48108e0"]
+[gd_scene format=4 uid="uid://yicge48108e0"]
 
 [ext_resource type="Texture2D" uid="uid://d2vmg0hhebutt" path="res://assets/arenas/main/background.png" id="2_yqjtg"]
-[ext_resource type="Script" path="res://scripts/core/MatchController.cs" id="3_match"]
+[ext_resource type="Script" uid="uid://b7uvckya3ofi1" path="res://scripts/core/MatchController.cs" id="3_match"]
 [ext_resource type="PackedScene" path="res://scenes/ui/screens/game_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/screens/pause_menu.tscn" id="5_pause"]
+[ext_resource type="Texture2D" uid="uid://cryffn0klhsaw" path="res://assets/arenas/main/platforms.png" id="6_mwwos"]
 [ext_resource type="PackedScene" path="res://scenes/ui/screens/victory_overlay.tscn" id="6_victory"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1438b"]
@@ -11,6 +12,22 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hnnho"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gx6lm"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vxo0c"]
+texture = ExtResource("6_mwwos")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.7770329, -8, -3.956891)
+0:0/0/physics_layer_0/polygon_0/one_way = true
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.7770329, -8, -3.956891)
+1:0/0/physics_layer_0/polygon_0/one_way = true
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.7770329, -8, -3.956891)
+2:0/0/physics_layer_0/polygon_0/one_way = true
+
+[sub_resource type="TileSet" id="TileSet_37n2d"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_vxo0c")
 
 [node name="Game" type="Node2D" unique_id=229146293]
 
@@ -35,17 +52,21 @@ position = Vector2(640, 0)
 rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_gx6lm")
 
-[node name="SpawnP1" type="Marker2D" parent="."]
+[node name="SpawnP1" type="Marker2D" parent="." unique_id=558587907]
 position = Vector2(197, 220)
 
-[node name="SpawnP2" type="Marker2D" parent="."]
+[node name="SpawnP2" type="Marker2D" parent="." unique_id=590775518]
 position = Vector2(427, 220)
 
-[node name="HUD" parent="." instance=ExtResource("4_hud")]
+[node name="HUD" parent="." unique_id=52922464 instance=ExtResource("4_hud")]
 
-[node name="VictoryOverlay" parent="." instance=ExtResource("6_victory")]
+[node name="VictoryOverlay" parent="." unique_id=1878609495 instance=ExtResource("6_victory")]
 
-[node name="PauseMenu" parent="." instance=ExtResource("5_pause")]
+[node name="PauseMenu" parent="." unique_id=178616233 instance=ExtResource("5_pause")]
 
-[node name="MatchController" type="Node" parent="."]
+[node name="MatchController" type="Node" parent="." unique_id=872889439]
 script = ExtResource("3_match")
+
+[node name="Platforms" type="TileMapLayer" parent="." unique_id=941803799]
+tile_map_data = PackedByteArray("AAASAAgAAAABAAAAAAATAAgAAAABAAAAAAAUAAgAAAABAAAAAAAVAAgAAAABAAAAAAAWAAgAAAABAAAAAAAXAAgAAAABAAAAAAARAAgAAAABAAAAAAAQAAgAAAABAAAAAAAPAAgAAAAAAAAAAAAYAAgAAAACAAAAAAAFAAwAAAABAAAAAAAGAAwAAAABAAAAAAAHAAwAAAABAAAAAAAIAAwAAAABAAAAAAAJAAwAAAABAAAAAAAKAAwAAAABAAAAAAALAAwAAAABAAAAAAAcAAwAAAABAAAAAAAdAAwAAAABAAAAAAAeAAwAAAABAAAAAAAfAAwAAAABAAAAAAAgAAwAAAABAAAAAAAhAAwAAAABAAAAAAAiAAwAAAABAAAAAAAjAAwAAAACAAAAAAAMAAwAAAACAAAAAAAEAAwAAAAAAAAAAAAbAAwAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_37n2d")
