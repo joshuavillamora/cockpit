@@ -56,13 +56,13 @@ public partial class Fighters : CharacterBody2D {
 
 	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
 		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8),  1, 1, 4,  1.0f, new Vector2(200, -80),  0.50f) },
-		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(34, 16), new Vector2(82, 12),  1, 1, 8,  0.6f, new Vector2(440, -240), 0.70f) },
-		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 32), new Vector2(0, -14),  1, 1, 7,  0.6f, new Vector2(80, -600),  0.80f) },
-		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(28, 20), new Vector2(40, 22),  1, 1, 14, 0.2f, new Vector2(400, -300), 1.00f) },
-		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(52, 44), new Vector2(0, 12),   1, 1, 5,  1.0f, new Vector2(280, -200), 0.60f) },
-		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(36, 18), new Vector2(50, 10),  1, 1, 7,  0.6f, new Vector2(440, -240), 0.70f) },
-		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18),  1, 1, 6,  0.6f, new Vector2(80, -560),  0.70f) },
-		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(0, 40),   1, 1, 10, 0.2f, new Vector2(120, 500),  0.80f) },
+		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(52, 16), new Vector2(52, 12), 1, 1, 8,  0.6f, new Vector2(440, -240), 0.70f) },
+		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7,  0.6f, new Vector2(80, -600),  0.80f) },
+		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(28, 20), new Vector2(40, 22), 1, 1, 14, 0.2f, new Vector2(400, -300), 1.00f) },
+		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(52, 44), new Vector2(0, 12),  1, 1, 5,  1.0f, new Vector2(280, -200), 0.60f) },
+		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(36, 18), new Vector2(50, 10), 1, 1, 7,  0.6f, new Vector2(440, -240), 0.70f) },
+		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18), 1, 1, 6,  0.6f, new Vector2(80, -560),  0.70f) },
+		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(0, 40),  1, 1, 10, 0.2f, new Vector2(120, 500),  0.80f) },
 	};
 
 	private AnimatedSprite2D animatedSprite;
