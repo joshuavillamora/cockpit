@@ -40,5 +40,5 @@ offset_right = 640.0
 offset_bottom = 346.0
 theme_override_constants/line_spacing = 4
 text = "A/D OR ARROWS: CHOOSE
-ENTER: START   ESC: BACK"
+ENTER: CONTINUE   ESC: BACK"
 horizontal_alignment = 1

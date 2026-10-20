@@ -49,7 +49,7 @@ public partial class MapSelect : Control {
 	public override void _Process(double delta) {
 		if (Input.IsActionJustPressed("menu_start")) {
 			SetProcess(false);
-			GameManager.Instance.StartMatch(arenas[cursor]);
+			GameManager.Instance.SelectArena(arenas[cursor]);
 			return;
 		}
 
@@ -60,7 +60,7 @@ public partial class MapSelect : Control {
 
 			if (Input.IsActionJustPressed(prefix + "attack")) {
 				SetProcess(false);
-				GameManager.Instance.StartMatch(arenas[cursor]);
+				GameManager.Instance.SelectArena(arenas[cursor]);
 				return;
 			}
 			if (Input.IsActionJustPressed(prefix + "jump")) {
