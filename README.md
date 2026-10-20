@@ -1,213 +1,161 @@
 # Cockpit
 
-A local-multiplayer 2D arena brawler built around chicken fighting. Two players pick a chicken and fight on one keyboard in a Filipino backyard *sabong* arena. Each chicken has directional ground and aerial attacks, a block or air dash, and a signature ability. You win by depleting your opponent's HP.
+**A local two-player 2D arena brawler starring feisty Filipino native chickens.**
 
-> Competition project — submission **October 25, 2026**. Feature freeze **October 23**.
+Pick your chicken, choose an arena, and fight a friend on the same keyboard. Land ground and aerial attacks, win rounds, and take the match. Cockpit is built with Godot 4 and C# in pixel art, as our entry to the **Level Up 3.0 Esports Game Dev Challenge** (Philippine Games and Sports theme).
 
----
+> **Status:** work in progress. The complete game flow is playable with two chickens. Art and audio are still placeholders, and some moves and abilities are not built yet. See [Current status](#current-status).
 
-## Requirements
+## Contents
 
-| Tool | Version | Notes |
-|------|---------|-------|
-| [Godot Engine — **.NET** edition](https://godotengine.org/download) | 4.7.x | The standard (non-.NET) build **cannot** open this project. |
-| [.NET SDK](https://dotnet.microsoft.com/download/dotnet/8.0) | 8.0 | Needed to compile the C# scripts. You need the SDK, not just the runtime. |
-| IDE (optional) | VS Code + C# Dev Kit, Rider, or Visual Studio | |
+- [About the game](#about-the-game)
+- [How to play](#how-to-play)
+- [Controls](#controls)
+- [Characters](#characters)
+- [Game screens](#game-screens)
+- [Run the game](#run-the-game)
+- [Current status](#current-status)
+- [Project layout](#project-layout)
+- [Documentation](#documentation)
+- [Built with](#built-with)
+- [Team](#team)
 
-## Getting started
+## About the game
 
-1. Clone the repository.
-2. Open Godot (.NET), click **Import**, and select `project.godot`.
-3. Press **Build** (the hammer icon, top-right) once so the C# assembly compiles.
-4. Press **F5** to run. The game starts at the loading screen (`scenes/ui/screens/loading_screen.tscn`).
-To test a match directly, open `scenes/gameplay/game.tscn` and press **F6**. It falls back to Banaba vs Joloano.
+| | |
+|---|---|
+| **Genre** | 2D arena battler (platform fighter style) |
+| **Players** | 2, local multiplayer on one keyboard |
+| **Goal** | Win the match by winning rounds. A round is won by knocking out your opponent (reducing their HP to zero). |
+| **Setting** | An enclosed Filipino backyard arena with spectators around it |
+| **Look** | Cartoon pixel art at 640 × 360, with exaggerated chickens and readable attack poses |
+| **Engine** | Godot 4.7 (.NET), written in C# |
 
-The game starts fullscreen. Press **F11** to toggle windowed mode (the choice is saved).
+The four fighters are inspired by real Philippine native chicken breeds. Each one has its own speed, size and attack style, plus a signature ability (planned).
 
-## Controls (default)
+## How to play
+
+1. **Start:** press any key on the loading screen, then choose **Play** on the main menu.
+2. **Choose your chicken:** each player picks from their own column of chickens and confirms. When both are ready, press `Enter`.
+3. **Choose an arena:** pick a map and press `Enter` to start.
+4. **Fight:** a match is **first to 2 round wins**.
+   - Move, jump, and attack. Hold a direction while attacking to choose the attack: neutral, side, up or down, on the ground or in the air.
+   - Reduce your opponent's health bar to zero to win the round. The health bars are at the top of the screen.
+   - The dots under each health bar show how many rounds that player has won in this match.
+   - If the score is 1-1, the last round is the **Deathmatch**.
+   - If both fighters are knocked out at the same time, the round is a draw and is replayed.
+5. **After the match:** choose **Rematch** to play again with the same chickens, or **Back to Menu**. The number in the middle of the HUD is the **match score**, counting matches each player has won since the last visit to the menu, so it keeps growing across rematches.
+
+Press `Esc` or `P` at any time during a match to pause.
+
+## Controls
 
 | Action | Player 1 | Player 2 |
 |--------|----------|----------|
 | Move left / right | `A` / `D` | `←` / `→` |
-| Up / Down (attack direction, menus) | `W` / `S` | `↑` / `↓` |
+| Aim attack up / down | `W` / `S` | `↑` / `↓` |
 | Jump | `K` or `Space` | `N` |
 | Attack | `J` or `E` | `M` or `/` |
 | Pause | `Esc` or `P` | `Esc` or `P` |
-| Block / Air dash | *TBD* | *TBD* |
-| Ability | *TBD* | *TBD* |
+| Block / air dash | coming soon | coming soon |
+| Ability | coming soon | coming soon |
 
-Input actions are named `p{N}_<action>`, for example `p1_attack`. Edit them in **Project Settings → Input Map**.
+**Menus:** `W`/`S` or the arrow keys move, `Enter` or `Space` selects, `Esc` goes back.
+**Character select:** each player uses their own keys. Up/down chooses, Attack confirms, Jump cancels. Press `Enter` when both are ready.
+**Map select:** either player moves with left/right, and `Enter` starts the match.
+**Fullscreen:** `F11`. The same controls list is available in-game under **Settings → Controls**.
 
-**Attack direction:** hold a direction while pressing Attack.
-- **Grounded:** neutral, side, up and down attacks.
-- **Airborne:** neutral, side, up and down air attacks.
+## Characters
 
----
+| Chicken | Style | Signature ability (planned) |
+|---------|-------|-----------------------------|
+| **Banaba** | Master of aerial attacks, stays in the air longer, weaker on the ground | *Wak-a-Doodle-Doo*: aim at an area and slice through platforms and opponents |
+| **Paraokan** | Tall and intimidating, slow, decent glider | *Chickbalang*: stretches into a controllable horse head with strong beak attacks |
+| **Joloano** | Long legs, strong ground attacks, slow, good range | *Bernardo's Feet*: grows for a short time with stronger ground attacks and knockback |
+| **Da Chik** | Small, fast, good wall mobility, lower health | *Zooooom*: dashes in any direction, keeping momentum; resets on landing |
 
-## Project structure
+**Playable now:** Banaba and Joloano. Paraokan and Da Chik appear as "SOON" on the character select screen.
 
-```
-cockpit/
-├── assets/                  # Raw art & audio from the design team (no scenes/scripts here)
-│   ├── characters/          #   One folder per chicken: banaba/, joloano/, paraokan/, da_chik/
-│   │   └── placeholder/     #   Temporary programmer art
-│   ├── arenas/              #   One folder per stage: backgrounds, tiles, platforms, crowd
-│   ├── ui/                  #   UI designer's assets
-│   │   ├── fonts/           #     NES Cyrillic, etc.
-│   │   ├── hud/             #     Health bars, portraits/icons, ability cooldowns, round markers
-│   │   ├── menus/           #     Title, character select, pause, victory screen art
-│   │   └── icons/           #     Buttons, cursors, input prompts
-│   ├── vfx/                 #   Hit sparks, feathers, dust, ability effects
-│   └── audio/
-│       ├── music/
-│       └── sfx/
-├── scenes/
-│   ├── characters/          # fighter.tscn (base) + one inherited scene per chicken
-│   ├── arenas/              # Stage scenes (floor, walls, ceiling, platforms)
-│   ├── gameplay/            # game.tscn — the match scene that spawns fighters
-│   └── ui/
-│       ├── screens/         #   Full screens: title, character select, HUD, round end, victory
-│       └── components/      #   Reusable widgets: health bar, character card, buttons
-├── scripts/
-│   ├── characters/          # Fighter logic (Fighters.cs)
-│   ├── ui/                  # Screen and widget scripts
-│   ├── autoload/            # Global singletons (game state, scene flow)
-│   └── core/                # Shared helpers, data types
-├── resources/               # .tres data: themes, character stats, attack data
-└── project.godot
-```
-
-**Where do I go for…**
-
-| Problem | Look in |
-|---------|---------|
-| Movement, attacks, damage, HP | `scripts/characters/Fighters.cs` |
-| Attack hitbox sizes, damage, active frames | The `Attacks` table at the top of `Fighters.cs` |
-| A chicken's sprites or animation timing | `scenes/characters/<name>.tscn` → `AnimatedSprite2D` → SpriteFrames |
-| Collision and hurtbox shapes shared by all chickens | `scenes/characters/fighter.tscn` |
-| Arena layout, spawn positions, walls and floor | `scenes/gameplay/game.tscn` |
-| Keybindings, resolution, physics layers | `project.godot` (edit through Project Settings) |
-| Menus, HUD and screen flow | `scenes/ui/` and `scripts/ui/` |
-
-### Characters
-
-Every chicken is an **inherited scene** of `scenes/characters/fighter.tscn`. To add a new one:
-
-1. Right-click `fighter.tscn` and choose **New Inherited Scene**. Save it as `scenes/characters/<name>.tscn`.
-2. Assign a new `SpriteFrames` resource to `AnimatedSprite2D`. Use the animation names listed below.
-3. Adjust the `CollisionShape2D` and `AttackHitbox` offsets to fit the sprite.
-4. Set `PlayerId` on the instance in the match scene.
-
-### Screen flow
+## Game screens
 
 ```
 Loading ─► Main Menu ─► Character Select ─► Map Select ─► Match ─► Victory
 (press     │ Play        (4 chickens left,    (2 arenas)    │        ├─ Rematch
  start)    │ Settings     4 right, VS,                      │        └─ Back to Menu
            │ Quit         picks in the middle)              ├─ Round intro ("ROUND N" / "FIGHT!")
-           └─ Settings overlay (volume, fullscreen, Controls)  ├─ K.O. screen, then the next round
+           └─ Settings (volume, fullscreen, Controls)       ├─ K.O. screen, then the next round
                                                             ├─ Deathmatch screen before the last round
-                                                            └─ Pause (Esc/P): Resume, Settings, Quit
+                                                            └─ Pause: Resume, Settings, Quit
 ```
 
-**Match rules:** first to **2 round wins**. At 1-1 the last round is the **Deathmatch**. A double KO is a draw and the round is replayed. The values live in `scripts/autoload/GameManager.cs` (`RoundsToWin`). The dots under the health bars are the round wins of the current match. The number in the HUD center is the match score: matches won since the last menu, so it grows across rematches.
+## Run the game
 
-**Menu controls:** Menus use `W/S` or arrows plus `Enter`/`Space`. Character select uses each player's own keys: up/down to choose, attack to confirm, jump to cancel, then **`Enter`** (once both confirmed) goes to map select. On map select either player moves with left/right and **`Enter`** starts the match. `Esc` goes back.
+### What you need
 
-### UI code map
+- [Godot Engine, **.NET** edition](https://godotengine.org/download) 4.7.x (the standard build cannot open this project)
+- [.NET SDK](https://dotnet.microsoft.com/download) 8.0 or newer
 
-| File | Role |
-|------|------|
-| `scripts/autoload/GameManager.cs` | Selected chickens and arena, round wins, scene paths. Call `SelectCharacters`, `StartMatch`, `Rematch`, `ReturnToMenu`. |
-| `scripts/autoload/SceneFlow.cs` | `GoTo(path)` fades between screens. Always use it to change screens. |
-| `scripts/autoload/SettingsManager.cs` | Volumes and fullscreen (F11), saved to `user://settings.cfg`. Audio buses: Master, Music, SFX (`default_bus_layout.tres`). |
-| `scripts/core/CharacterData.cs` + `resources/characters/*.tres` | One resource per chicken: name, portrait, ability icons, fighter scene, `Playable`. |
-| `scripts/core/ArenaData.cs` + `resources/arenas/*.tres` | One resource per arena: name, map thumbnail, background, tint. Add a path to `MapSelect.cs` for a new one. |
-| `scripts/core/MatchController.cs` | Round state machine in `game.tscn`: spawns fighters, intro, KO, score, victory. |
-| `scripts/ui/LoadingScreen.cs` | Preloads scenes and data, then "PRESS START". Add new scenes to its `Preload` list. |
-| `scripts/ui/GameHud.cs` | Health bars, portraits, score, round markers, center text. `SetAbilityState(player, state)` is ready for the ability system. |
-| `scripts/ui/OverlayScreen.cs` | Base for popups (`SettingsScreen`, `ControlsScreen`). Open with `OverlayScreen.Open(...)`. |
-| `scripts/ui/*.cs` | Main menu, character select, map select, pause, victory overlay. |
-| `resources/ui_theme.tres` | Project-wide theme: NES Cyrillic font, buttons, panels, `TextButton` variation. |
+### Steps
 
-### What the fighter code must provide (backend contract)
+1. Clone this repository.
+2. Open Godot (.NET), choose **Import**, and select `project.godot`.
+3. Press **Build** (the hammer icon, top right) once so the C# code compiles.
+4. Press **F5** to run. The game starts fullscreen; press `F11` for windowed mode.
 
-`Fighters.cs` exposes these for the UI. Keep them when changing fighter code:
+To jump straight into a match while developing, open `scenes/gameplay/game.tscn` and press **F6**.
 
-- `HealthChanged(int current, int max)` signal: drives the health bars.
-- `Died` signal: ends the round. The fighter stays in the scene tree; `MatchController` frees it next round.
-- `InputLocked` (bool): frozen during round intro and after a KO.
-- `StartFacingRight` (bool) and `PlayerId` (int): set by `MatchController` before the fighter enters the tree.
+## Current status
 
-To make a new chicken selectable, create its scene, set `Playable = true` and `Scene` in its `resources/characters/<name>.tres`.
+**Working today**
+- Full screen flow with rounds, K.O. and Deathmatch screens, pause, rematch and match score
+- Two playable chickens with walk, jump, eight attacks, health, knockback and hitstun
+- One-way platforms, two arenas, and saved volume and fullscreen settings
 
-### Current placeholders
+**Placeholder or not built yet**
+- Final art: the UI and menus use a placeholder skin, and the second arena is the first with a tint
+- Audio: no music or sound effects yet
+- Moves: run, double jump, glide, wall moves, air dash, block, and the four abilities
+- Paraokan and Da Chik, controller support, and a tutorial screen
 
-- Logo, buttons, panels, portraits and map thumbnails are the designer's wireframe skin. Swap the PNGs in `assets/ui/` and keep the filenames.
-- Menu backgrounds are flat sky and field colors (`scenes/ui/components/menu_background.tscn`). Replace with the field art.
-- The main menu roosters are placeholder boxes. The doc's feathery box outline is not applied yet (it needs a transparent, 9-slice PNG from the UI designer).
-- Both arenas currently use the same background (the second is tinted). Set `Background` in `resources/arenas/*.tres` when new arenas exist.
-- Font: NES Cyrillic (`assets/ui/fonts/NESCyrillic.ttf`). Use sizes that are multiples of 8 so it stays sharp.
-- Paraokan and Da Chik show as "SOON" on character select until their scenes exist.
-- No music or sound effects yet. Use the `Music` and `SFX` buses.
-- The ability icon in the HUD always shows "ready" until abilities are implemented.
+Deadlines: feature freeze **October 23, 2026**, submission **October 25, 2026**. The full list is in [Status and Roadmap](docs/status-and-roadmap.md).
 
----
+## Project layout
 
-## Asset guidelines (for designers)
+```
+assets/       Art, fonts and audio from the design team
+resources/    Data files: UI theme, chickens, arenas
+scenes/       Screen and gameplay layouts (Godot scenes)
+scripts/      C# code: autoload systems, UI screens, match flow, fighters
+docs/         Extra documentation for the team
+project.godot  Godot project settings and input map
+```
 
-### Technical specs
+## Documentation
 
-| Spec | Value |
-|------|-------|
-| Base resolution | 640 × 360 (scaled up to fit the screen) |
-| Character frame / sprite-sheet cell | 64 × 64 px |
-| Visible character bounds | ~48 × 56 px |
-| Tile size | 16 × 16 px |
-| Format | PNG with a transparent background |
-| Texture filtering | Nearest (already the project default; pixels stay crisp) |
+This README covers the game. The team documents live in [`docs/`](docs/README.md):
 
-### Naming
+| Document | For |
+|----------|-----|
+| [Game Design](docs/game-design.md) | Full design notes: moves, stage, rules |
+| [Contributing](docs/contributing.md) | Setup, branches, commit style |
+| [Art Guidelines](docs/art-guidelines.md) | Sizes, naming and folders for artists |
+| [Project Structure](docs/project-structure.md) | Where files live and what to edit |
+| [Frontend Guide](docs/frontend-guide.md) | How the UI code works |
+| [Backend Integration](docs/backend-integration.md) | What the UI needs from the gameplay code |
+| [Status and Roadmap](docs/status-and-roadmap.md) | Progress and what is next |
 
-- Use lowercase letters, underscores and no spaces: `banaba_side_attack.png`, `hud_health_bar_fill.png`.
-- Characters: `<character>_<animation>.png`, saved in `assets/characters/<character>/`.
-- Draw characters **facing right only**. The game flips them for the left side, so you don't need `_left` or `_right` variants.
-- UI files start with their area: `hud_`, `menu_`, `select_`, `btn_`, `icon_`, `font_`.
+## Built with
 
-### Animation names the code expects
-
-Use these exact names in every chicken's SpriteFrames so the same code drives every character:
-
-| Group | Names |
-|-------|-------|
-| Movement | `idle`, `walk`, `run`, `jump`, `fall`, `double_jump`, `glide`, `wall_slide`, `wall_bounce`, `air_dash` |
-| Ground attacks | `neutral_attack`, `side_attack`, `up_attack`, `down_attack`, `running_attack` |
-| Air attacks | `neutral_air`, `side_air`, `up_air`, `down_air` |
-| Defense / state | `block`, `hurt`, `ko`, `victory` |
-| Ability | `ability` (add suffixes like `ability_start` / `ability_loop` if needed) |
-
-The code already uses `idle` and all eight attack animations. The other names are planned.
-
-### Adding files to the project
-
-1. Drop the file into the matching `assets/` folder **while Godot is open**, or let Godot rescan the folder.
-2. To move or rename a file that is already in the project, **use Godot's FileSystem dock**, not Explorer or Finder. Godot then updates every scene that references the file. If you move a file outside Godot, scenes can lose track of it.
-3. Commit the `.import` and `.uid` files that Godot generates next to your files. Other machines need them to find the assets.
-
----
-
-## Workflow
-
-- **Branches:** work on a feature branch (`feat/title-screen`, `art/banaba-run`) and merge into `main`.
-- **Commits:** use [Conventional Commits](https://www.conventionalcommits.org/), for example `feat: add side attack`, `fix: adjust hitbox`, `art: add joloano idle`, or `chore: reorganize folders`.
-- **Scene conflicts:** `.tscn` files merge badly. Avoid editing the same scene at the same time. Coordinate in the group chat before touching `game.tscn` or `fighter.tscn`.
+- [Godot Engine](https://godotengine.org/) 4.7 (.NET) and C#
+- Pixel art and UI by the Cockpit design team
+- NES Cyrillic font for in-game text
 
 ## Team
 
 | Role | Area |
 |------|------|
-| Character artist | Chickens, animations |
+| Character artist | Chickens and animations |
 | Environment artist | Arenas, platforms, crowd |
 | UI / VFX artist | HUD, menus, icons, effects |
-| Backend developer | Gameplay systems: movement, combat, abilities |
+| Backend developer | Gameplay: movement, combat, abilities |
 | Frontend developer | Asset integration, UI, screen flow |
