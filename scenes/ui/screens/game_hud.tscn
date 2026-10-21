@@ -3,6 +3,13 @@
 [ext_resource type="Script" path="res://scripts/ui/GameHud.cs" id="1"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_healthbar_frame.png" id="2"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_healthbar_fill.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_healthbar_back.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_counter_frame.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_meter_frame.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_meter_back.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_meter_fill_ready.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_banner_round.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_banner_ko.png" id="10"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -20,113 +27,175 @@ mouse_filter = 2
 [node name="P1Portrait" type="TextureRect" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 8.0
-offset_top = 6.0
-offset_right = 50.0
-offset_bottom = 42.0
-expand_mode = 1
-stretch_mode = 5
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 48.0
+offset_bottom = 44.0
+
+[node name="P1BarBack" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 16.0
+offset_right = 236.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("4")
 
 [node name="P1Bar" type="TextureProgressBar" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 54.0
-offset_top = 8.0
-offset_right = 278.0
+offset_left = 56.0
+offset_top = 16.0
+offset_right = 236.0
 offset_bottom = 32.0
 value = 100.0
 fill_mode = 1
-texture_under = ExtResource("2")
 texture_progress = ExtResource("3")
-texture_progress_offset = Vector2(4, 4)
 
-[node name="P1Name" type="Label" parent="Root"]
+[node name="P1BarFrame" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 12.0
+offset_right = 240.0
+offset_bottom = 36.0
+mouse_filter = 2
+texture = ExtResource("2")
+
+[node name="P1MeterBack" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 44.0
+offset_right = 188.0
+offset_bottom = 52.0
+mouse_filter = 2
+texture = ExtResource("7")
+
+[node name="P1Meter" type="TextureProgressBar" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 54.0
-offset_top = 33.0
-offset_right = 278.0
-offset_bottom = 49.0
-text = "P1"
+offset_left = 56.0
+offset_top = 44.0
+offset_right = 188.0
+offset_bottom = 52.0
+value = 100.0
+texture_progress = ExtResource("8")
+
+[node name="P1MeterFrame" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 40.0
+offset_right = 192.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("6")
 
 [node name="P1Markers" type="HBoxContainer" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 54.0
-offset_top = 52.0
-offset_right = 278.0
-offset_bottom = 68.0
-theme_override_constants/separation = 4
+offset_left = 200.0
+offset_top = 40.0
+offset_right = 240.0
+offset_bottom = 56.0
+mouse_filter = 2
+theme_override_constants/separation = 8
 
-[node name="P1Ability" type="TextureRect" parent="Root"]
+[node name="CounterFrame" type="TextureRect" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 17.0
-offset_top = 46.0
-offset_right = 41.0
-offset_bottom = 70.0
-
-[node name="P2Portrait" type="TextureRect" parent="Root"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 590.0
-offset_top = 6.0
-offset_right = 632.0
-offset_bottom = 42.0
-expand_mode = 1
-stretch_mode = 5
-
-[node name="P2Bar" type="TextureProgressBar" parent="Root"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 362.0
+offset_left = 256.0
 offset_top = 8.0
-offset_right = 586.0
-offset_bottom = 32.0
-value = 100.0
-texture_under = ExtResource("2")
-texture_progress = ExtResource("3")
-texture_progress_offset = Vector2(4, 4)
+offset_right = 384.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("5")
 
-[node name="P2Name" type="Label" parent="Root"]
+[node name="ScoreLabel" type="Label" parent="Root/CounterFrame"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 362.0
-offset_top = 33.0
-offset_right = 586.0
-offset_bottom = 49.0
-text = "P2"
-horizontal_alignment = 2
-
-[node name="P2Markers" type="HBoxContainer" parent="Root"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 362.0
-offset_top = 52.0
-offset_right = 586.0
-offset_bottom = 68.0
-theme_override_constants/separation = 4
-alignment = 2
-
-[node name="P2Ability" type="TextureRect" parent="Root"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 599.0
-offset_top = 46.0
-offset_right = 623.0
-offset_bottom = 70.0
-
-[node name="ScoreLabel" type="Label" parent="Root"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 278.0
-offset_top = 8.0
-offset_right = 362.0
-offset_bottom = 32.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 24
 text = "0-0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="P2BarBack" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 404.0
+offset_top = 16.0
+offset_right = 584.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("4")
+
+[node name="P2Bar" type="TextureProgressBar" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 404.0
+offset_top = 16.0
+offset_right = 584.0
+offset_bottom = 32.0
+value = 100.0
+texture_progress = ExtResource("3")
+
+[node name="P2BarFrame" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 12.0
+offset_right = 588.0
+offset_bottom = 36.0
+mouse_filter = 2
+texture = ExtResource("2")
+
+[node name="P2MeterBack" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 44.0
+offset_right = 584.0
+offset_bottom = 52.0
+mouse_filter = 2
+texture = ExtResource("7")
+
+[node name="P2Meter" type="TextureProgressBar" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 452.0
+offset_top = 44.0
+offset_right = 584.0
+offset_bottom = 52.0
+value = 100.0
+fill_mode = 1
+texture_progress = ExtResource("8")
+
+[node name="P2MeterFrame" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 40.0
+offset_right = 588.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("6")
+
+[node name="P2Markers" type="HBoxContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 400.0
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 56.0
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="P2Portrait" type="TextureRect" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 592.0
+offset_top = 12.0
+offset_right = 624.0
+offset_bottom = 44.0
 
 [node name="Dim" type="ColorRect" parent="Root"]
 unique_name_in_owner = true
@@ -138,19 +207,54 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0.6)
+color = Color(0, 0, 0, 0.5)
 
-[node name="BigText" type="Label" parent="Root"]
+[node name="RoundBanner" type="TextureRect" parent="Root"]
 unique_name_in_owner = true
 visible = false
+layout_mode = 0
+offset_left = 176.0
+offset_top = 148.0
+offset_right = 464.0
+offset_bottom = 212.0
+mouse_filter = 2
+texture = ExtResource("9")
+
+[node name="Label" type="Label" parent="Root/RoundBanner"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(0.25, 0.15, 0.08, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 32
 text = "ROUND 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KoBanner" type="TextureRect" parent="Root"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 224.0
+offset_top = 132.0
+offset_right = 416.0
+offset_bottom = 228.0
+mouse_filter = 2
+texture = ExtResource("10")
+
+[node name="Label" type="Label" parent="Root/KoBanner"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.15, 0.08, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 40
+text = "K.O."
 horizontal_alignment = 1
 vertical_alignment = 1

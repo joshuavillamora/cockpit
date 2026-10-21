@@ -24,46 +24,42 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.6)
-
-[node name="Title" type="Label" parent="Root"]
-layout_mode = 0
-offset_top = 20.0
-offset_right = 640.0
-offset_bottom = 68.0
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 40
-text = "PAUSE"
-horizontal_alignment = 1
-vertical_alignment = 1
+color = Color(0, 0, 0, 0.5)
 
 [node name="Panel" type="PanelContainer" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 216.0
-offset_top = 96.0
-offset_right = 424.0
-offset_bottom = 288.0
+offset_left = 208.0
+offset_top = 80.0
+offset_right = 432.0
+offset_bottom = 280.0
 
 [node name="Menu" type="VBoxContainer" parent="Root/Panel"]
 layout_mode = 2
-theme_override_constants/separation = 14
-alignment = 1
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Root/Panel/Menu"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "PAUSE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ResumeButton" type="Button" parent="Root/Panel/Menu"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(176, 32)
+custom_minimum_size = Vector2(192, 32)
 layout_mode = 2
 text = "RESUME"
 
 [node name="SettingsButton" type="Button" parent="Root/Panel/Menu"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(176, 32)
+custom_minimum_size = Vector2(192, 32)
 layout_mode = 2
 text = "SETTINGS"
 
 [node name="QuitButton" type="Button" parent="Root/Panel/Menu"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(176, 32)
+custom_minimum_size = Vector2(192, 32)
 layout_mode = 2
 text = "QUIT TO MENU"
