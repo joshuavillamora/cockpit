@@ -17,81 +17,79 @@ layout_mode = 1
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
-offset_top = 14.0
-offset_right = 640.0
-offset_bottom = 46.0
+offset_left = 144.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 48.0
 theme_override_font_sizes/font_size = 24
 text = "CHARACTER SELECT"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="P1Heading" type="Label" parent="."]
 layout_mode = 0
-offset_left = 141.0
-offset_top = 62.0
-offset_right = 269.0
-offset_bottom = 86.0
+offset_left = 144.0
+offset_top = 116.0
+offset_right = 272.0
+offset_bottom = 140.0
 text = "PLAYER 1"
 horizontal_alignment = 1
 
 [node name="P2Heading" type="Label" parent="."]
 layout_mode = 0
-offset_left = 371.0
-offset_top = 62.0
-offset_right = 499.0
-offset_bottom = 86.0
+offset_left = 368.0
+offset_top = 116.0
+offset_right = 496.0
+offset_bottom = 140.0
 text = "PLAYER 2"
+horizontal_alignment = 1
+
+[node name="P1Ready" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 144.0
+offset_top = 216.0
+offset_right = 272.0
+offset_bottom = 240.0
+text = "CHOOSE"
+horizontal_alignment = 1
+
+[node name="P2Ready" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 368.0
+offset_top = 216.0
+offset_right = 496.0
+offset_bottom = 240.0
+text = "CHOOSE"
 horizontal_alignment = 1
 
 [node name="P1Name" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 141.0
-offset_top = 206.0
-offset_right = 269.0
-offset_bottom = 230.0
+offset_left = 144.0
+offset_top = 244.0
+offset_right = 272.0
+offset_bottom = 268.0
 text = "BANABA"
 horizontal_alignment = 1
 
 [node name="P2Name" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 371.0
-offset_top = 206.0
-offset_right = 499.0
-offset_bottom = 230.0
+offset_left = 368.0
+offset_top = 244.0
+offset_right = 496.0
+offset_bottom = 268.0
 text = "JOLOANO"
 horizontal_alignment = 1
-
-[node name="P1Confirm" type="Button" parent="."]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 32)
-layout_mode = 0
-offset_left = 141.0
-offset_top = 236.0
-offset_right = 269.0
-offset_bottom = 268.0
-mouse_filter = 2
-focus_mode = 0
-text = "CONFIRM"
-
-[node name="P2Confirm" type="Button" parent="."]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 32)
-layout_mode = 0
-offset_left = 371.0
-offset_top = 236.0
-offset_right = 499.0
-offset_bottom = 268.0
-mouse_filter = 2
-focus_mode = 0
-text = "CONFIRM"
 
 [node name="Versus" type="Label" parent="."]
 layout_mode = 0
 offset_left = 270.0
-offset_top = 124.0
+offset_top = 160.0
 offset_right = 370.0
-offset_bottom = 164.0
+offset_bottom = 200.0
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
 theme_override_font_sizes/font_size = 32
 text = "VS"
@@ -112,9 +110,9 @@ text = "ENTER: PLAY"
 
 [node name="Hint" type="Label" parent="."]
 layout_mode = 0
-offset_left = 40.0
+offset_left = 120.0
 offset_top = 322.0
-offset_right = 600.0
+offset_right = 520.0
 offset_bottom = 358.0
 theme_override_constants/line_spacing = 2
 text = "P1: W/S MOVE  J OK  K BACK

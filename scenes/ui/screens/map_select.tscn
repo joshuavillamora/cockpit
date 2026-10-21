@@ -17,21 +17,14 @@ layout_mode = 1
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
-offset_top = 24.0
-offset_right = 640.0
-offset_bottom = 56.0
+offset_left = 144.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 48.0
 theme_override_font_sizes/font_size = 24
 text = "MAP SELECTION"
 horizontal_alignment = 1
-
-[node name="MapName" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_top = 262.0
-offset_right = 640.0
-offset_bottom = 286.0
-text = "BACKYARD"
-horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Hint" type="Label" parent="."]
 layout_mode = 0

@@ -59,6 +59,8 @@ public partial class LoadingScreen : Control {
 			if (progress >= 1f && bar.Value >= 100.0 && elapsed >= MinShowTime) {
 				ready = true;
 				bar.Visible = false;
+				GetNode<Control>("%LoadingBarBack").Visible = false;
+				GetNode<Control>("%LoadingBarFrame").Visible = false;
 				status.Visible = false;
 				pressStart.Visible = true;
 			}
