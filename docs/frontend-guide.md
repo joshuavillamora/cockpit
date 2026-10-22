@@ -44,7 +44,7 @@ Always alive: GameManager (state)   SceneFlow (fade + change scene)   SettingsMa
 
 Each screen reads state from `GameManager`, shows it, and calls `GameManager` or `SceneFlow` when the player moves on. Screens never load each other directly.
 
-## 3. The three autoloads
+## 3. The autoloads
 
 ### `scripts/autoload/GameManager.cs` (shared memory)
 
@@ -99,6 +99,20 @@ public async void GoTo(string path) {
 
 ### `scripts/autoload/UiFx.cs` (cursor and button flash)
 Effects that apply on every screen. `ui_cursor.png` becomes the mouse pointer (scaled up with the window) and is also drawn beside whichever button or slider has keyboard focus. Every button flashes `ui_button_normal_dark.png` for about 0.1 s when pressed, then returns to the light look.
+
+### `scripts/autoload/AudioManager.cs` (sound and music)
+Plays sounds by name: `AudioManager.Instance?.PlaySfx(Sfx.Hit, 0.1f)` finds `assets/audio/sfx/hit.ogg` (or `.wav` / `.mp3`). The second argument varies the pitch randomly by that fraction so repeats don't sound identical. The names live in the `Sfx` class at the top of the file. **A missing file is skipped silently**, so code can name a sound before its file exists, and swapping a sound only means replacing its file. `CREDITS.md` lists which clip each file came from.
+
+- **Buttons and sliders** get sounds automatically: a click when focus moves, a confirm sound when pressed. `QuitButton` and `MenuButton` play the back sound instead. Overlay `BackButton`s stay quiet because `OverlayScreen` plays the popup close sound.
+- **Music** (`PlayMusic(Music.Main)`) does nothing if that track is already playing, so it carries across screens without restarting. `SetMusicLevel(-6)` fades it under the fight (the HUD does this each round); the menu and lobby set it back to 0.
+- **Balance:** the files are all peak-normalized; the `Volumes` table turns the UI clicks down and leaves the big moments loud.
+- **Buses:** effects use the `SFX` bus and music the `Music` bus, so the settings sliders control them.
+- **Debugging:** run with `-- --audio-log` to print every sound and music change.
+
+Where sounds are triggered:
+- **Loading screen:** the rooster call when PRESS START appears; music starts 1.2 s later.
+- **Character and map select, lobby:** cursor moves, ready / unready, tips, door, match start.
+- **`GameHud`:** the banners, plus hit and block. It plays these from `HealthChanged`, so `Fighters.cs` has no audio code: a loss of 1-3 HP is a blocked hit (20 % chip damage), anything more is a hit.
 
 ### `scripts/autoload/SettingsManager.cs` (saved options)
 
