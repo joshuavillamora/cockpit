@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bx0rabgl85mr8"]
 
 [ext_resource type="PackedScene" uid="uid://b55yl8grvgela" path="res://scenes/characters/fighter.tscn" id="1_idp20"]
-[ext_resource type="Texture2D" uid="uid://dcox8nbo5n43d" path="res://assets/characters/banaba/banaba.png" id="2_kyjrd"]
 [ext_resource type="Texture2D" uid="uid://cdtm5h2wy5jej" path="res://assets/characters/banaba/banaba_attack.png" id="2_m7p1d"]
+[ext_resource type="Texture2D" uid="uid://0wk5t0jdlhqg" path="res://assets/characters/banaba/banaba_idle.png" id="3_8kerm"]
 [ext_resource type="Texture2D" uid="uid://ui556xfyqmxf" path="res://assets/characters/banaba/banaba_run.png" id="4_8kerm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jko6h"]
@@ -17,9 +17,21 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("2_m7p1d")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kyjrd"]
-atlas = ExtResource("2_kyjrd")
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkf0j"]
+atlas = ExtResource("3_8kerm")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2l2mh"]
+atlas = ExtResource("3_8kerm")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etcxn"]
+atlas = ExtResource("3_8kerm")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mj3p"]
+atlas = ExtResource("3_8kerm")
+region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hdv25"]
 atlas = ExtResource("4_8kerm")
@@ -68,12 +80,21 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kyjrd")
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_bkf0j")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_2l2mh")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_etcxn")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_7mj3p")
 }],
 "loop": 1,
 "name": &"idle",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 3.0,
@@ -185,15 +206,20 @@ height = 26.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
-animation = &"walk"
-frame_progress = 0.26962352
+animation = &"idle"
+frame_progress = 0.68550265
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
+visible = false
 position = Vector2(0, 19)
 shape = SubResource("CapsuleShape2D_hnnho")
 
 [node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
+visible = false
 position = Vector2(0, 16)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=38610296]
 position = Vector2(0, 0)
+
+[node name="Hurtbox" parent="." index="3" unique_id=1989035223]
+visible = false
