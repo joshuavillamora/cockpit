@@ -68,6 +68,7 @@ public partial class Fighters : CharacterBody2D {
 	};
 
 	private AnimatedSprite2D animatedSprite;
+	private AnimatedSprite2D knockoutSprite;
 	private Area2D attackHitbox;
 	private Sprite2D hitboxVisual;
 	private CollisionShape2D hitboxShape;
@@ -100,6 +101,7 @@ public partial class Fighters : CharacterBody2D {
 		blockKey = $"p{PlayerId}_block";
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		knockoutSprite = GetNode<AnimatedSprite2D>("Knockout");
 		attackHitbox = GetNode<Area2D>("AttackHitbox");
 		hitboxShape = attackHitbox.GetNode<CollisionShape2D>("CollisionShape2D");
 		hitboxVisual = attackHitbox.GetNode<Sprite2D>("HitboxVisual");
@@ -116,6 +118,8 @@ public partial class Fighters : CharacterBody2D {
 		attackHitbox.AreaEntered += OnHitboxAreaEntered;
 		animatedSprite.FrameChanged += OnFrameChanged;
 		animatedSprite.AnimationFinished += OnAnimationFinished;
+
+		knockoutSprite.Visible = false;
 
 		SetFacing(StartFacingRight);
 		animatedSprite.Play("idle");
@@ -391,12 +395,17 @@ public partial class Fighters : CharacterBody2D {
 		GD.Print($"{Name} was knocked out");
 
 		// Stay in the tree (MatchController frees fighters between rounds) but stop fighting
-		SetPhysicsProcess(false);
 		attackHitbox.SetDeferred(Area2D.PropertyName.Monitoring, false);
 		GetNode<Area2D>("Hurtbox").SetDeferred(Area2D.PropertyName.Monitorable, false);
-		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 		hitboxVisual.Visible = false;
-		CreateTween().TweenProperty(animatedSprite, "modulate:a", 0.0f, 0.4f);
+
+		knockoutSprite.FlipH = Velocity.X > 0;
+
+		animatedSprite.Visible = false;
+		knockoutSprite.Visible = true;
+		knockoutSprite.Play("knockout");
+
+		Velocity = new Vector2(1.0f, 0f);
 
 		EmitSignal(SignalName.Died);
 	}
