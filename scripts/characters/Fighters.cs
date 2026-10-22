@@ -45,8 +45,8 @@ public partial class Fighters : CharacterBody2D {
 		public int Damage;
 		public float Mobility;   // 0 = commits you, 1 = keeps nearly full movement
 		public float MomentumKeep;
-    	public Vector2 Knockback;
-    	public float Hitstun; 
+		public Vector2 Knockback;
+		public float Hitstun; 
 
 		public AttackData(string animation, Vector2 size, Vector2 offset, int startFrame, int endFrame, int damage, float mobility, float momentumKeep, Vector2 knockback, float hitstun) {
 			Animation = animation; Size = size; Offset = offset;

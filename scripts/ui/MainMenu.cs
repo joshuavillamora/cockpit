@@ -15,6 +15,12 @@ public partial class MainMenu : Control {
 		playButton.GrabFocus();
 	}
 
+	public override void _Input(InputEvent @event) {
+		if (@event.IsActionPressed("start_fight")) {
+			GetTree().ChangeSceneToFile("res://scenes/gameplay/test_fight.tscn");
+		}
+	}
+
 	private void OpenOverlay(string scenePath) {
 		menu.Visible = false;
 		OverlayScreen.Open(this, scenePath, () => {
