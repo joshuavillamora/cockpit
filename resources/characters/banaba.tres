@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken1_cooling.png" id="4"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken1_unavailable.png" id="5"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_chicken1.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/characters/banaba/banaba.png" id="8"]
 [ext_resource type="PackedScene" path="res://scenes/characters/banaba.tscn" id="6"]
 
 [resource]
@@ -13,6 +14,7 @@ script = ExtResource("1")
 Id = "banaba"
 DisplayName = "BANABA"
 Portrait = ExtResource("2")
+SelectSprite = ExtResource("8")
 HudPortrait = ExtResource("7")
 AbilityReady = ExtResource("3")
 AbilityCooling = ExtResource("4")

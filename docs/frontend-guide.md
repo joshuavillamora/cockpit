@@ -150,9 +150,9 @@ if (characters[index].Playable) { cursor[player] = index; return; }
 ```
 Adding `count` before `%` stops the index going negative when moving up past 0. The loop keeps stepping until it finds an unlocked chicken, so locked ones are skipped.
 
-`_Process` builds action names per player: `$"p{p+1}_up"` becomes `p1_up` or `p2_up`. Attack confirms, jump cancels. `Refresh()` redraws everything from the state (highlight frames, big preview, "CONFIRM" / "READY!"). Keeping state separate from drawing keeps the code simple.
+`_Process` builds action names per player: `$"p{p+1}_up"` becomes `p1_up` or `p2_up`. Attack confirms, jump cancels. `Refresh()` redraws everything from the state (highlight frames, the big chicken and its name box, "CHOOSING..." / "READY", and the faded MOVE / OK keys of a confirmed player). Keeping state separate from drawing keeps the code simple.
 
-Enter is `menu_start`, separate from `ui_accept`. Space is `ui_accept` and also P1's jump, so using it would cancel a confirm at the same moment. `BuildColumn` and `BuildPreview` create the TextureRects in code, so the screen grows with the character list.
+Enter is `menu_start`, separate from `ui_accept`. Space is `ui_accept` and also P1's jump, so using it would cancel a confirm at the same moment. `BuildColumn`, `BuildStage` and `BuildKeyBar` create the nodes in code, so the screen grows with the character list. The layout follows the approved redesign mockup ("box vs box"): each pick stands on a name box, with a controls bar (keycaps above MOVE / OK / BACK) under it. The slots and the big chicken use `CharacterData.SelectSprite` (a 64x64 full-body still) and fall back to `Portrait` when it is empty.
 
 ### `MapSelect.cs`
 Same pattern with one shared cursor. Either player moves it, Enter continues to the lobby, and `SelectArena(arenas[cursor])` hands the chosen `ArenaData` to `GameManager`.

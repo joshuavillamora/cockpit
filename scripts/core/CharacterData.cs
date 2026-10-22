@@ -6,6 +6,7 @@ public partial class CharacterData : Resource {
 	[Export] public string Id = "";
 	[Export] public string DisplayName = "";
 	[Export] public Texture2D Portrait;          // 64x64, character select and victory
+	[Export] public Texture2D SelectSprite;      // 64x64 full-body still, character select (falls back to Portrait)
 	[Export] public Texture2D HudPortrait;       // 32x32, next to the health bar
 	[Export] public Texture2D AbilityReady;
 	[Export] public Texture2D AbilityCooling;
