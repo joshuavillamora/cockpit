@@ -135,7 +135,7 @@ public partial class Fighters : CharacterBody2D {
 			if (hitstunTimer <= 0f) animatedSprite.Play("idle");
 		}
 		bool stunned = hitstunTimer > 0f;
-		
+
 		// Attack
 		if (Input.IsActionJustPressed(attackKey) && !isAttacking) {
 			attackBufferTimer = AttackBufferTime;
@@ -150,6 +150,10 @@ public partial class Fighters : CharacterBody2D {
 
 		// Jump
 		if (!stunned) Jump();
+
+		if (Input.IsActionJustReleased(downKey)) {
+			Position += new Vector2(0, 2);
+		}
 
 		// Horizontal movement
 		if (stunned) {

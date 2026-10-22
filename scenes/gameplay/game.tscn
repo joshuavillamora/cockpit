@@ -16,14 +16,12 @@
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vxo0c"]
 texture = ExtResource("6_mwwos")
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.7770329, -8, -3.956891)
-0:0/0/physics_layer_0/polygon_0/one_way = true
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.7770329, -8, -3.956891)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
 1:0/0/physics_layer_0/polygon_0/one_way = true
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3.7770329, -8, -3.956891)
-2:0/0/physics_layer_0/polygon_0/one_way = true
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
 
 [sub_resource type="TileSet" id="TileSet_37n2d"]
 physics_layer_0/collision_layer = 1
@@ -68,7 +66,7 @@ position = Vector2(427, 220)
 [node name="MatchController" type="Node" parent="." unique_id=872889439]
 script = ExtResource("3_match")
 
-[node name="Platforms" type="TileMapLayer" parent="." unique_id=941803799 groups=["oneway"]]
+[node name="Platforms" type="TileMapLayer" parent="." unique_id=941803799]
 position = Vector2(1, 0)
 tile_map_data = PackedByteArray("AAASAAgAAAABAAAAAAATAAgAAAABAAAAAAAUAAgAAAABAAAAAAAVAAgAAAABAAAAAAAWAAgAAAABAAAAAAAXAAgAAAABAAAAAAARAAgAAAABAAAAAAAQAAgAAAABAAAAAAAPAAgAAAAAAAAAAAAYAAgAAAACAAAAAAAFAAwAAAABAAAAAAAGAAwAAAABAAAAAAAHAAwAAAABAAAAAAAIAAwAAAABAAAAAAAJAAwAAAABAAAAAAAKAAwAAAABAAAAAAALAAwAAAABAAAAAAAcAAwAAAABAAAAAAAdAAwAAAABAAAAAAAeAAwAAAABAAAAAAAfAAwAAAABAAAAAAAgAAwAAAABAAAAAAAhAAwAAAABAAAAAAAiAAwAAAABAAAAAAAjAAwAAAACAAAAAAAMAAwAAAACAAAAAAAEAAwAAAAAAAAAAAAbAAwAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_37n2d")
