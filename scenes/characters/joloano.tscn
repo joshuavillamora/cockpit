@@ -2,15 +2,27 @@
 
 [ext_resource type="PackedScene" uid="uid://b55yl8grvgela" path="res://scenes/characters/fighter.tscn" id="1_20cxu"]
 [ext_resource type="Texture2D" uid="uid://d2xiq84o03wij" path="res://assets/characters/joloano/joloano_attack.png" id="2_0e5kw"]
-[ext_resource type="Texture2D" uid="uid://bra6j772iwcrc" path="res://assets/characters/joloano/joloano.png" id="3_xxxxp"]
+[ext_resource type="Texture2D" uid="uid://d4gixwld3frmf" path="res://assets/characters/joloano/joloano_idle.png" id="3_44b8t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d2hy4"]
 atlas = ExtResource("2_0e5kw")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e6x2r"]
-atlas = ExtResource("3_xxxxp")
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdt14"]
+atlas = ExtResource("3_44b8t")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hs73c"]
+atlas = ExtResource("3_44b8t")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jny6k"]
+atlas = ExtResource("3_44b8t")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs3ic"]
+atlas = ExtResource("3_44b8t")
+region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_20cxu"]
 animations = [{
@@ -43,12 +55,21 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e6x2r")
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_pdt14")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_hs73c")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_jny6k")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_cs3ic")
 }],
 "loop": 1,
 "name": &"idle",
-"speed": 5.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 3.0,
@@ -144,7 +165,8 @@ PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
-animation = &"neutral_air"
+animation = &"idle"
+frame_progress = 0.17708802
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 position = Vector2(0, 16)
