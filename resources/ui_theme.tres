@@ -4,11 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://dohbmlf813eyw" path="res://assets/ui/menus/ui_button_focus.png" id="2_focus"]
 [ext_resource type="Texture2D" uid="uid://chbyx54i2xfmi" path="res://assets/ui/menus/ui_button_pressed.png" id="3_pressed"]
 [ext_resource type="Texture2D" uid="uid://drvi5pepoeng0" path="res://assets/ui/menus/ui_button_disabled.png" id="4_disabled"]
-[ext_resource type="Texture2D" uid="uid://bxpeeka3qesgu" path="res://assets/ui/menus/ui_panel.png" id="5_panel"]
 [ext_resource type="FontFile" uid="uid://ckqkru7xroyu5" path="res://assets/ui/fonts/NESCyrillic.ttf" id="6_font"]
-[ext_resource type="Texture2D" path="res://assets/ui/menus/ui_popup_panel.png" id="7_popup"]
-[ext_resource type="Texture2D" path="res://assets/ui/menus/ui_info_panel.png" id="8_info"]
-[ext_resource type="Texture2D" path="res://assets/ui/menus/ui_tutorial_box.png" id="9_tutorial"]
+[ext_resource type="Texture2D" uid="uid://xg00eeam8xdx" path="res://assets/ui/menus/ui_popup_panel.png" id="7_popup"]
+[ext_resource type="Texture2D" uid="uid://o85rgjhdyh1n" path="res://assets/ui/menus/ui_info_panel.png" id="8_info"]
+[ext_resource type="Texture2D" uid="uid://jsuc0inw117j" path="res://assets/ui/menus/ui_tutorial_box.png" id="9_tutorial"]
 
 [sub_resource type="StyleBoxTexture" id="btn_disabled"]
 content_margin_left = 10.0
@@ -46,16 +45,7 @@ texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 
-[sub_resource type="StyleBoxTexture" id="panel"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-texture = ExtResource("7_popup")
-texture_margin_left = 14.0
-texture_margin_top = 14.0
-texture_margin_right = 14.0
-texture_margin_bottom = 14.0
+[sub_resource type="StyleBoxEmpty" id="empty"]
 
 [sub_resource type="StyleBoxTexture" id="info_panel"]
 content_margin_left = 14.0
@@ -63,6 +53,17 @@ content_margin_top = 12.0
 content_margin_right = 14.0
 content_margin_bottom = 12.0
 texture = ExtResource("8_info")
+texture_margin_left = 14.0
+texture_margin_top = 14.0
+texture_margin_right = 14.0
+texture_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxTexture" id="panel"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+texture = ExtResource("7_popup")
 texture_margin_left = 14.0
 texture_margin_top = 14.0
 texture_margin_right = 14.0
@@ -79,8 +80,6 @@ texture_margin_top = 14.0
 texture_margin_right = 14.0
 texture_margin_bottom = 14.0
 
-[sub_resource type="StyleBoxEmpty" id="empty"]
-
 [resource]
 default_font = ExtResource("6_font")
 default_font_size = 16
@@ -96,9 +95,6 @@ Button/styles/hover = SubResource("btn_focus")
 Button/styles/hover_pressed = SubResource("btn_pressed")
 Button/styles/normal = SubResource("btn_normal")
 Button/styles/pressed = SubResource("btn_pressed")
-Label/colors/font_color = Color(1, 1, 1, 1)
-Label/colors/font_outline_color = Color(0, 0, 0, 1)
-Label/constants/outline_size = 2
 CheckButton/styles/focus = SubResource("empty")
 CheckButton/styles/hover = SubResource("empty")
 CheckButton/styles/hover_pressed = SubResource("empty")
@@ -106,10 +102,11 @@ CheckButton/styles/normal = SubResource("empty")
 CheckButton/styles/pressed = SubResource("empty")
 InfoPanel/base_type = &"PanelContainer"
 InfoPanel/styles/panel = SubResource("info_panel")
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 2
 Panel/styles/panel = SubResource("panel")
 PanelContainer/styles/panel = SubResource("panel")
-TutorialBox/base_type = &"PanelContainer"
-TutorialBox/styles/panel = SubResource("tutorial_box")
 TextButton/base_type = &"Button"
 TextButton/colors/font_color = Color(1, 1, 1, 1)
 TextButton/colors/font_focus_color = Color(1, 0.85, 0.3, 1)
@@ -124,3 +121,5 @@ TextButton/styles/hover = SubResource("empty")
 TextButton/styles/hover_pressed = SubResource("empty")
 TextButton/styles/normal = SubResource("empty")
 TextButton/styles/pressed = SubResource("empty")
+TutorialBox/base_type = &"PanelContainer"
+TutorialBox/styles/panel = SubResource("tutorial_box")

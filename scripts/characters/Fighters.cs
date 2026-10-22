@@ -145,7 +145,11 @@ public partial class Fighters : CharacterBody2D {
 		// right after the gravity block
 		if (hitstunTimer > 0f) {
 			hitstunTimer -= (float)delta;
-			if (hitstunTimer <= 0f) animatedSprite.Play("idle");
+			animatedSprite.Modulate = new Color(1f, 0.4f, 0.4f);
+			if (hitstunTimer <= 0f) {
+				animatedSprite.Modulate = Colors.White;
+				animatedSprite.Play("idle");
+			}
 		}
 		bool stunned = hitstunTimer > 0f;
 
@@ -354,7 +358,7 @@ public partial class Fighters : CharacterBody2D {
 		Velocity = knockback;
 		hitstunTimer = hitstun;
 
-		animatedSprite.Play("idle");
+		animatedSprite.Play("hurt");
 		ApplyDamage(damage, true);
 	}
 
