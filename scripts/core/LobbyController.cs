@@ -66,7 +66,12 @@ public partial class LobbyController : Node2D {
 		ApplyArena(gm.SelectedArena);
 		SpawnFighters(gm);
 
-		GetNode<TrainingDummy>("Dummy").Hit += (hits, damage) => hitLabel.Text = $"HITS {hits}\nDMG {damage}";
+		GetNode<TrainingDummy>("Dummy").Hit += (hits, damage) => {
+			hitLabel.Text = $"HITS {hits}\nDMG {damage}";
+			AudioManager.Instance?.PlaySfx(Sfx.Hit, 0.1f);
+		};
+		AudioManager.Instance?.PlayMusic(Music.Main);
+		AudioManager.Instance?.SetMusicLevel(0f);
 
 		var door = GetNode<Area2D>("%Door");
 		door.BodyEntered += body => SetInDoor(body, true);
@@ -84,14 +89,17 @@ public partial class LobbyController : Node2D {
 	public override void _UnhandledInput(InputEvent @event) {
 		if (!starting && @event.IsActionPressed("ui_cancel")) {
 			GetViewport().SetInputAsHandled();
+			AudioManager.Instance?.PlaySfx(Sfx.MenuBack);
 			SceneFlow.Instance.GoTo(GameManager.MapSelectScene);
 		} else if (@event.IsActionPressed("menu_start")) {
 			GetViewport().SetInputAsHandled();
 			tipsBox.Visible = true;
 			ShowTip(tipIndex + 1);
+			AudioManager.Instance?.PlaySfx(Sfx.Tip);
 		} else if (@event.IsActionPressed("lobby_skip_tips")) {
 			GetViewport().SetInputAsHandled();
 			tipsBox.Visible = !tipsBox.Visible;
+			AudioManager.Instance?.PlaySfx(Sfx.TipsToggle);
 		}
 	}
 
@@ -117,6 +125,7 @@ public partial class LobbyController : Node2D {
 	private void SetInDoor(Node2D body, bool inside) {
 		if (starting || body is not Fighters fighter) return;
 
+		if (inside && !inDoor[fighter.PlayerId - 1]) AudioManager.Instance?.PlaySfx(Sfx.Door);
 		inDoor[fighter.PlayerId - 1] = inside;
 		fighter.Modulate = new Color(1, 1, 1, inside ? 0.5f : 1f);
 		Refresh();
@@ -127,6 +136,7 @@ public partial class LobbyController : Node2D {
 	private async void BeginMatch() {
 		starting = true;
 		foreach (Fighters fighter in fighters) fighter.InputLocked = true;
+		AudioManager.Instance?.PlaySfx(Sfx.MatchStart);
 		Refresh();
 
 		await ToSignal(GetTree().CreateTimer(StartDelay), SceneTreeTimer.SignalName.Timeout);

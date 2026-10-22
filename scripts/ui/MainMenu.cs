@@ -13,6 +13,10 @@ public partial class MainMenu : Control {
 		GetNode<Button>("%QuitButton").Pressed += () => GetTree().Quit();
 
 		playButton.GrabFocus();
+
+		// Already playing if we came from the loading screen; full volume again after a match
+		AudioManager.Instance?.PlayMusic(Music.Main);
+		AudioManager.Instance?.SetMusicLevel(0f);
 	}
 
 	public override void _Input(InputEvent @event) {

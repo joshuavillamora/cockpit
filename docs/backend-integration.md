@@ -34,6 +34,18 @@ Each player has an ability meter under their health bar. `GameHud.SetMeter(int p
 
 The HUD now uses y 0-76 of the screen (chicken names sit above the bars). Keep the stage ceiling, platforms and anything important below y 76.
 
+## Sounds for moves (optional)
+
+Hit, block and KO sounds already play from the HUD, so nothing is required. To add sounds for moves, call the audio autoload from `Fighters.cs`, one line each, for example:
+
+```csharp
+AudioManager.Instance?.PlaySfx("jump", 0.05f);     // in Jump(), where the jump velocity is set
+AudioManager.Instance?.PlaySfx("swing", 0.1f);     // in StartAttack()
+AudioManager.Instance?.PlaySfx("glide");           // when gliding starts
+```
+
+Then drop `jump.ogg`, `swing.ogg` and `glide.ogg` into `assets/audio/sfx/`. Until a file exists the call does nothing, so the line can go in first. List any new sound's source in `CREDITS.md`.
+
 ## Adding a chicken
 
 1. Create the fighter scene: right-click `scenes/characters/fighter.tscn` → **New Inherited Scene**, save as `scenes/characters/<name>.tscn`.

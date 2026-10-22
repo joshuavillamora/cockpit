@@ -53,12 +53,14 @@ public partial class MapSelect : Control {
 	public override void _UnhandledInput(InputEvent @event) {
 		if (@event.IsActionPressed("ui_cancel")) {
 			GetViewport().SetInputAsHandled();
+			AudioManager.Instance?.PlaySfx(Sfx.MenuBack);
 			SceneFlow.Instance.GoTo(GameManager.CharacterSelectScene);
 		}
 	}
 
 	public override void _Process(double delta) {
 		if (Input.IsActionJustPressed("menu_start")) {
+			AudioManager.Instance?.PlaySfx(Sfx.MenuConfirm);
 			SetProcess(false);
 			GameManager.Instance.SelectArena(arenas[cursor]);
 			return;
@@ -70,11 +72,13 @@ public partial class MapSelect : Control {
 			if (Input.IsActionJustPressed(prefix + "move_right")) Move(1);
 
 			if (Input.IsActionJustPressed(prefix + "attack")) {
+				AudioManager.Instance?.PlaySfx(Sfx.MenuConfirm);
 				SetProcess(false);
 				GameManager.Instance.SelectArena(arenas[cursor]);
 				return;
 			}
 			if (Input.IsActionJustPressed(prefix + "jump")) {
+				AudioManager.Instance?.PlaySfx(Sfx.MenuBack);
 				SetProcess(false);
 				SceneFlow.Instance.GoTo(GameManager.CharacterSelectScene);
 				return;
@@ -84,6 +88,7 @@ public partial class MapSelect : Control {
 
 	private void Move(int direction) {
 		cursor = (cursor + direction + arenas.Count) % arenas.Count;
+		AudioManager.Instance?.PlaySfx(Sfx.SelectMove, 0.05f);
 		Refresh();
 	}
 

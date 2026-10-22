@@ -30,7 +30,7 @@ Competition submission: **October 25, 2026**. Feature freeze: **October 23**.
 - **Movement:** run, wall slide, wall bounce, air dash.
 - **Combat:** running attack.
 - **Abilities:** all four.
-- **Audio:** music, attack and hit sounds, menu sounds, Banaba's distance-based wakwak.
+- **Audio:** jump, attack swing and glide sounds (see [Backend Integration](backend-integration.md#sounds-for-moves-optional)), crowd ambience, Banaba's distance-based wakwak.
 - **Effects:** hit flashes, feather bursts, landing dust, screen shake.
 - **Feathery box outline** from the UI design (needs a transparent 9-slice PNG).
 - **Controller support.**
@@ -39,7 +39,8 @@ Competition submission: **October 25, 2026**. Feature freeze: **October 23**.
 
 - [ ] Replace placeholder art with final art as it arrives.
 - [ ] Add block and ability tips to the lobby once those features exist.
-- [ ] Add audio (original or properly licensed) and list its source.
+- [x] Add audio (original or properly licensed) and list its source (`CREDITS.md`).
+- [ ] Confirm the licence for "I Want It All" covers use in the game.
 - [ ] Confirm the license of the NES Cyrillic font.
 - [ ] Fill in the asset and AI usage disclosure and the waiver.
 - [ ] Two-player playtest of every matchup, then a bug-fix pass.
