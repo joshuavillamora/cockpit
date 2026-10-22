@@ -56,14 +56,16 @@ Press `Esc` or `P` at any time during a match to pause.
 | Aim attack up / down | `W` / `S` | `↑` / `↓` |
 | Jump | `K` or `Space` | `N` |
 | Attack | `J` or `E` | `M` or `/` |
+| Block (on the ground) | `H` | `,` |
 | Pause | `Esc` or `P` | `Esc` or `P` |
-| Block / air dash | coming soon | coming soon |
+| Air dash | coming soon | coming soon |
 | Ability | coming soon | coming soon |
 
 **Menus:** `W`/`S` or the arrow keys move, `Enter` or `Space` selects, `Esc` goes back.
 **Character select:** each player uses their own keys. Up/down chooses, Attack confirms, Jump cancels. Press `Enter` when both are ready.
 **Map select:** either player moves with left/right, and `Enter` continues to the lobby.
-**Lobby:** test movement and attacks, and hit the training dummy. Walk both chickens into the door to start the match. `Esc` goes back to map select.
+**Lobby:** test movement and attacks, and hit the training dummy. Walk both chickens into the door to start the match. `Enter` shows the next tip, `Tab` hides the tips, `Esc` goes back to map select.
+**In the air:** press Jump again to double jump, hold Jump while falling to glide.
 **Fullscreen:** `F11`. The same controls list is available in-game under **Settings → Controls**.
 
 ## Characters
@@ -84,7 +86,7 @@ Loading ─► Main Menu ─► Character Select ─► Map Select ─► Lobby 
 ```
 
 - **Loading:** preloads the game, then "PRESS START".
-- **Main Menu:** Play, Settings (volume, fullscreen, Controls) and Exit.
+- **Main Menu:** Play, Settings (volume, fullscreen, Controls) and Quit.
 - **Character Select:** 4 chickens on each side; each player's pick is shown large in the middle.
 - **Map Select:** choose the arena.
 - **Lobby:** a training room. Test movement and attacks, hit the dummy, then walk both players into the door to start the match.

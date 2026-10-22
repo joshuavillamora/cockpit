@@ -32,20 +32,24 @@ cockpit/
 |---|---|---|---|
 | Loading | `loading_screen.tscn` | `scripts/ui/LoadingScreen.cs` | `ui_logo`, `ui_healthbar_*` |
 | Main Menu | `main_menu.tscn` | `MainMenu.cs` | `ui_logo` |
-| Settings (popup) | `settings_screen.tscn` | `SettingsScreen.cs` | theme |
-| Controls (popup) | `controls_screen.tscn` | `ControlsScreen.cs` | theme |
-| Character Select | `character_select.tscn` | `CharacterSelect.cs` | `ui_portrait_*`, `ui_select_frame_*` |
+| Settings (popup) | `settings_screen.tscn` | `SettingsScreen.cs` | theme (`ui_popup_panel`), `ui_popup_divider` |
+| Controls (popup) | `controls_screen.tscn` | `ControlsScreen.cs` | theme, `ui_keycap`, `ui_keycap_wide` |
+| Character Select | `character_select.tscn` | `CharacterSelect.cs` | `ui_portrait_*`, `ui_select_frame_*`, `ui_info_panel`, `ui_tag_ability/passive`, keycaps |
 | Map Select | `map_select.tscn` | `MapSelect.cs` | `ui_map_frame`, `ui_map_thumb_*` |
-| Lobby | `lobby_tutorial.tscn` | `scripts/core/LobbyController.cs` | arena background |
+| Lobby | `lobby_tutorial.tscn` | `scripts/core/LobbyController.cs` | arena background, `ui_info_panel`, `ui_counter_frame` (HITS plate), `ui_lobby_door`, `ui_tutorial_box`, `ui_round_marker_*` (tip dots), keycaps |
 | Training dummy (in the lobby) | `scenes/gameplay/training_dummy.tscn` | `scripts/core/TrainingDummy.cs` | none (placeholder boxes) |
 | Match | `scenes/gameplay/game.tscn` | `scripts/core/MatchController.cs` | arena background |
-| HUD | `game_hud.tscn` | `GameHud.cs` | `ui_healthbar_*`, `ui_meter_*`, `ui_counter_frame`, `ui_round_marker_*`, `ui_hud_portrait_*`, `ui_banner_*` |
-| Pause | `pause_menu.tscn` | `PauseMenu.cs` | theme |
+| HUD | `game_hud.tscn` | `GameHud.cs` | `ui_healthbar_*`, `ui_meter_*`, `ui_counter_frame`, `ui_round_marker_*`, `ui_hud_portrait_*`, `ui_banner_round_1/2/3`, `ui_banner_fight`, `ui_banner_ko`; the blank `ui_banner_round` and `ui_banner_blank_ko` carry the DEATHMATCH and DRAW text |
+| Pause | `pause_menu.tscn` | `PauseMenu.cs` | theme (`ui_popup_panel`) |
 | Victory | `victory_overlay.tscn` | `VictoryOverlay.cs` | theme |
 
-Currently unused by any screen: `ui_menu_rooster_left/right`, `ui_emblem_p1/p2` and `ui_ability_*` (waiting for the Abilities + Passives design).
+Currently unused by any screen: `ui_menu_rooster_left/right`, `ui_emblem_p1/p2`, `ui_panel` (replaced by `ui_popup_panel`) and `ui_ability_*` (the final art is imported; no wireframe places it yet).
 
-**Dark frames** (`assets/ui/dark/`) are animation frames, not a theme: `ui_button_normal_dark` (button click flash, `UiFx`), `ui_select_frame_p1/p2_dark` (character select, on confirm), `ui_round_marker_full_dark` and `ui_counter_frame_dark` (HUD, when a round is won or the score changes), `ui_meter_fill_ready_dark` (HUD, the full-meter pulse). The rest of the dark set has not been imported yet.
+**Asset versions:** the designer's V4 pack is the full set; V5 is the final pack and replaces V4 where both have a file (`ui_button_focus`, `ui_banner_ko`). Layouts follow the V5 wireframes (frames 1-12).
+
+**Keycaps:** `scripts/ui/Keycap.cs` draws one key on the keycap art (`Keycap.Create("A")`). Longer names use the wide cap, stretched to fit; arrow keys draw a triangle because the font has no arrow glyphs. The key lists live in `ControlsScreen.Rows`, which the lobby also reads.
+
+**Dark frames** (`assets/ui/dark/`) are animation frames, not a theme: `ui_button_normal_dark` (button click flash, `UiFx`), `ui_lobby_door_dark` (lobby door while a player waits in it), `ui_button_focus_dark` (imported for later), `ui_select_frame_p1/p2_dark` (character select, on confirm), `ui_round_marker_full_dark` and `ui_counter_frame_dark` (HUD, when a round is won or the score changes), `ui_meter_fill_ready_dark` (HUD, the full-meter pulse). The rest of the dark set has not been imported yet.
 
 ### How a button press travels (Play → Match)
 
@@ -69,7 +73,7 @@ Currently unused by any screen: `ui_menu_rooster_left/right`, `ui_emblem_p1/p2` 
 | Add a chicken | New `.tres` in `resources/characters/`, then `CharacterSelect.CharacterPaths` and `LoadingScreen.Preload` |
 | Add a map | New `.tres` in `resources/arenas/`, then `MapSelect.ArenaPaths` and `Preload` |
 | Change keys | Project Settings → Input Map |
-| Update the controls list | `ControlsScreen.cs` (`Rows`) |
+| Update the controls list (controls screen and lobby) | `ControlsScreen.cs` (`Rows`) |
 | Change intro / K.O. / Deathmatch text | `GameHud.cs` (`PlayRoundIntro`, `ShowKo`) |
 | Change what happens on KO / round end | `MatchController.cs` (`OnFighterDied`) |
 | Change the lobby tips | `LobbyController.cs` (`Tips`) |

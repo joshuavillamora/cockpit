@@ -21,13 +21,14 @@ Competition submission: **October 25, 2026**. Feature freeze: **October 23**.
 | Second arena | Uses the first arena's background with a tint. Set `Background` in `resources/arenas/*.tres` when new arenas exist. |
 | Paraokan, Da Chik | Shown as "SOON". They need sprites and scenes. |
 | Ability meter on the HUD | Always full (gold, pulsing) until abilities exist. Call `GameHud.SetMeter` when charge exists. |
-| Ability icons (`ui_ability_*`) | Not used yet; waiting for the Abilities + Passives design. |
-| Lobby | The door and dummy are plain colored boxes. Tips cover movement and attacks only; add block and ability tips (`LobbyController.Tips`) once they exist. |
+| Ability icons (`ui_ability_*`) | Final art imported, but no wireframe places them yet. |
+| Passive text | Character select shows "PASSIVE TBD" until the final passive names and descriptions are set in `resources/characters/*.tres`. |
+| Lobby | The dummy is plain colored boxes. Add the ability tip (`LobbyController.Tips`) once abilities exist. |
 
 ## Not built yet
 
-- **Movement:** run, double jump, glide, wall slide, wall bounce, air dash.
-- **Combat:** block, running attack.
+- **Movement:** run, wall slide, wall bounce, air dash.
+- **Combat:** running attack.
 - **Abilities:** all four.
 - **Audio:** music, attack and hit sounds, menu sounds, Banaba's distance-based wakwak.
 - **Effects:** hit flashes, feather bursts, landing dust, screen shake.

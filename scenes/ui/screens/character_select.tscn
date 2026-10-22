@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/CharacterSelect.cs" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/ui/components/menu_background.tscn" id="2"]
+[ext_resource type="Texture2D" path="res://assets/arenas/main/background.png" id="2"]
 
 [node name="CharacterSelect" type="Control"]
 layout_mode = 3
@@ -12,109 +12,91 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Background" parent="." instance=ExtResource("2")]
-layout_mode = 1
+[node name="Arena" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+texture = ExtResource("2")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.05, 0.067, 0.078, 0.62)
+
+[node name="EscHint" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 16.0
+offset_right = 120.0
+offset_bottom = 32.0
+mouse_filter = 2
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
 offset_left = 144.0
-offset_top = 16.0
+offset_top = 12.0
 offset_right = 496.0
-offset_bottom = 48.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(0.93, 0.89, 0.78, 1)
+theme_override_colors/font_shadow_color = Color(0.05, 0.067, 0.078, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 24
 text = "CHARACTER SELECT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="P1Heading" type="Label" parent="."]
-layout_mode = 0
-offset_left = 144.0
-offset_top = 116.0
-offset_right = 272.0
-offset_bottom = 140.0
-text = "PLAYER 1"
-horizontal_alignment = 1
-
-[node name="P2Heading" type="Label" parent="."]
-layout_mode = 0
-offset_left = 368.0
-offset_top = 116.0
-offset_right = 496.0
-offset_bottom = 140.0
-text = "PLAYER 2"
-horizontal_alignment = 1
-
-[node name="P1Ready" type="Label" parent="."]
+[node name="P1Stage" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 144.0
-offset_top = 216.0
-offset_right = 272.0
+offset_left = 124.0
+offset_top = 44.0
+offset_right = 316.0
 offset_bottom = 240.0
-text = "CHOOSE"
-horizontal_alignment = 1
+mouse_filter = 2
 
-[node name="P2Ready" type="Label" parent="."]
+[node name="P2Stage" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 368.0
-offset_top = 216.0
-offset_right = 496.0
+offset_left = 324.0
+offset_top = 44.0
+offset_right = 516.0
 offset_bottom = 240.0
-text = "CHOOSE"
-horizontal_alignment = 1
-
-[node name="P1Name" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 144.0
-offset_top = 244.0
-offset_right = 272.0
-offset_bottom = 268.0
-text = "BANABA"
-horizontal_alignment = 1
-
-[node name="P2Name" type="Label" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 368.0
-offset_top = 244.0
-offset_right = 496.0
-offset_bottom = 268.0
-text = "JOLOANO"
-horizontal_alignment = 1
+mouse_filter = 2
 
 [node name="Versus" type="Label" parent="."]
 layout_mode = 0
-offset_left = 270.0
-offset_top = 160.0
-offset_right = 370.0
-offset_bottom = 200.0
+offset_left = 280.0
+offset_top = 92.0
+offset_right = 360.0
+offset_bottom = 124.0
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_shadow_color = Color(0.48, 0.24, 0.06, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 32
 text = "VS"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="PlayButton" type="Button" parent="."]
+[node name="P1Info" type="Panel" parent="."]
 unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(192, 32)
 layout_mode = 0
-offset_left = 224.0
-offset_top = 276.0
-offset_right = 416.0
-offset_bottom = 308.0
-mouse_filter = 2
-focus_mode = 0
-text = "ENTER: PLAY"
+offset_left = 124.0
+offset_top = 244.0
+offset_right = 316.0
+offset_bottom = 352.0
 
-[node name="Hint" type="Label" parent="."]
+[node name="P2Info" type="Panel" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 120.0
-offset_top = 322.0
-offset_right = 520.0
-offset_bottom = 358.0
-theme_override_constants/line_spacing = 2
-text = "P1: W/S MOVE  J OK  K BACK
-P2: UP/DN MOVE  M OK  N BACK"
-horizontal_alignment = 1
+offset_left = 324.0
+offset_top = 244.0
+offset_right = 516.0
+offset_bottom = 352.0

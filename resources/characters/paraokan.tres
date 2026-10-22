@@ -19,3 +19,7 @@ AbilityCooling = ExtResource("4")
 AbilityUnavailable = ExtResource("5")
 
 Playable = false
+AbilityName = "CHICKBALANG"
+AbilityText = "HORSE-HEAD STRIKES"
+PassiveName = "PASSIVE TBD"
+PassiveText = "TEXT COMING SOON"

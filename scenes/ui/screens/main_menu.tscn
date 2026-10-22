@@ -63,4 +63,4 @@ text = "SETTINGS"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(192, 32)
 layout_mode = 2
-text = "EXIT"
+text = "QUIT"

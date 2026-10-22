@@ -1,5 +1,6 @@
 [gd_scene format=3]
 
+[ext_resource type="Texture2D" path="res://assets/ui/menus/ui_popup_divider.png" id="2_divider"]
 [ext_resource type="Script" path="res://scripts/ui/SettingsScreen.cs" id="1"]
 
 [node name="SettingsScreen" type="Control"]
@@ -37,6 +38,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "SETTINGS"
 horizontal_alignment = 1
+
+[node name="Divider" type="TextureRect" parent="Panel/Content"]
+layout_mode = 2
+texture = ExtResource("2_divider")
+stretch_mode = 3
 
 [node name="Rows" type="VBoxContainer" parent="Panel/Content"]
 layout_mode = 2
@@ -98,14 +104,14 @@ text = "FULLSCREEN"
 
 [node name="ControlsButton" type="Button" parent="Panel/Content"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 32)
+custom_minimum_size = Vector2(192, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "CONTROLS"
 
 [node name="BackButton" type="Button" parent="Panel/Content"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 32)
+custom_minimum_size = Vector2(192, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "BACK"

@@ -30,14 +30,16 @@ The training lobby (`LobbyController`) spawns the same fighters before the match
 
 ## Ability meter on the HUD
 
-Each player has an ability meter under their health bar. `GameHud.SetMeter(int player, float ratio)` sets it: `player` is 0 for P1 and 1 for P2, `ratio` is 0 to 1. P1's meter fills left to right and P2's right to left. A full meter shows the gold fill and pulses (it swaps with the dark gold fill). It currently always shows full, so call `SetMeter` from your ability code once charge or cooldown exists. The HUD has no ability icon in the current design (`ui_ability_*` is not used yet).
+Each player has an ability meter under their health bar. `GameHud.SetMeter(int player, float ratio)` sets it: `player` is 0 for P1 and 1 for P2, `ratio` is 0 to 1. P1's meter fills left to right and P2's right to left. A full meter shows the gold fill and pulses (it swaps with the dark gold fill). It currently always shows full, so call `SetMeter` from your ability code once charge or cooldown exists. The HUD has no ability icon in the final design (`ui_ability_*` is imported but not shown).
+
+The HUD now uses y 0-76 of the screen (chicken names sit above the bars). Keep the stage ceiling, platforms and anything important below y 76.
 
 ## Adding a chicken
 
 1. Create the fighter scene: right-click `scenes/characters/fighter.tscn` → **New Inherited Scene**, save as `scenes/characters/<name>.tscn`.
 2. Assign a `SpriteFrames` resource to `AnimatedSprite2D` using the animation names in the [art guidelines](art-guidelines.md).
 3. Adjust the `CollisionShape2D` and `AttackHitbox` offsets to fit the sprite.
-4. Create `resources/characters/<name>.tres` (New Resource → `CharacterData`) and set `DisplayName`, `Portrait` (64×64), `HudPortrait` (32×32), `Scene`, and `Playable = true`. The ability icon fields are not used yet.
+4. Create `resources/characters/<name>.tres` (New Resource → `CharacterData`) and set `DisplayName`, `Portrait` (64×64), `HudPortrait` (32×32), `Scene`, and `Playable = true`. Fill `AbilityName`, `AbilityText`, `PassiveName` and `PassiveText` for the character select info panel: each fits 20 characters (a name, then a one-line description). The ability icon fields are not used yet.
 5. Add the path to `CharacterSelect.CharacterPaths` (`scripts/ui/CharacterSelect.cs`) and to `LoadingScreen.Preload` (`scripts/ui/LoadingScreen.cs`).
 
 Chickens with `Playable = false` appear as "SOON" and cannot be picked.

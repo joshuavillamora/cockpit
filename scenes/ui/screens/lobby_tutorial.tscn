@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://scripts/core/LobbyController.cs" id="1_lobby"]
 [ext_resource type="Texture2D" path="res://assets/arenas/main/background.png" id="2_bg"]
 [ext_resource type="PackedScene" path="res://scenes/gameplay/training_dummy.tscn" id="3_dummy"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_lobby_door.png" id="4_door"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_counter_frame.png" id="5_plate"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_floor"]
 
@@ -11,7 +13,7 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_right"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
-size = Vector2(64, 72)
+size = Vector2(64, 68)
 
 [node name="LobbyTutorial" type="Node2D"]
 script = ExtResource("1_lobby")
@@ -51,33 +53,25 @@ unique_name_in_owner = true
 position = Vector2(608, 257)
 collision_layer = 0
 
-[node name="Frame" type="ColorRect" parent="Door"]
+[node name="Art" type="TextureRect" parent="Door"]
+unique_name_in_owner = true
 offset_left = -32.0
-offset_top = -76.0
+offset_top = -68.0
 offset_right = 32.0
-offset_bottom = 0.0
 mouse_filter = 2
-color = Color(0.35, 0.22, 0.1, 1)
-
-[node name="Opening" type="ColorRect" parent="Door"]
-offset_left = -26.0
-offset_top = -70.0
-offset_right = 32.0
-offset_bottom = 0.0
-mouse_filter = 2
-color = Color(0.06, 0.04, 0.02, 1)
+texture = ExtResource("4_door")
 
 [node name="Sign" type="Label" parent="Door"]
-offset_left = -26.0
-offset_top = -60.0
-offset_right = 32.0
-offset_bottom = -38.0
+offset_left = -20.0
+offset_top = -44.0
+offset_right = 20.0
+offset_bottom = -28.0
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
 text = "GO"
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
-position = Vector2(0, -36)
+position = Vector2(0, -34)
 shape = SubResource("RectangleShape2D_door")
 
 [node name="Ui" type="CanvasLayer" parent="."]
@@ -94,95 +88,120 @@ mouse_filter = 2
 
 [node name="Title" type="Label" parent="Ui/Root"]
 layout_mode = 0
-offset_top = 6.0
-offset_right = 640.0
-offset_bottom = 28.0
+offset_left = 144.0
+offset_top = 4.0
+offset_right = 496.0
+offset_bottom = 24.0
 text = "TRAINING LOBBY"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="BackHint" type="Label" parent="Ui/Root"]
+[node name="BackHint" type="Control" parent="Ui/Root"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 8.0
 offset_top = 6.0
-offset_right = 160.0
-offset_bottom = 28.0
-text = "ESC: BACK"
+offset_right = 104.0
+offset_bottom = 22.0
+mouse_filter = 2
 
-[node name="P1Panel" type="PanelContainer" parent="Ui/Root"]
-modulate = Color(1, 1, 1, 0.92)
+[node name="P1Panel" type="Panel" parent="Ui/Root"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 8.0
-offset_top = 34.0
+offset_top = 32.0
 offset_right = 268.0
-offset_bottom = 190.0
+offset_bottom = 188.0
+mouse_filter = 2
+theme_type_variation = &"InfoPanel"
 
-[node name="Box" type="VBoxContainer" parent="Ui/Root/P1Panel"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Heading" type="Label" parent="Ui/Root/P1Panel/Box"]
-layout_mode = 2
-text = "PLAYER 1"
-horizontal_alignment = 1
-
-[node name="Keys" type="Label" parent="Ui/Root/P1Panel/Box"]
-layout_mode = 2
-text = "MOVE A/D
-AIM  W/S
-JUMP K/SPACE
-ATTACK J/E"
-
-[node name="P1Status" type="Label" parent="Ui/Root/P1Panel/Box"]
+[node name="P2Panel" type="Panel" parent="Ui/Root"]
 unique_name_in_owner = true
-layout_mode = 2
-text = "GO TO THE DOOR"
-horizontal_alignment = 1
-
-[node name="P2Panel" type="PanelContainer" parent="Ui/Root"]
-modulate = Color(1, 1, 1, 0.92)
 layout_mode = 0
 offset_left = 372.0
-offset_top = 34.0
+offset_top = 32.0
 offset_right = 632.0
-offset_bottom = 190.0
+offset_bottom = 188.0
+mouse_filter = 2
+theme_type_variation = &"InfoPanel"
 
-[node name="Box" type="VBoxContainer" parent="Ui/Root/P2Panel"]
-layout_mode = 2
-theme_override_constants/separation = 4
+[node name="HitPlate" type="NinePatchRect" parent="Ui/Root"]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 152.0
+offset_right = 368.0
+offset_bottom = 184.0
+mouse_filter = 2
+texture = ExtResource("5_plate")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
 
-[node name="Heading" type="Label" parent="Ui/Root/P2Panel/Box"]
-layout_mode = 2
-text = "PLAYER 2"
-horizontal_alignment = 1
-
-[node name="Keys" type="Label" parent="Ui/Root/P2Panel/Box"]
-layout_mode = 2
-text = "MOVE ARROWS
-AIM  UP/DOWN
-JUMP N
-ATTACK M OR /"
-
-[node name="P2Status" type="Label" parent="Ui/Root/P2Panel/Box"]
+[node name="HitLabel" type="Label" parent="Ui/Root/HitPlate"]
 unique_name_in_owner = true
-layout_mode = 2
-text = "GO TO THE DOOR"
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = -2
+text = "HIT THE
+DUMMY"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="TipLabel" type="Label" parent="Ui/Root"]
+[node name="TipsBox" type="Panel" parent="Ui/Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 288.0
-offset_right = 640.0
-offset_bottom = 310.0
+offset_left = 80.0
+offset_top = 260.0
+offset_right = 560.0
+offset_bottom = 340.0
+mouse_filter = 2
+theme_type_variation = &"TutorialBox"
+
+[node name="TipLabel" type="Label" parent="Ui/Root/TipsBox"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = 462.0
+offset_bottom = 42.0
 text = "TIP"
-horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="TipDots" type="HBoxContainer" parent="Ui/Root/TipsBox"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 18.0
+offset_top = 50.0
+offset_right = 218.0
+offset_bottom = 66.0
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="TipKeys" type="HBoxContainer" parent="Ui/Root/TipsBox"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 222.0
+offset_top = 50.0
+offset_right = 462.0
+offset_bottom = 66.0
+mouse_filter = 2
+theme_override_constants/separation = 3
+alignment = 2
 
 [node name="DoorStatus" type="Label" parent="Ui/Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 326.0
+offset_top = 342.0
 offset_right = 640.0
-offset_bottom = 348.0
+offset_bottom = 358.0
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
 text = "BOTH PLAYERS: ENTER THE DOOR"
 horizontal_alignment = 1
+vertical_alignment = 1

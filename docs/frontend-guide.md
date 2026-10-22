@@ -150,9 +150,9 @@ if (characters[index].Playable) { cursor[player] = index; return; }
 ```
 Adding `count` before `%` stops the index going negative when moving up past 0. The loop keeps stepping until it finds an unlocked chicken, so locked ones are skipped.
 
-`_Process` builds action names per player: `$"p{p+1}_up"` becomes `p1_up` or `p2_up`. Attack confirms, jump cancels. `Refresh()` redraws everything from the state (highlight frames, big preview, "CONFIRM" / "READY!"). Keeping state separate from drawing keeps the code simple.
+`_Process` builds action names per player: `$"p{p+1}_up"` becomes `p1_up` or `p2_up`. Attack confirms, jump cancels. `Refresh()` redraws everything from the state (highlight frames, the big chicken and its name box, "CHOOSING..." / "READY", and the faded MOVE / OK keys of a confirmed player). Keeping state separate from drawing keeps the code simple.
 
-Enter is `menu_start`, separate from `ui_accept`. Space is `ui_accept` and also P1's jump, so using it would cancel a confirm at the same moment. `BuildColumn` and `BuildPreview` create the TextureRects in code, so the screen grows with the character list.
+Enter is `menu_start`, separate from `ui_accept`. Space is `ui_accept` and also P1's jump, so using it would cancel a confirm at the same moment. `BuildColumn`, `BuildStage` and `BuildKeyBar` create the nodes in code, so the screen grows with the character list. The layout follows the approved redesign mockup ("box vs box"): each pick stands on a name box, with a controls bar (keycaps above MOVE / OK / BACK) under it. The slots and the big chicken use `CharacterData.SelectSprite` (a 64x64 full-body still) and fall back to `Portrait` when it is empty.
 
 ### `MapSelect.cs`
 Same pattern with one shared cursor. Either player moves it, Enter continues to the lobby, and `SelectArena(arenas[cursor])` hands the chosen `ArenaData` to `GameManager`.
@@ -167,9 +167,11 @@ fighter.MaxHealth = PracticeHealth;   // 9999, so nobody is knocked out in the l
 
 The door is an `Area2D` named `Door`, 64 px wide and touching the right wall, so a fighter cannot run past it. `BodyEntered` and `BodyExited` call `SetInDoor`, which marks that player ready (and fades them) or not ready. When both players are inside, `BeginMatch` locks both fighters, waits 0.8 s, and calls `GameManager.EnterMatch()`. Esc goes back to map select. Rematch skips the lobby and goes straight to the match.
 
-The tip line at the bottom rotates through the `Tips` array every 4 seconds. Add block and ability tips there once those features exist.
+The layout follows the lobby wireframe (frame 12). Each player's panel lists the keys from `ControlsScreen.Rows` as keycaps, so changing a key there updates both screens. The door art switches to its dark version while anyone is inside.
 
-`TrainingDummy` shows how to make something a fighter can hit. A fighter's attack hitbox calls `TakeDamage` on the parent of any hurtbox (layer 4) it touches, so the dummy only needs a `Hurtbox` `Area2D` child on layer 4 and a public `TakeDamage(int)` method. It counts hits, shows the last damage, and leans back with a spring.
+The tips box at the bottom (`ui_tutorial_box`) shows one tip from the `Tips` array, with a dot per tip. It moves on every 4 seconds; `Enter` (`menu_start`) shows the next tip and `Tab` (`lobby_skip_tips`) hides or shows the box. These are handled in `_UnhandledInput`, and nothing in the lobby takes keyboard focus, so player keys like Space never press a button. Add the ability tip once abilities exist.
+
+`TrainingDummy` shows how to make something a fighter can hit. A fighter's attack hitbox calls `TakeDamage` on the parent of any hurtbox (layer 4) it touches, so the dummy only needs a `Hurtbox` `Area2D` child on layer 4 and a public `TakeDamage(int)` method. It counts hits, emits `Hit(hits, damage)` (the lobby shows it on the HITS plate between the panels), and leans back with a spring.
 
 ## 6. The match
 

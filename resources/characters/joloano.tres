@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken3_cooling.png" id="4"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken3_unavailable.png" id="5"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_chicken3.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/characters/joloano/joloano.png" id="8"]
 [ext_resource type="PackedScene" path="res://scenes/characters/joloano.tscn" id="6"]
 
 [resource]
@@ -13,9 +14,14 @@ script = ExtResource("1")
 Id = "joloano"
 DisplayName = "JOLOANO"
 Portrait = ExtResource("2")
+SelectSprite = ExtResource("8")
 HudPortrait = ExtResource("7")
 AbilityReady = ExtResource("3")
 AbilityCooling = ExtResource("4")
 AbilityUnavailable = ExtResource("5")
 Scene = ExtResource("6")
 Playable = true
+AbilityName = "BERNARDO'S FEET"
+AbilityText = "GROW, HIT HARDER"
+PassiveName = "PASSIVE TBD"
+PassiveText = "TEXT COMING SOON"

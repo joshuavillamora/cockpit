@@ -40,11 +40,3 @@ monitoring = false
 position = Vector2(0, -28)
 shape = SubResource("RectangleShape2D_hurt")
 
-[node name="HitLabel" type="Label" parent="."]
-offset_left = -64.0
-offset_top = -112.0
-offset_right = 64.0
-offset_bottom = -72.0
-text = "HIT ME"
-horizontal_alignment = 1
-vertical_alignment = 2
