@@ -18,7 +18,7 @@ cockpit/
 │   ├── gameplay/game.tscn   Arena, spawns, HUD, pause, victory
 │   └── characters/          fighter.tscn (base), banaba, joloano
 └── scripts/                 Logic
-    ├── autoload/            GameManager, SceneFlow, SettingsManager
+    ├── autoload/            GameManager, SceneFlow, SettingsManager, UiFx
     ├── core/                CharacterData, ArenaData, MatchController
     ├── ui/                  One script per screen or popup
     └── characters/          Fighters.cs (backend)
@@ -31,7 +31,7 @@ cockpit/
 | Screen | Scene (`scenes/ui/screens/`) | Script | Main assets |
 |---|---|---|---|
 | Loading | `loading_screen.tscn` | `scripts/ui/LoadingScreen.cs` | `ui_logo`, `ui_healthbar_*` |
-| Main Menu | `main_menu.tscn` | `MainMenu.cs` | `ui_logo`, `ui_menu_rooster_*` |
+| Main Menu | `main_menu.tscn` | `MainMenu.cs` | `ui_logo` |
 | Settings (popup) | `settings_screen.tscn` | `SettingsScreen.cs` | theme |
 | Controls (popup) | `controls_screen.tscn` | `ControlsScreen.cs` | theme |
 | Character Select | `character_select.tscn` | `CharacterSelect.cs` | `ui_portrait_*`, `ui_select_frame_*` |
@@ -39,11 +39,13 @@ cockpit/
 | Lobby | `lobby_tutorial.tscn` | `scripts/core/LobbyController.cs` | arena background |
 | Training dummy (in the lobby) | `scenes/gameplay/training_dummy.tscn` | `scripts/core/TrainingDummy.cs` | none (placeholder boxes) |
 | Match | `scenes/gameplay/game.tscn` | `scripts/core/MatchController.cs` | arena background |
-| HUD | `game_hud.tscn` | `GameHud.cs` | `ui_healthbar_*`, `ui_round_marker_*`, portraits, ability icons |
+| HUD | `game_hud.tscn` | `GameHud.cs` | `ui_healthbar_*`, `ui_meter_*`, `ui_counter_frame`, `ui_round_marker_*`, `ui_hud_portrait_*`, `ui_banner_*` |
 | Pause | `pause_menu.tscn` | `PauseMenu.cs` | theme |
 | Victory | `victory_overlay.tscn` | `VictoryOverlay.cs` | theme |
 
-Currently unused by any screen: `ui_banner_ko`, `ui_banner_round`, `ui_counter_frame`, `ui_cursor`, `ui_emblem_p1/p2`.
+Currently unused by any screen: `ui_menu_rooster_left/right`, `ui_emblem_p1/p2` and `ui_ability_*` (waiting for the Abilities + Passives design).
+
+**Dark frames** (`assets/ui/dark/`) are animation frames, not a theme: `ui_button_normal_dark` (button click flash, `UiFx`), `ui_select_frame_p1/p2_dark` (character select, on confirm), `ui_round_marker_full_dark` and `ui_counter_frame_dark` (HUD, when a round is won or the score changes), `ui_meter_fill_ready_dark` (HUD, the full-meter pulse). The rest of the dark set has not been imported yet.
 
 ### How a button press travels (Play → Match)
 

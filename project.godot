@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameManager="*res://scripts/autoload/GameManager.cs"
 SceneFlow="*res://scripts/autoload/SceneFlow.cs"
 SettingsManager="*res://scripts/autoload/SettingsManager.cs"
+UiFx="*res://scripts/autoload/UiFx.cs"
 
 [display]
 

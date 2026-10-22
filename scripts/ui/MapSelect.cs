@@ -1,7 +1,8 @@
 using Godot;
 using System.Collections.Generic;
 
-// Either player can move the cursor and start the match (the arena is a shared choice).
+// Either player can move the cursor and continue (the arena is a shared choice).
+// Layout follows the designer's wireframe: two 256x144 thumbnails with the name under each.
 public partial class MapSelect : Control {
 	private static readonly string[] ArenaPaths = {
 		"res://resources/arenas/backyard.tres",
@@ -9,20 +10,20 @@ public partial class MapSelect : Control {
 	};
 
 	private const float CardTop = 100f;
-	private const float CardGap = 40f;
+	private const float CardGap = 24f;
+	private const float FrameMargin = 4f;   // the frame is the thumbnail plus 4 px on each side
 
 	private readonly List<ArenaData> arenas = new();
-	private readonly List<Control> cards = new();
-	private Label mapName;
+	private readonly List<Control[]> cardImages = new();   // thumbnail + frame per card
+	private readonly List<Label> cardNames = new();
 	private int cursor;
 
 	public override void _Ready() {
-		mapName = GetNode<Label>("%MapName");
 		var frameTexture = GD.Load<Texture2D>("res://assets/ui/menus/ui_map_frame.png");
 
 		foreach (string path in ArenaPaths) arenas.Add(GD.Load<ArenaData>(path));
 
-		// Cards are centered as a row: [frame 264x152] gap [frame 264x152] ...
+		// Cards are centered as a row: [frame] gap [frame] ...
 		float cardWidth = frameTexture.GetWidth();
 		float left = (640f - (arenas.Count * cardWidth + (arenas.Count - 1) * CardGap)) / 2f;
 		for (int i = 0; i < arenas.Count; i++) {
@@ -30,10 +31,20 @@ public partial class MapSelect : Control {
 				Position = new Vector2(left + i * (cardWidth + CardGap), CardTop),
 				Size = frameTexture.GetSize(),
 			};
-			card.AddChild(new TextureRect { Texture = frameTexture });
-			card.AddChild(new TextureRect { Texture = arenas[i].Thumbnail, Position = new Vector2(4, 4) });
+			var thumbnail = new TextureRect { Texture = arenas[i].Thumbnail, Position = new Vector2(FrameMargin, FrameMargin) };
+			var frame = new TextureRect { Texture = frameTexture };
+			card.AddChild(thumbnail);
+			card.AddChild(frame);
+			var name = new Label {
+				Text = arenas[i].DisplayName,
+				HorizontalAlignment = HorizontalAlignment.Center,
+				Position = new Vector2(0, frameTexture.GetHeight() + 4),
+				Size = new Vector2(cardWidth, 24),
+			};
+			card.AddChild(name);
 			AddChild(card);
-			cards.Add(card);
+			cardImages.Add(new Control[] { thumbnail, frame });
+			cardNames.Add(name);
 		}
 
 		Refresh();
@@ -77,10 +88,10 @@ public partial class MapSelect : Control {
 	}
 
 	private void Refresh() {
-		for (int i = 0; i < cards.Count; i++) {
+		for (int i = 0; i < cardImages.Count; i++) {
 			bool selected = i == cursor;
-			cards[i].Modulate = selected ? Colors.White : new Color(0.5f, 0.5f, 0.5f);
+			foreach (Control image in cardImages[i]) image.Modulate = selected ? Colors.White : new Color(0.5f, 0.5f, 0.5f);
+			cardNames[i].Modulate = selected ? Colors.White : new Color(0.75f, 0.75f, 0.75f);   // names stay readable
 		}
-		mapName.Text = arenas[cursor].DisplayName;
 	}
 }

@@ -28,16 +28,16 @@ On death the fighter stays in the scene tree (it fades out and its collisions ar
 
 The training lobby (`LobbyController`) spawns the same fighters before the match, with `MaxHealth = 9999` so nobody is knocked out, and uses `PlayerId`, `StartFacingRight` and `InputLocked` the same way. It also has a training dummy that is not a `Fighters` node: keep the `HasMethod("TakeDamage")` branch in `OnHitboxAreaEntered`, because the dummy relies on it. When block and abilities exist, tell the frontend so the lobby tips can explain them.
 
-## Ability icons on the HUD
+## Ability meter on the HUD
 
-`GameHud.SetAbilityState(int player, AbilityState state)` switches a player's ability icon between `Ready`, `Cooling` and `Unavailable`. `player` is 0 for P1 and 1 for P2. It currently always shows `Ready`, so call it from your ability code once cooldowns exist.
+Each player has an ability meter under their health bar. `GameHud.SetMeter(int player, float ratio)` sets it: `player` is 0 for P1 and 1 for P2, `ratio` is 0 to 1. P1's meter fills left to right and P2's right to left. A full meter shows the gold fill and pulses (it swaps with the dark gold fill). It currently always shows full, so call `SetMeter` from your ability code once charge or cooldown exists. The HUD has no ability icon in the current design (`ui_ability_*` is not used yet).
 
 ## Adding a chicken
 
 1. Create the fighter scene: right-click `scenes/characters/fighter.tscn` → **New Inherited Scene**, save as `scenes/characters/<name>.tscn`.
 2. Assign a `SpriteFrames` resource to `AnimatedSprite2D` using the animation names in the [art guidelines](art-guidelines.md).
 3. Adjust the `CollisionShape2D` and `AttackHitbox` offsets to fit the sprite.
-4. Create `resources/characters/<name>.tres` (New Resource → `CharacterData`) and set `DisplayName`, `Portrait`, the three ability icons, `Scene`, and `Playable = true`.
+4. Create `resources/characters/<name>.tres` (New Resource → `CharacterData`) and set `DisplayName`, `Portrait` (64×64), `HudPortrait` (32×32), `Scene`, and `Playable = true`. The ability icon fields are not used yet.
 5. Add the path to `CharacterSelect.CharacterPaths` (`scripts/ui/CharacterSelect.cs`) and to `LoadingScreen.Preload` (`scripts/ui/LoadingScreen.cs`).
 
 Chickens with `Playable = false` appear as "SOON" and cannot be picked.

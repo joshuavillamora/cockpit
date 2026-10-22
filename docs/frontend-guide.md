@@ -39,7 +39,7 @@ Loading → MainMenu → CharacterSelect → MapSelect → Lobby → game.tscn
                                                             ├─ GameHud (bars, big text)
                                                             ├─ PauseMenu
                                                             └─ VictoryOverlay
-Always alive: GameManager (state)   SceneFlow (fade + change scene)   SettingsManager
+Always alive: GameManager (state)   SceneFlow (fade + change scene)   SettingsManager   UiFx (cursor, button flash)
 ```
 
 Each screen reads state from `GameManager`, shows it, and calls `GameManager` or `SceneFlow` when the player moves on. Screens never load each other directly.
@@ -97,6 +97,9 @@ public async void GoTo(string path) {
 ```
 `async/await` lets code wait for something without freezing the game. `ToSignal` turns a Godot signal into something you can `await`. The fade is a `ColorRect` on a `CanvasLayer` with `Layer = 100` (drawn above everything), animated by a `Tween` on `"color:a"`. `SetPauseMode(Process)` lets the tween run while the game is paused.
 
+### `scripts/autoload/UiFx.cs` (cursor and button flash)
+Effects that apply on every screen. `ui_cursor.png` becomes the mouse pointer (scaled up with the window) and is also drawn beside whichever button or slider has keyboard focus. Every button flashes `ui_button_normal_dark.png` for about 0.1 s when pressed, then returns to the light look.
+
 ### `scripts/autoload/SettingsManager.cs` (saved options)
 
 - `Load()` reads `user://settings.cfg` with `ConfigFile` (`user://` is a per-user folder outside the project).
@@ -106,7 +109,7 @@ public async void GoTo(string path) {
 
 ## 4. Data as resources
 
-`CharacterData` and `ArenaData` (`scripts/core/`) are `Resource` classes with `[Export]` fields. `[GlobalClass]` makes them show up as creatable types. The `.tres` files in `resources/` fill in the fields (`DisplayName`, `Portrait`, `Scene`, `Playable`).
+`CharacterData` and `ArenaData` (`scripts/core/`) are `Resource` classes with `[Export]` fields. `[GlobalClass]` makes them show up as creatable types. The `.tres` files in `resources/` fill in the fields (`DisplayName`, `Portrait`, `HudPortrait`, `Scene`, `Playable`).
 
 ```csharp
 GD.Load<CharacterData>("res://resources/characters/banaba.tres");

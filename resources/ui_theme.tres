@@ -8,63 +8,63 @@
 [ext_resource type="FontFile" uid="uid://ckqkru7xroyu5" path="res://assets/ui/fonts/NESCyrillic.ttf" id="6_font"]
 
 [sub_resource type="StyleBoxTexture" id="btn_disabled"]
-content_margin_left = 8.0
-content_margin_right = 8.0
+content_margin_left = 10.0
+content_margin_right = 10.0
 texture = ExtResource("4_disabled")
-texture_margin_left = 4.0
-texture_margin_top = 4.0
-texture_margin_right = 4.0
-texture_margin_bottom = 4.0
-
-[sub_resource type="StyleBoxTexture" id="btn_focus"]
-content_margin_left = 8.0
-content_margin_right = 8.0
-texture = ExtResource("2_focus")
-texture_margin_left = 4.0
-texture_margin_top = 4.0
-texture_margin_right = 4.0
-texture_margin_bottom = 4.0
-
-[sub_resource type="StyleBoxTexture" id="btn_pressed"]
-content_margin_left = 8.0
-content_margin_right = 8.0
-texture = ExtResource("3_pressed")
-texture_margin_left = 4.0
-texture_margin_top = 4.0
-texture_margin_right = 4.0
-texture_margin_bottom = 4.0
-
-[sub_resource type="StyleBoxTexture" id="btn_normal"]
-content_margin_left = 8.0
-content_margin_right = 8.0
-texture = ExtResource("1_normal")
-texture_margin_left = 4.0
-texture_margin_top = 4.0
-texture_margin_right = 4.0
-texture_margin_bottom = 4.0
-
-[sub_resource type="StyleBoxTexture" id="panel"]
-content_margin_left = 14.0
-content_margin_top = 12.0
-content_margin_right = 14.0
-content_margin_bottom = 12.0
-texture = ExtResource("5_panel")
 texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="btn_focus"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+texture = ExtResource("2_focus")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="btn_pressed"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+texture = ExtResource("3_pressed")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="btn_normal"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+texture = ExtResource("1_normal")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="panel"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+texture = ExtResource("5_panel")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxEmpty" id="empty"]
 
 [resource]
 default_font = ExtResource("6_font")
 default_font_size = 16
-Button/colors/font_color = Color(0.1, 0.14, 0.25, 1)
-Button/colors/font_disabled_color = Color(0.45, 0.5, 0.6, 1)
-Button/colors/font_focus_color = Color(0.1, 0.14, 0.25, 1)
-Button/colors/font_hover_color = Color(0.1, 0.14, 0.25, 1)
-Button/colors/font_hover_pressed_color = Color(0.1, 0.14, 0.25, 1)
-Button/colors/font_pressed_color = Color(0.1, 0.14, 0.25, 1)
+Button/colors/font_color = Color(0.93, 0.89, 0.78, 1)
+Button/colors/font_disabled_color = Color(0.5, 0.48, 0.42, 1)
+Button/colors/font_focus_color = Color(1, 0.93, 0.62, 1)
+Button/colors/font_hover_color = Color(1, 0.93, 0.62, 1)
+Button/colors/font_hover_pressed_color = Color(1, 0.93, 0.62, 1)
+Button/colors/font_pressed_color = Color(1, 0.93, 0.62, 1)
 Button/styles/disabled = SubResource("btn_disabled")
 Button/styles/focus = SubResource("btn_focus")
 Button/styles/hover = SubResource("btn_focus")

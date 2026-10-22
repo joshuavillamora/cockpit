@@ -17,10 +17,11 @@ Competition submission: **October 25, 2026**. Feature freeze: **October 23**.
 |------|-------|
 | UI art | The designer's wireframe skin: logo, buttons, panels, portraits, map thumbnails. Replace the PNGs in `assets/ui/` and keep the filenames. |
 | Menu backgrounds | Flat sky and field colors (`scenes/ui/components/menu_background.tscn`). |
-| Menu roosters | Plain boxes. |
+| Logo | A gray placeholder box with the text "COCKPIT" drawn on top. |
 | Second arena | Uses the first arena's background with a tint. Set `Background` in `resources/arenas/*.tres` when new arenas exist. |
 | Paraokan, Da Chik | Shown as "SOON". They need sprites and scenes. |
-| Ability icons on the HUD | Always show "ready" until abilities exist. |
+| Ability meter on the HUD | Always full (gold, pulsing) until abilities exist. Call `GameHud.SetMeter` when charge exists. |
+| Ability icons (`ui_ability_*`) | Not used yet; waiting for the Abilities + Passives design. |
 | Lobby | The door and dummy are plain colored boxes. Tips cover movement and attacks only; add block and ability tips (`LobbyController.Tips`) once they exist. |
 
 ## Not built yet

@@ -2,9 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3gkj8wu0fcvk" path="res://scripts/ui/MainMenu.cs" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/menu_background.tscn" id="2"]
-[ext_resource type="Texture2D" uid="uid://lciach5v47pl" path="res://assets/ui/menus/ui_logo.png" id="3"]
-[ext_resource type="Texture2D" uid="uid://c67wg7ay2igwl" path="res://assets/ui/menus/ui_menu_rooster_left.png" id="4"]
-[ext_resource type="Texture2D" uid="uid://3h6ofysxp5gp" path="res://assets/ui/menus/ui_menu_rooster_right.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/ui/menus/ui_logo.png" id="3"]
 
 [node name="MainMenu" type="Control" unique_id=655943326]
 layout_mode = 3
@@ -18,27 +16,12 @@ script = ExtResource("1")
 [node name="Background" parent="." unique_id=899714336 instance=ExtResource("2")]
 layout_mode = 1
 
-[node name="RoosterLeft" type="TextureRect" parent="." unique_id=1433773948]
-layout_mode = 0
-offset_top = 120.0
-offset_right = 144.0
-offset_bottom = 304.0
-texture = ExtResource("4")
-
-[node name="RoosterRight" type="TextureRect" parent="." unique_id=269071340]
-layout_mode = 0
-offset_left = 496.0
-offset_top = 120.0
-offset_right = 640.0
-offset_bottom = 304.0
-texture = ExtResource("5")
-
-[node name="Logo" type="TextureRect" parent="." unique_id=2008299123]
+[node name="Logo" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 176.0
-offset_top = 24.0
+offset_top = 40.0
 offset_right = 464.0
-offset_bottom = 72.0
+offset_bottom = 88.0
 texture = ExtResource("3")
 
 [node name="LogoLabel" type="Label" parent="Logo" unique_id=490669707]
@@ -59,10 +42,10 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 224.0
-offset_top = 136.0
+offset_top = 152.0
 offset_right = 416.0
-offset_bottom = 256.0
-theme_override_constants/separation = 12
+offset_bottom = 280.0
+theme_override_constants/separation = 16
 
 [node name="PlayButton" type="Button" parent="Menu" unique_id=836893939]
 unique_name_in_owner = true
@@ -80,4 +63,4 @@ text = "SETTINGS"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(192, 32)
 layout_mode = 2
-text = "QUIT"
+text = "EXIT"

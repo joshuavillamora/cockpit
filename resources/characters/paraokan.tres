@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken2_ready.png" id="3"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken2_cooling.png" id="4"]
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken2_unavailable.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_chicken2.png" id="7"]
 
 
 [resource]
@@ -12,6 +13,7 @@ script = ExtResource("1")
 Id = "paraokan"
 DisplayName = "PARAOKAN"
 Portrait = ExtResource("2")
+HudPortrait = ExtResource("7")
 AbilityReady = ExtResource("3")
 AbilityCooling = ExtResource("4")
 AbilityUnavailable = ExtResource("5")

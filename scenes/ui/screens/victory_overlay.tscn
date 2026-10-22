@@ -23,38 +23,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.65)
+color = Color(0, 0, 0, 0.5)
 
 [node name="Winner" type="Label" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 96.0
-offset_right = 640.0
-offset_bottom = 144.0
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 40
+offset_left = 96.0
+offset_top = 88.0
+offset_right = 544.0
+offset_bottom = 120.0
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 32
 text = "PLAYER 1 WINS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Menu" type="VBoxContainer" parent="Root"]
-layout_mode = 0
-offset_left = 200.0
-offset_top = 190.0
-offset_right = 440.0
-offset_bottom = 270.0
-theme_override_constants/separation = 16
-
-[node name="RematchButton" type="Button" parent="Root/Menu"]
+[node name="RematchButton" type="Button" parent="Root"]
 unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"TextButton"
-theme_override_font_sizes/font_size = 24
+custom_minimum_size = Vector2(192, 32)
+layout_mode = 0
+offset_left = 224.0
+offset_top = 200.0
+offset_right = 416.0
+offset_bottom = 232.0
 text = "REMATCH"
 
-[node name="MenuButton" type="Button" parent="Root/Menu"]
+[node name="MenuButton" type="Button" parent="Root"]
 unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"TextButton"
-theme_override_font_sizes/font_size = 24
+custom_minimum_size = Vector2(192, 32)
+layout_mode = 0
+offset_left = 224.0
+offset_top = 248.0
+offset_right = 416.0
+offset_bottom = 280.0
 text = "BACK TO MENU"

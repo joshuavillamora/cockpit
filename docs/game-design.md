@@ -19,7 +19,7 @@ Loading ─► Main Menu ─► Character Select ─► Map Select ─► Lobby 
 ```
 
 - **Loading:** preloads the game, then "PRESS START".
-- **Main Menu:** Play, Settings (volume, fullscreen, Controls) and Quit.
+- **Main Menu:** Play, Settings (volume, fullscreen, Controls) and Exit.
 - **Character Select:** 4 chickens on each side; each player's pick is shown large in the middle.
 - **Map Select:** choose the arena.
 - **Lobby:** a training room. Test movement and attacks, hit the dummy, then walk both players into the door to start the match.
