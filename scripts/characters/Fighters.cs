@@ -80,6 +80,7 @@ public partial class Fighters : CharacterBody2D {
 	private AttackData currentAttack = Attacks[AttackType.NeutralAttack];
 	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey, downKey;
 	private float hitstunTimer = 0f;
+	private bool doubleJump = false;
 	
 	
 	public override void _Ready() {
@@ -118,6 +119,8 @@ public partial class Fighters : CharacterBody2D {
 		// Gravity
 		if (!IsOnFloor()) {
 			velocity += GetGravity() * (float)delta;
+		} else {
+			doubleJump = true;
 		}
 		
 		Velocity = velocity;
@@ -189,6 +192,9 @@ public partial class Fighters : CharacterBody2D {
 	private void Jump() {
 		if (Input.IsActionJustPressed(jumpKey) && IsOnFloor()) {
 			Velocity = new Vector2(Velocity.X, JumpVelocity);
+		} else if (Input.IsActionJustPressed(jumpKey) && doubleJump) {
+			Velocity = new Vector2(Velocity.X, JumpVelocity);
+			doubleJump = false;
 		}
 		if (Input.IsActionJustReleased(jumpKey) && Velocity.Y < 0) {
 			Velocity = new Vector2(Velocity.X, Velocity.Y * JumpCutMultiplier);
