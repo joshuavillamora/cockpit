@@ -231,6 +231,8 @@ public partial class Fighters : CharacterBody2D {
 			CancelAttack();
 			Velocity = new Vector2(Velocity.X, JumpVelocity);
 			doubleJump = false;
+
+			animatedSprite.SetFrameAndProgress(0, 0.0f);
 			animatedSprite.Play("jump");
 		}
 		if (Input.IsActionJustReleased(jumpKey) && Velocity.Y < 0) {
@@ -288,7 +290,12 @@ public partial class Fighters : CharacterBody2D {
 	}
 
 	private void OnAnimationFinished() {
-		if (isAttacking) EndAttack();
+		if (isAttacking) {
+			EndAttack();
+		} else if (animatedSprite.Animation == "jump") {
+			animatedSprite.SetFrameAndProgress(4, 1.0f);
+			animatedSprite.Pause();
+		}
 	}
 
 	private void OnHitboxAreaEntered(Area2D area) {
