@@ -12,4 +12,10 @@ public partial class CharacterData : Resource {
 	[Export] public Texture2D AbilityUnavailable;
 	[Export] public PackedScene Scene;       // fighter scene to spawn in a match
 	[Export] public bool Playable = true;    // false = shown as "SOON" on character select
+
+	// Character select info panel. Each box fits two lines of 20 characters: the name, then a short description.
+	[Export] public string AbilityName = "";
+	[Export] public string AbilityText = "";
+	[Export] public string PassiveName = "";
+	[Export] public string PassiveText = "";
 }

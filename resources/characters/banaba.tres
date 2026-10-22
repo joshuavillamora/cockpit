@@ -19,3 +19,7 @@ AbilityCooling = ExtResource("4")
 AbilityUnavailable = ExtResource("5")
 Scene = ExtResource("6")
 Playable = true
+AbilityName = "WAK-A-DOODLE-DOO"
+AbilityText = "AIMED DASH SLICE"
+PassiveName = "PASSIVE TBD"
+PassiveText = "TEXT COMING SOON"

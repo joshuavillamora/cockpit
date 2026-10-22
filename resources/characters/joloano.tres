@@ -19,3 +19,7 @@ AbilityCooling = ExtResource("4")
 AbilityUnavailable = ExtResource("5")
 Scene = ExtResource("6")
 Playable = true
+AbilityName = "BERNARDO'S FEET"
+AbilityText = "GROW, HIT HARDER"
+PassiveName = "PASSIVE TBD"
+PassiveText = "TEXT COMING SOON"
