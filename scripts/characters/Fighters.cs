@@ -164,9 +164,6 @@ public partial class Fighters : CharacterBody2D {
 			StartAttack();
 		}
 
-		// Jump
-		if (!stunned) Jump();
-
 		if (Input.IsActionJustReleased(downKey)) {
 			Position += new Vector2(0, 2);
 		}
@@ -179,7 +176,16 @@ public partial class Fighters : CharacterBody2D {
 			Vector2 dir = new Vector2(direction, 0);
 			Walk(dir, (float)delta);
 		}
+
+		// Jump
+		if (!stunned) Jump();
+
 		MoveAndSlide();
+		if (IsOnFloor() && !isAttacking && hitstunTimer <= 0f && !isBlocking) {
+			if (animatedSprite.Animation == "jump") {
+				animatedSprite.Play("idle");
+			}
+		}
 	}
 
 	private void Walk(Vector2 dir, float delta) {
@@ -205,7 +211,7 @@ public partial class Fighters : CharacterBody2D {
 		}
 
 
-		if (!isAttacking && !isBlocking && hitstunTimer <= 0f) {
+		if (IsOnFloor() && !isAttacking && !isBlocking && hitstunTimer <= 0f) {
 			if (dir.X != 0) {
 				if (animatedSprite.Animation != "walk") animatedSprite.Play("walk");
 			} else {
@@ -218,10 +224,14 @@ public partial class Fighters : CharacterBody2D {
 
 	private void Jump() {
 		if (Input.IsActionJustPressed(jumpKey) && IsOnFloor()) {
+			CancelAttack();
 			Velocity = new Vector2(Velocity.X, JumpVelocity);
+			animatedSprite.Play("jump");
 		} else if (Input.IsActionJustPressed(jumpKey) && doubleJump) {
+			CancelAttack();
 			Velocity = new Vector2(Velocity.X, JumpVelocity);
 			doubleJump = false;
+			animatedSprite.Play("jump");
 		}
 		if (Input.IsActionJustReleased(jumpKey) && Velocity.Y < 0) {
 			Velocity = new Vector2(Velocity.X, Velocity.Y * JumpCutMultiplier);
