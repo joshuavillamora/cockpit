@@ -81,6 +81,7 @@ public partial class Fighters : CharacterBody2D {
 	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey, downKey;
 	private float hitstunTimer = 0f;
 	private bool doubleJump = false;
+	private float glideMultiplier = 0.1f;
 	
 	
 	public override void _Ready() {
@@ -118,7 +119,9 @@ public partial class Fighters : CharacterBody2D {
 
 		// Gravity
 		if (!IsOnFloor()) {
-			velocity += GetGravity() * (float)delta;
+			bool isGliding = Input.IsActionPressed(jumpKey) && Velocity.Y > 0;
+			float gravityMultiplier = isGliding? glideMultiplier : 1.0f;
+			velocity += GetGravity() * gravityMultiplier * (float)delta;
 		} else {
 			doubleJump = true;
 		}
@@ -174,7 +177,7 @@ public partial class Fighters : CharacterBody2D {
 
 		float accel = Acceleration;
 		float decel = Deceleration;
-		if (isAttacking) {
+		if (isAttacking && IsOnFloor()) {
 			accel *= AttackAccelMultiplier * currentAttack.Mobility;
 			decel *= Mathf.Lerp(1f, AttackDecelMultiplier, currentAttack.Mobility);
 		}
