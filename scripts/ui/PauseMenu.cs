@@ -27,12 +27,14 @@ public partial class PauseMenu : CanvasLayer {
 	private void Pause() {
 		GetTree().Paused = true;
 		root.Visible = true;
+		AudioManager.Instance?.PlaySfx(Sfx.PopupOpen);
 		resumeButton.GrabFocus();
 	}
 
 	private void Resume() {
 		root.Visible = false;
 		GetTree().Paused = false;
+		AudioManager.Instance?.PlaySfx(Sfx.PopupClose);
 	}
 
 	private void OpenOverlay(string scenePath) {

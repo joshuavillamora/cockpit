@@ -10,6 +10,7 @@ public partial class OverlayScreen : Control {
 		var overlay = GD.Load<PackedScene>(scenePath).Instantiate<OverlayScreen>();
 		overlay.Closed += () => onClosed?.Invoke();
 		parent.AddChild(overlay);
+		AudioManager.Instance?.PlaySfx(Sfx.PopupOpen);
 		return overlay;
 	}
 
@@ -22,6 +23,7 @@ public partial class OverlayScreen : Control {
 
 	public void Close() {
 		OnClosing();
+		AudioManager.Instance?.PlaySfx(Sfx.PopupClose);
 		EmitSignal(SignalName.Closed);
 		QueueFree();
 	}
