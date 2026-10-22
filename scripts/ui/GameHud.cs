@@ -1,9 +1,11 @@
 using Godot;
 using System.Threading.Tasks;
 
-// In-match HUD. Layout follows the designer's HUD wireframe (everything inside y 0-64):
-// portrait, health bar, ability meter and round markers per player, and the match score between them.
-// Round and K.O. banners appear in the middle. MatchController calls Bind() each round.
+// In-match HUD. Layout follows the designer's final HUD wireframe (frame 5, everything inside y 0-76,
+// so the stage ceiling and platforms must stay below y 76): chicken name, portrait, health bar,
+// ability meter and round markers per player, and the match score between them.
+// Round, FIGHT! and KO banners have the lettering drawn in; DEATHMATCH and DRAW are written on blank banners.
+// MatchController calls Bind() each round.
 // Dark frames (ui_dark set) flash when a round marker is earned and when the score changes.
 public partial class GameHud : CanvasLayer {
 	private const string HudPath = "res://assets/ui/hud/";
@@ -14,6 +16,7 @@ public partial class GameHud : CanvasLayer {
 	private readonly TextureProgressBar[] bars = new TextureProgressBar[2];
 	private readonly TextureProgressBar[] meters = new TextureProgressBar[2];
 	private readonly TextureRect[] portraits = new TextureRect[2];
+	private readonly Label[] names = new Label[2];
 	private readonly HBoxContainer[] markerBoxes = new HBoxContainer[2];
 	private readonly bool[] meterFull = new bool[2];
 	private readonly bool[][] markerFilled = { new bool[GameManager.RoundsToWin], new bool[GameManager.RoundsToWin] };
@@ -21,8 +24,13 @@ public partial class GameHud : CanvasLayer {
 	private TextureRect counterFrame;
 	private Label scoreLabel;
 	private ColorRect dim;
-	private Control roundBanner;
-	private Control koBanner;
+	private TextureRect roundBanner;
+	private TextureRect koBanner;
+	private Texture2D[] roundBanners;
+	private Texture2D fightBanner;
+	private Texture2D koTexture;
+	private Texture2D blankRoundBanner;
+	private Texture2D blankKoBanner;
 	private Texture2D markerFull;
 	private Texture2D markerFullDark;
 	private Texture2D markerEmpty;
@@ -40,13 +48,25 @@ public partial class GameHud : CanvasLayer {
 		meters[1] = GetNode<TextureProgressBar>("%P2Meter");
 		portraits[0] = GetNode<TextureRect>("%P1Portrait");
 		portraits[1] = GetNode<TextureRect>("%P2Portrait");
+		names[0] = GetNode<Label>("%P1Name");
+		names[1] = GetNode<Label>("%P2Name");
 		markerBoxes[0] = GetNode<HBoxContainer>("%P1Markers");
 		markerBoxes[1] = GetNode<HBoxContainer>("%P2Markers");
 		counterFrame = GetNode<TextureRect>("%CounterFrame");
 		scoreLabel = GetNode<Label>("%ScoreLabel");
 		dim = GetNode<ColorRect>("%Dim");
-		roundBanner = GetNode<Control>("%RoundBanner");
-		koBanner = GetNode<Control>("%KoBanner");
+		roundBanner = GetNode<TextureRect>("%RoundBanner");
+		koBanner = GetNode<TextureRect>("%KoBanner");
+
+		roundBanners = new[] {
+			GD.Load<Texture2D>(HudPath + "ui_banner_round_1.png"),
+			GD.Load<Texture2D>(HudPath + "ui_banner_round_2.png"),
+			GD.Load<Texture2D>(HudPath + "ui_banner_round_3.png"),
+		};
+		fightBanner = GD.Load<Texture2D>(HudPath + "ui_banner_fight.png");
+		koTexture = GD.Load<Texture2D>(HudPath + "ui_banner_ko.png");
+		blankRoundBanner = GD.Load<Texture2D>(HudPath + "ui_banner_round.png");
+		blankKoBanner = GD.Load<Texture2D>(HudPath + "ui_banner_blank_ko.png");
 
 		markerFull = GD.Load<Texture2D>(HudPath + "ui_round_marker_full.png");
 		markerFullDark = GD.Load<Texture2D>(DarkPath + "ui_round_marker_full_dark.png");
@@ -79,6 +99,7 @@ public partial class GameHud : CanvasLayer {
 		for (int i = 0; i < 2; i++) {
 			int index = i;
 			portraits[i].Texture = characters[i].HudPortrait;
+			names[i].Text = characters[i].DisplayName;
 			SetMeter(i, 1f);   // placeholder: always full until abilities exist
 			SetHealth(i, fighters[i].Health, fighters[i].MaxHealth, false);
 			fighters[i].HealthChanged += (current, max) => SetHealth(index, current, max, true);
@@ -117,15 +138,21 @@ public partial class GameHud : CanvasLayer {
 
 	public async Task PlayRoundIntro(int round, bool deathmatch) {
 		if (deathmatch) {
-			await ShowBanner(roundBanner, "DEATHMATCH", 24, 1.6f, true);
+			await ShowBanner(roundBanner, blankRoundBanner, "DEATHMATCH", 24, 1.6f, true);
+		} else if (round >= 1 && round <= roundBanners.Length) {
+			await ShowBanner(roundBanner, roundBanners[round - 1], null, 0, 1.0f, false);
 		} else {
-			await ShowBanner(roundBanner, $"ROUND {round}", 32, 1.0f, false);
+			await ShowBanner(roundBanner, blankRoundBanner, $"ROUND {round}", 32, 1.0f, false);   // no drawn banner past 3
 		}
-		await ShowBanner(roundBanner, "FIGHT!", 32, 0.6f, false);
+		await ShowBanner(roundBanner, fightBanner, null, 0, 0.6f, false);
 	}
 
 	public async Task ShowKo(bool draw) {
-		await ShowBanner(koBanner, draw ? "DRAW" : "K.O.", 40, 1.8f, true);
+		if (draw) {
+			await ShowBanner(koBanner, blankKoBanner, "DRAW", 40, 1.8f, true);
+		} else {
+			await ShowBanner(koBanner, koTexture, null, 0, 1.8f, true);
+		}
 	}
 
 	private void SetHealth(int player, int current, int max, bool animate) {
@@ -146,10 +173,15 @@ public partial class GameHud : CanvasLayer {
 		rect.Texture = normal;
 	}
 
-	private async Task ShowBanner(Control banner, string text, int fontSize, float seconds, bool dimBackground) {
+	// text = null for banners that have the lettering drawn in
+	private async Task ShowBanner(TextureRect banner, Texture2D texture, string text, int fontSize, float seconds, bool dimBackground) {
+		banner.Texture = texture;
 		var label = banner.GetNode<Label>("Label");
-		label.Text = text;
-		label.AddThemeFontSizeOverride("font_size", fontSize);
+		label.Visible = text != null;
+		if (text != null) {
+			label.Text = text;
+			label.AddThemeFontSizeOverride("font_size", fontSize);
+		}
 		banner.PivotOffset = banner.Size / 2;
 		banner.Scale = new Vector2(1.5f, 1.5f);
 		dim.Visible = dimBackground;
