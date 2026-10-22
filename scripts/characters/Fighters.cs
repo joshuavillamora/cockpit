@@ -135,7 +135,7 @@ public partial class Fighters : CharacterBody2D {
 			if (hitstunTimer <= 0f) animatedSprite.Play("idle");
 		}
 		bool stunned = hitstunTimer > 0f;
-
+		
 		// Attack
 		if (Input.IsActionJustPressed(attackKey) && !isAttacking) {
 			attackBufferTimer = AttackBufferTime;
@@ -152,11 +152,13 @@ public partial class Fighters : CharacterBody2D {
 		if (!stunned) Jump();
 
 		// Horizontal movement
-		float direction = Input.GetAxis(moveLeft, moveRight);
-		if (stunned) HitstunDrift((float)delta);
-		Vector2 dir = new Vector2(direction, 0);
-
-		Walk(dir, (float)delta);
+		if (stunned) {
+			HitstunDrift((float)delta);
+		} else {
+			float direction = Input.GetAxis(moveLeft, moveRight);
+			Vector2 dir = new Vector2(direction, 0);
+			Walk(dir, (float)delta);
+		}
 		MoveAndSlide();
 	}
 
