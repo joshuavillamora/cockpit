@@ -207,19 +207,13 @@ height = 26.0
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
 animation = &"idle"
-frame_progress = 0.68550265
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
-visible = false
 position = Vector2(0, 19)
 shape = SubResource("CapsuleShape2D_hnnho")
 
 [node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
-visible = false
 position = Vector2(0, 16)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=38610296]
 position = Vector2(0, 0)
-
-[node name="Hurtbox" parent="." index="3" unique_id=1989035223]
-visible = false
