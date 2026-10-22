@@ -16,6 +16,7 @@ public partial class Fighters : CharacterBody2D {
 	[Export] public int PlayerId = 1;
 	[Export] public int MaxHealth = 100;
 	[Export] public bool StartFacingRight = true;
+	[Export] public float BlockDamageMultiplier = 0.2f;
 
 	// UI / match flow hooks (HUD and MatchController listen to these)
 	[Signal] public delegate void HealthChangedEventHandler(int current, int max);
@@ -82,6 +83,11 @@ public partial class Fighters : CharacterBody2D {
 	private float hitstunTimer = 0f;
 	private bool doubleJump = false;
 	private float glideMultiplier = 0.1f;
+	private const float BlockKnockbackMultiplier = 0.35f;
+	private const float BlockWalkMultiplier = 0.35f;        // slow shuffle while guarding
+
+	private StringName blockKey;
+	private bool isBlocking = false;
 	
 	
 	public override void _Ready() {
@@ -91,6 +97,7 @@ public partial class Fighters : CharacterBody2D {
 		attackKey = $"p{PlayerId}_attack";
 		upKey = $"p{PlayerId}_up";
 		downKey = $"p{PlayerId}_down";
+		blockKey = $"p{PlayerId}_block";
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		attackHitbox = GetNode<Area2D>("AttackHitbox");
@@ -142,14 +149,17 @@ public partial class Fighters : CharacterBody2D {
 		}
 		bool stunned = hitstunTimer > 0f;
 
+		// Blocking
+		Blocking(Input.IsActionPressed(blockKey) && IsOnFloor() && !isAttacking && !stunned);
+
 		// Attack
-		if (Input.IsActionJustPressed(attackKey) && !isAttacking) {
+		if (!stunned && !isBlocking && Input.IsActionJustPressed(attackKey) && !isAttacking) {
 			attackBufferTimer = AttackBufferTime;
 		}
 		attackBufferTimer -= (float)delta;
 
 		// Grounded Attacks
-		if (!stunned && attackBufferTimer > 0 && !isAttacking) {
+		if (!stunned && !isBlocking && attackBufferTimer > 0 && !isAttacking) {
 			attackBufferTimer = 0;
 			StartAttack();
 		}
@@ -177,14 +187,19 @@ public partial class Fighters : CharacterBody2D {
 
 		float accel = Acceleration;
 		float decel = Deceleration;
+		float spd = Speed;
+
 		if (isAttacking && IsOnFloor()) {
 			accel *= AttackAccelMultiplier * currentAttack.Mobility;
 			decel *= Mathf.Lerp(1f, AttackDecelMultiplier, currentAttack.Mobility);
 		}
 
+		if (isBlocking) spd *= BlockWalkMultiplier;
+
 		if (dir.X != 0) {
 			SetFacing(dir.X > 0);
-			velocity.X = Mathf.MoveToward(velocity.X, dir.X * Speed, accel * delta);
+			float rate = Mathf.Abs(velocity.X) > spd ? decel : accel;
+			velocity.X = Mathf.MoveToward(velocity.X, dir.X * spd, rate * delta);
 		} else {
 			velocity.X = Mathf.MoveToward(velocity.X, 0, decel * delta);
 		}
@@ -281,24 +296,32 @@ public partial class Fighters : CharacterBody2D {
 		attackHitbox.Position = new Vector2(right ? offset.X : -offset.X, offset.Y);
 	}
 
-	public void TakeDamage(int damage) {
-		if (Health <= 0) return;   // already knocked out
+	public void TakeDamage(int damage) => ApplyDamage(damage, true);   // still works for dummies
+
+	private void ApplyDamage(int damage, bool flash) {
+		if (Health <= 0) return;
 
 		Health = Mathf.Max(Health - damage, 0);
 		EmitSignal(SignalName.HealthChanged, Health, MaxHealth);
 		GD.Print($"{Name} took {damage} damage ({Health}/{MaxHealth})");
 
-		// Quick red flash so you can see hits land
-		animatedSprite.Modulate = new Color(1f, 0.4f, 0.4f);
-		CreateTween().TweenProperty(animatedSprite, "modulate", Colors.White, 0.15);
-
-		if (Health == 0) {
-			Die();
+		if (flash) {
+			animatedSprite.Modulate = new Color(1f, 0.4f, 0.4f);
+			CreateTween().TweenProperty(animatedSprite, "modulate", Colors.White, 0.15);
 		}
+
+		if (Health == 0) Die();
 	}
-	
+
 	public void TakeHit(int damage, Vector2 knockback, float hitstun) {
 		if (Health <= 0) return;
+
+		if (isBlocking) {
+			int chip = Mathf.Max(1, Mathf.RoundToInt(damage * BlockDamageMultiplier));
+			Velocity = new Vector2(knockback.X * BlockKnockbackMultiplier, Velocity.Y);
+			ApplyDamage(chip, false);
+			return;                              // no hitstun, no interrupt
+		}
 
 		CancelAttack();
 		attackBufferTimer = 0f;
@@ -306,7 +329,7 @@ public partial class Fighters : CharacterBody2D {
 		hitstunTimer = hitstun;
 
 		animatedSprite.Play("idle");
-		TakeDamage(damage);
+		ApplyDamage(damage, true);
 	}
 
 	private void CancelAttack() {
@@ -319,6 +342,19 @@ public partial class Fighters : CharacterBody2D {
 	private void HitstunDrift(float delta) {
 		float friction = IsOnFloor() ? 800f : 100f;
 		Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, friction * delta), Velocity.Y);
+	}
+
+	private void Blocking(bool block) {
+		if (block == isBlocking) return;
+		isBlocking = block;
+
+		animatedSprite.SelfModulate = block ? new Color(0.6f, 0.8f, 1f) : Colors.White;
+
+		if (block && animatedSprite.SpriteFrames.HasAnimation("block")) {
+			animatedSprite.Play("block");
+		} else if (!block && animatedSprite.Animation == "block") {
+			animatedSprite.Play("idle");
+		}
 	}
 
 	private void Die() {
