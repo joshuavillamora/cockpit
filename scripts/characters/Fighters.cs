@@ -200,8 +200,10 @@ public partial class Fighters : CharacterBody2D {
 			SetFacing(dir.X > 0);
 			float rate = Mathf.Abs(velocity.X) > spd ? decel : accel;
 			velocity.X = Mathf.MoveToward(velocity.X, dir.X * spd, rate * delta);
+			animatedSprite.Play("walk");
 		} else {
 			velocity.X = Mathf.MoveToward(velocity.X, 0, decel * delta);
+			animatedSprite.Play("idle");
 		}
 
 		Velocity = velocity;
