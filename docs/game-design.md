@@ -19,7 +19,7 @@ Loading ─► Main Menu ─► Character Select ─► Map Select ─► Lobby 
 ```
 
 - **Loading:** preloads the game, then "PRESS START".
-- **Main Menu:** Play, Settings (volume, fullscreen, Controls) and Exit.
+- **Main Menu:** Play, Settings (volume, fullscreen, Controls) and Quit.
 - **Character Select:** 4 chickens on each side; each player's pick is shown large in the middle.
 - **Map Select:** choose the arena.
 - **Lobby:** a training room. Test movement and attacks, hit the dummy, then walk both players into the door to start the match.
@@ -42,8 +42,9 @@ Loading ─► Main Menu ─► Character Select ─► Map Select ─► Lobby 
 | Up / Down (attack direction, menus) | `W` / `S` | `↑` / `↓` |
 | Jump | `K` or `Space` | `N` |
 | Attack | `J` or `E` | `M` or `/` |
+| Block (on the ground) | `H` | `,` |
 | Pause | `Esc` or `P` | `Esc` or `P` |
-| Block / Air dash | planned | planned |
+| Air dash | planned | planned |
 | Ability | planned | planned |
 
 Hold a direction while pressing Attack to choose the attack: neutral, side, up or down, on the ground or in the air.
