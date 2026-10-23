@@ -7,6 +7,7 @@ using Godot;
 public partial class UiFx : CanvasLayer {
 	private const string CursorPath = "res://assets/ui/icons/ui_cursor.png";
 	private const string DarkButtonPath = "res://assets/ui/dark/ui_button_normal_dark.png";
+	public const string NoFlash = "ui_fx_no_flash";   // set this meta on a button to skip the press flash
 	private const float FlashSeconds = 0.1f;
 	private const float PointerGap = 4f;        // space between the pointer and the focused control
 	private static readonly string[] ButtonStyles = { "normal", "hover", "pressed", "focus", "hover_pressed", "disabled" };
@@ -71,13 +72,22 @@ public partial class UiFx : CanvasLayer {
 		if (node is Button button) button.Pressed += () => Flash(button);
 	}
 
-	// Swap every button look for the dark one for a moment, then go back to the light look
+	// Swap every button look for the dark one for a moment, then go back to the look it had.
+	// Buttons with the NoFlash meta (the key slots on the controls screen) keep their own look.
 	private async void Flash(Button button) {
-		foreach (string style in ButtonStyles) button.AddThemeStyleboxOverride(style, darkButton);
+		if (button.HasMeta(NoFlash)) return;
+		var previous = new StyleBox[ButtonStyles.Length];
+		for (int i = 0; i < ButtonStyles.Length; i++) {
+			if (button.HasThemeStyleboxOverride(ButtonStyles[i])) previous[i] = button.GetThemeStylebox(ButtonStyles[i]);
+			button.AddThemeStyleboxOverride(ButtonStyles[i], darkButton);
+		}
 
 		await ToSignal(GetTree().CreateTimer(FlashSeconds), SceneTreeTimer.SignalName.Timeout);
 		if (!IsInstanceValid(button)) return;   // the button's screen closed in the meantime
 
-		foreach (string style in ButtonStyles) button.RemoveThemeStyleboxOverride(style);
+		for (int i = 0; i < ButtonStyles.Length; i++) {
+			if (previous[i] != null) button.AddThemeStyleboxOverride(ButtonStyles[i], previous[i]);
+			else button.RemoveThemeStyleboxOverride(ButtonStyles[i]);
+		}
 	}
 }
