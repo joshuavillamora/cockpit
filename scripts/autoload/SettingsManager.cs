@@ -37,6 +37,7 @@ public partial class SettingsManager : Node {
 
 	public void Save() {
 		var cfg = new ConfigFile();
+		cfg.Load(SavePath);   // keep the [controls] section InputBindings writes to the same file
 		cfg.SetValue("audio", "master", MasterVolume);
 		cfg.SetValue("audio", "music", MusicVolume);
 		cfg.SetValue("audio", "sfx", SfxVolume);
