@@ -68,7 +68,6 @@ public partial class Fighters : CharacterBody2D {
 	};
 
 	private AnimatedSprite2D animatedSprite;
-	private AnimatedSprite2D knockoutSprite;
 	private Area2D attackHitbox;
 	private Sprite2D hitboxVisual;
 	private CollisionShape2D hitboxShape;
@@ -101,7 +100,6 @@ public partial class Fighters : CharacterBody2D {
 		blockKey = $"p{PlayerId}_block";
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		knockoutSprite = GetNode<AnimatedSprite2D>("Knockout");
 		attackHitbox = GetNode<Area2D>("AttackHitbox");
 		hitboxShape = attackHitbox.GetNode<CollisionShape2D>("CollisionShape2D");
 		hitboxVisual = attackHitbox.GetNode<Sprite2D>("HitboxVisual");
@@ -118,8 +116,6 @@ public partial class Fighters : CharacterBody2D {
 		attackHitbox.AreaEntered += OnHitboxAreaEntered;
 		animatedSprite.FrameChanged += OnFrameChanged;
 		animatedSprite.AnimationFinished += OnAnimationFinished;
-
-		knockoutSprite.Visible = false;
 
 		SetFacing(StartFacingRight);
 		animatedSprite.Play("idle");
@@ -399,11 +395,8 @@ public partial class Fighters : CharacterBody2D {
 		GetNode<Area2D>("Hurtbox").SetDeferred(Area2D.PropertyName.Monitorable, false);
 		hitboxVisual.Visible = false;
 
-		knockoutSprite.FlipH = Velocity.X > 0;
-
-		animatedSprite.Visible = false;
-		knockoutSprite.Visible = true;
-		knockoutSprite.Play("knockout");
+		animatedSprite.FlipH = Velocity.X > 0;
+		animatedSprite.Play("knockout");
 
 		Velocity = new Vector2(1.0f, 0f);
 
