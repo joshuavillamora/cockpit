@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 public partial class Fighters : CharacterBody2D {
-	public const float Speed = 200.0f;
+	public const float Speed = 175.0f;
 	public const float Acceleration = 800.0f;
 	public const float Deceleration = 1800.0f;
 	public const float JumpVelocity = -350.0f;
@@ -17,6 +17,7 @@ public partial class Fighters : CharacterBody2D {
 	[Export] public int MaxHealth = 100;
 	[Export] public bool StartFacingRight = true;
 	[Export] public float BlockDamageMultiplier = 0.2f;
+	[Export] public float RunSpeed = 250f;
 
 	// UI / match flow hooks (HUD and MatchController listen to these)
 	[Signal] public delegate void HealthChangedEventHandler(int current, int max);
@@ -90,6 +91,12 @@ public partial class Fighters : CharacterBody2D {
 	private static int hitstopGeneration;
 	private static double previousTimeScale = 1.0;
 	private bool isBlocking = false;
+	private const float doubleTapWindow = 0.25f;
+	private bool isRunning = false;
+	private int runDir = 0;
+	private int lastTapDir = 0;
+	private double lastTapTime = -1.0;
+	private float accelBonus = 200f;
 	
 	
 	public override void _Ready() {
@@ -183,6 +190,8 @@ public partial class Fighters : CharacterBody2D {
 			Walk(dir, (float)delta);
 		}
 
+		Run(stunned);
+
 		// Jump
 		if (!stunned) Jump();
 
@@ -199,7 +208,9 @@ public partial class Fighters : CharacterBody2D {
 
 		float accel = Acceleration;
 		float decel = Deceleration;
-		float spd = Speed;
+		float spd = isRunning? RunSpeed : Speed;
+
+		if (isRunning) accel += accelBonus;
 
 		if (isAttacking && IsOnFloor()) {
 			accel *= AttackAccelMultiplier * currentAttack.Mobility;
@@ -219,7 +230,8 @@ public partial class Fighters : CharacterBody2D {
 
 		if (IsOnFloor() && !isAttacking && !isBlocking && hitstunTimer <= 0f) {
 			if (dir.X != 0) {
-				if (animatedSprite.Animation != "walk") animatedSprite.Play("walk");
+				string moveAnim = isRunning? "run" : "walk";
+				if (animatedSprite.Animation != moveAnim) animatedSprite.Play(moveAnim);
 			} else {
 				if (animatedSprite.Animation != "idle") animatedSprite.Play("idle");
 			}
@@ -244,6 +256,29 @@ public partial class Fighters : CharacterBody2D {
 		if (Input.IsActionJustReleased(jumpKey) && Velocity.Y < 0) {
 			Velocity = new Vector2(Velocity.X, Velocity.Y * JumpCutMultiplier);
 		}
+	}
+
+	private void Run(bool stunned) {
+		if (stunned || isBlocking) { isRunning = false; return; }
+
+		int tap = 0;
+		if (Input.IsActionJustPressed(moveRight)) tap = 1;
+		else if (Input.IsActionJustPressed(moveLeft)) tap = -1;
+
+		if (tap != 0) {
+			double now = Time.GetTicksMsec() / 1000.0;
+			if (tap == lastTapDir && now - lastTapTime <= doubleTapWindow && IsOnFloor()) {
+				isRunning = true;
+				runDir = tap;
+			}
+			lastTapDir = tap;
+			lastTapTime = now;
+		}
+
+		// Stop running when the direction is released or reversed
+		float axis = Input.GetAxis(moveLeft, moveRight);
+		int heldDir = Mathf.Abs(axis) > 0.1f ? (axis > 0 ? 1 : -1) : 0;
+		if (heldDir != runDir) isRunning = false;
 	}
 
 	// Attack functions
