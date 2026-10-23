@@ -48,23 +48,25 @@ public partial class Fighters : CharacterBody2D {
 		public float MomentumKeep;
 		public Vector2 Knockback;
 		public float Hitstun; 
+		public float Hitstop; 
 
-		public AttackData(string animation, Vector2 size, Vector2 offset, int startFrame, int endFrame, int damage, float mobility, float momentumKeep, Vector2 knockback, float hitstun) {
+		public AttackData(string animation, Vector2 size, Vector2 offset, int startFrame, int endFrame, int damage, float mobility, float momentumKeep, Vector2 knockback, float hitstun, float hitstop) {
 			Animation = animation; Size = size; Offset = offset;
 			StartFrame = startFrame; EndFrame = endFrame;
-			Damage = damage; Mobility = mobility; MomentumKeep = momentumKeep; Knockback = knockback; Hitstun = hitstun;
+			Damage = damage; Mobility = mobility; MomentumKeep = momentumKeep; 
+			Knockback = knockback; Hitstun = hitstun; Hitstop = hitstop;
 		}
 	}
 
 	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
-		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(24, 8),  1, 2, 4,  1.0f, 0.9f, new Vector2(100, -40),  0.50f) },
-		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(52, 16), new Vector2(52, 12), 1, 1, 8,  0.6f, 0.7f, new Vector2(220, -120), 0.70f) },
-		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7,  0.6f, 0.6f, new Vector2(40, -300),  0.80f) },
-		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(32, 20), new Vector2(28, 22), 2, 7, 14, 0.2f, 0.3f, new Vector2(100, -150), 1.00f) },
-		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(52, 44), new Vector2(0, 12),  1, 1, 5,  1.0f, 1.0f, new Vector2(150, -100), 0.60f) },
-		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(36, 18), new Vector2(50, 10), 1, 1, 7,  0.6f, 0.8f, new Vector2(220, -120), 0.70f) },
-		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18), 1, 1, 6,  0.6f, 0.8f, new Vector2(40, -280),  0.70f) },
-		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(0, 40),  1, 1, 10, 0.2f, 0.5f, new Vector2(60, 250),  0.80f) },
+		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(24, 8),  1, 2, 4,  1.0f, 0.9f, new Vector2(100, -40),  0.50f, 0.10f) },
+		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(52, 16), new Vector2(52, 12), 1, 1, 8,  0.6f, 0.7f, new Vector2(220, -120), 0.70f, 0.15f) },
+		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7,  0.6f, 0.6f, new Vector2(40, -300),  0.80f, 0.15f) },
+		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(32, 20), new Vector2(28, 22), 2, 7, 14, 0.2f, 0.3f, new Vector2(100, -150), 1.00f, 0.25f) },
+		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(52, 44), new Vector2(0, 12),  1, 1, 5,  1.0f, 1.0f, new Vector2(150, -100), 0.60f, 0.15f) },
+		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(36, 18), new Vector2(50, 10), 1, 1, 7,  0.6f, 0.8f, new Vector2(220, -120), 0.70f, 0.15f) },
+		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18), 1, 1, 6,  0.6f, 0.8f, new Vector2(40, -280),  0.70f, 0.15f) },
+		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(0, 40),  1, 1, 10, 0.2f, 0.5f, new Vector2(60, 250),  0.80f, 0.15f) },
 	};
 
 	private AnimatedSprite2D animatedSprite;
@@ -79,14 +81,14 @@ public partial class Fighters : CharacterBody2D {
 	private bool facingRight = true;
 	private float attackBufferTimer = 0f;
 	private AttackData currentAttack = Attacks[AttackType.NeutralAttack];
-	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey, downKey;
+	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey, downKey, blockKey;
 	private float hitstunTimer = 0f;
 	private bool doubleJump = false;
 	private float glideMultiplier = 0.1f;
 	private const float BlockKnockbackMultiplier = 0.35f;
 	private const float BlockWalkMultiplier = 0.35f;        // slow shuffle while guarding
-
-	private StringName blockKey;
+	private static int hitstopGeneration;
+	private static double previousTimeScale = 1.0;
 	private bool isBlocking = false;
 	
 	
@@ -310,7 +312,7 @@ public partial class Fighters : CharacterBody2D {
 		if (target is Fighters victim) {
 			Vector2 kb = currentAttack.Knockback;
 			kb.X *= facingRight ? 1 : -1;
-			victim.TakeHit(currentAttack.Damage, kb, currentAttack.Hitstun);
+			victim.TakeHit(currentAttack.Damage, kb, currentAttack.Hitstun, currentAttack.Hitstop);
 		} else if (target.HasMethod("TakeDamage")) {
 			target.Call("TakeDamage", currentAttack.Damage);
 		}
@@ -343,7 +345,7 @@ public partial class Fighters : CharacterBody2D {
 		if (Health == 0) Die();
 	}
 
-	public void TakeHit(int damage, Vector2 knockback, float hitstun) {
+	public void TakeHit(int damage, Vector2 knockback, float hitstun, float hitstop) {
 		if (Health <= 0) return;
 
 		if (isBlocking) {
@@ -360,6 +362,7 @@ public partial class Fighters : CharacterBody2D {
 
 		animatedSprite.Play("hurt");
 		ApplyDamage(damage, true);
+		Hitstop(hitstop);
 	}
 
 	private void CancelAttack() {
@@ -372,6 +375,22 @@ public partial class Fighters : CharacterBody2D {
 	private void HitstunDrift(float delta) {
 		float friction = IsOnFloor() ? 800f : 100f;
 		Velocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, friction * delta), Velocity.Y);
+	}
+
+	private async void Hitstop(float duration) {
+		int generation = ++hitstopGeneration;
+
+		if (Engine.TimeScale > 0f) {
+			previousTimeScale = Engine.TimeScale;
+		}
+
+		Engine.TimeScale = 0f;
+
+		await ToSignal(GetTree().CreateTimer(duration, true, false, true),SceneTreeTimer.SignalName.Timeout);
+
+		if (generation == hitstopGeneration) {
+			Engine.TimeScale = previousTimeScale;
+		}
 	}
 
 	private void Blocking(bool block) {
