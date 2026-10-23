@@ -57,7 +57,7 @@ public partial class Fighters : CharacterBody2D {
 	}
 
 	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
-		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(36, 8),  1, 1, 4,  1.0f, 0.9f, new Vector2(100, -40),  0.50f) },
+		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(24, 8),  1, 2, 4,  1.0f, 0.9f, new Vector2(100, -40),  0.50f) },
 		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(52, 16), new Vector2(52, 12), 1, 1, 8,  0.6f, 0.7f, new Vector2(220, -120), 0.70f) },
 		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 32), new Vector2(0, -14), 1, 1, 7,  0.6f, 0.6f, new Vector2(40, -300),  0.80f) },
 		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(28, 20), new Vector2(40, 22), 1, 1, 14, 0.2f, 0.3f, new Vector2(100, -150), 1.00f) },
