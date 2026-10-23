@@ -22,7 +22,14 @@ public partial class SettingsScreen : OverlayScreen {
 		fullscreen.Toggled += on => { settings.Fullscreen = on; settings.Apply(); };
 
 		var controlsButton = GetNode<Button>("%ControlsButton");
-		controlsButton.Pressed += () => OverlayScreen.Open(this, ControlsScreen.ScenePath, () => controlsButton.GrabFocus());
+		// Controls takes Settings' place (Settings hides), and BACK / Esc there brings Settings back
+		controlsButton.Pressed += () => {
+			Visible = false;
+			OverlayScreen.Open(GetParent(), ControlsScreen.ScenePath, () => {
+				Visible = true;
+				controlsButton.GrabFocus();
+			});
+		};
 		GetNode<Button>("%BackButton").Pressed += Close;
 		masterSlider.GrabFocus();
 	}

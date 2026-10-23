@@ -15,7 +15,8 @@ public partial class OverlayScreen : Control {
 	}
 
 	public override void _UnhandledInput(InputEvent @event) {
-		if (@event.IsActionPressed("ui_cancel")) {
+		// A hidden overlay is waiting behind another one (Settings behind Controls): only the top one closes
+		if (IsVisibleInTree() && @event.IsActionPressed("ui_cancel")) {
 			GetViewport().SetInputAsHandled();
 			Close();
 		}
