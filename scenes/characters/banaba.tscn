@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://chs5rj2huhdfx" path="res://assets/characters/banaba/banaba_neutral_attack.png" id="7_u3jka"]
 [ext_resource type="Texture2D" uid="uid://ca4f3yud720v2" path="res://assets/characters/banaba/banaba_walk.png" id="10_2l2mh"]
 [ext_resource type="Texture2D" uid="uid://cwinyhirkudlq" path="res://assets/characters/banaba/banaba_side_attack.png" id="10_etcxn"]
+[ext_resource type="Texture2D" uid="uid://ba0st4b120tyt" path="res://assets/characters/banaba/banaba_up_attack.png" id="11_7mj3p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jko6h"]
 atlas = ExtResource("2_m7p1d")
@@ -223,6 +224,22 @@ region = Rect2(128, 128, 128, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_3nik2"]
 atlas = ExtResource("10_etcxn")
 region = Rect2(256, 128, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7yyao"]
+atlas = ExtResource("11_7mj3p")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ynbv"]
+atlas = ExtResource("11_7mj3p")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vksuj"]
+atlas = ExtResource("11_7mj3p")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxfsc"]
+atlas = ExtResource("11_7mj3p")
+region = Rect2(64, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3o5uj"]
 atlas = ExtResource("10_2l2mh")
@@ -507,14 +524,26 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 8.0,
-"texture": SubResource("AtlasTexture_jko6h")
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_7yyao")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_3ynbv")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_vksuj")
 }, {
 "duration": 8.0,
-"texture": SubResource("AtlasTexture_m7p1d")
+"texture": SubResource("AtlasTexture_gxfsc")
 }, {
-"duration": 16.0,
-"texture": SubResource("AtlasTexture_iv7gr")
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_vksuj")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_3ynbv")
+}, {
+"duration": 12.0,
+"texture": SubResource("AtlasTexture_7yyao")
 }],
 "loop": 0,
 "name": &"up_attack",
@@ -541,22 +570,27 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bkf0j"]
 size = Vector2(24, 40)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mj3p"]
+size = Vector2(36, 32)
+
 [node name="Banaba" unique_id=460291919 instance=ExtResource("1_idp20")]
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
-animation = &"side_attack"
-frame = 9
-frame_progress = 1.0
+animation = &"up_attack"
+frame = 0
+frame_progress = 0.19101503
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 shape = SubResource("RectangleShape2D_bkf0j")
 
 [node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
+visible = false
 position = Vector2(0, 16)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=38610296]
 position = Vector2(0, 6)
 
 [node name="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1989035223) index="0" unique_id=826217368]
-position = Vector2(0.5, 14)
+position = Vector2(0.5, 11)
+shape = SubResource("RectangleShape2D_7mj3p")
