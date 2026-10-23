@@ -69,13 +69,13 @@ region = Rect2(256, 0, 64, 64)
 [sub_resource type="SpriteFrames" id="SpriteFrames_20cxu"]
 animations = [{
 "frames": [{
-"duration": 6.0,
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
-"duration": 4.0,
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
-"duration": 10.0,
+"duration": 20.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
@@ -83,13 +83,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 7.0,
+"duration": 14.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
-"duration": 3.0,
+"duration": 6.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
-"duration": 12.0,
+"duration": 24.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
@@ -157,13 +157,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 3.0,
-"texture": SubResource("AtlasTexture_d2hy4")
-}, {
 "duration": 6.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
-"duration": 6.0,
+"duration": 12.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
@@ -171,13 +171,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_d2hy4")
-}, {
-"duration": 2.0,
+"duration": 4.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
 "duration": 4.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
@@ -185,13 +185,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 4.0,
-"texture": SubResource("AtlasTexture_d2hy4")
-}, {
-"duration": 3.0,
-"texture": SubResource("AtlasTexture_d2hy4")
-}, {
 "duration": 8.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 16.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
@@ -199,13 +199,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 5.0,
+"duration": 10.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
-"duration": 3.0,
+"duration": 6.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
-"duration": 8.0,
+"duration": 16.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
@@ -213,13 +213,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 4.0,
-"texture": SubResource("AtlasTexture_d2hy4")
-}, {
-"duration": 3.0,
-"texture": SubResource("AtlasTexture_d2hy4")
-}, {
 "duration": 8.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 16.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
@@ -227,13 +227,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 4.0,
-"texture": SubResource("AtlasTexture_d2hy4")
-}, {
-"duration": 4.0,
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }, {
 "duration": 8.0,
+"texture": SubResource("AtlasTexture_d2hy4")
+}, {
+"duration": 16.0,
 "texture": SubResource("AtlasTexture_d2hy4")
 }],
 "loop": 0,
@@ -250,9 +250,7 @@ PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
-animation = &"hurt"
-frame = 5
-frame_progress = 1.0
+animation = &"up_attack"
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 position = Vector2(0, 16)

@@ -189,13 +189,13 @@ region = Rect2(192, 0, 64, 64)
 [sub_resource type="SpriteFrames" id="SpriteFrames_47mej"]
 animations = [{
 "frames": [{
-"duration": 6.0,
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_jko6h")
 }, {
-"duration": 4.0,
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_m7p1d")
 }, {
-"duration": 10.0,
+"duration": 20.0,
 "texture": SubResource("AtlasTexture_iv7gr")
 }],
 "loop": 0,
@@ -342,13 +342,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 3.0,
+"duration": 6.0,
 "texture": SubResource("AtlasTexture_jko6h")
 }, {
-"duration": 6.0,
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_m7p1d")
 }, {
-"duration": 6.0,
+"duration": 12.0,
 "texture": SubResource("AtlasTexture_iv7gr")
 }],
 "loop": 0,
@@ -373,13 +373,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 4.0,
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_jko6h")
 }, {
-"duration": 3.0,
+"duration": 6.0,
 "texture": SubResource("AtlasTexture_m7p1d")
 }, {
-"duration": 8.0,
+"duration": 16.0,
 "texture": SubResource("AtlasTexture_iv7gr")
 }],
 "loop": 0,
@@ -387,13 +387,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 5.0,
+"duration": 10.0,
 "texture": SubResource("AtlasTexture_jko6h")
 }, {
-"duration": 3.0,
+"duration": 6.0,
 "texture": SubResource("AtlasTexture_m7p1d")
 }, {
-"duration": 9.0,
+"duration": 18.0,
 "texture": SubResource("AtlasTexture_iv7gr")
 }],
 "loop": 0,
@@ -401,13 +401,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 4.0,
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_jko6h")
 }, {
-"duration": 3.0,
+"duration": 6.0,
 "texture": SubResource("AtlasTexture_m7p1d")
 }, {
-"duration": 8.0,
+"duration": 16.0,
 "texture": SubResource("AtlasTexture_iv7gr")
 }],
 "loop": 0,
@@ -415,13 +415,13 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 4.0,
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_jko6h")
 }, {
-"duration": 4.0,
+"duration": 8.0,
 "texture": SubResource("AtlasTexture_m7p1d")
 }, {
-"duration": 8.0,
+"duration": 16.0,
 "texture": SubResource("AtlasTexture_iv7gr")
 }],
 "loop": 0,
@@ -454,16 +454,13 @@ height = 26.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
-animation = &"down_attack"
-frame = 3
-frame_progress = 0.41955146
+animation = &"up_attack"
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 position = Vector2(0, 19)
 shape = SubResource("CapsuleShape2D_hnnho")
 
 [node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
-visible = false
 position = Vector2(0, 16)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=38610296]
