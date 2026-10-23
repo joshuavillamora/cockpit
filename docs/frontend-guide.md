@@ -142,7 +142,10 @@ public static OverlayScreen Open(Node parent, string scenePath, Action onClosed)
     return overlay;
 }
 ```
-`Instantiate` makes a copy of the scene, `AddChild` puts it on screen, `Closed` is a signal, and `onClosed` is the callback the opener passes in. `SettingsScreen` and `ControlsScreen` inherit this and get Esc-to-close and `Close()` for free. `SettingsScreen` overrides `OnClosing()` to save settings, and opens Controls on top of itself with the same `Open` call.
+`Instantiate` makes a copy of the scene, `AddChild` puts it on screen, `Closed` is a signal, and `onClosed` is the callback the opener passes in. `SettingsScreen` and `ControlsScreen` inherit this and get Esc-to-close and `Close()` for free. `SettingsScreen` overrides `OnClosing()` to save settings. Its CONTROLS button hides Settings and opens Controls next to it (same parent) with the same `Open` call; when Controls closes, Settings shows again. A hidden overlay ignores Esc, so Esc closes only the screen on top.
+
+### `InputBindings.cs` (autoload) and the controls screen
+The default keys are the first two keys of each `p1_*` / `p2_*` action in the Input Map (`project.godot`). `InputBindings` keeps two slots per action, writes them into the `InputMap` (so `Fighters` needs no changes) and saves only the actions a player changed to the `[controls]` section of `user://settings.cfg`. `Bind` moves a key that another action already has; `Clear` never empties an action's last key; keys of `pause`, `menu_start`, `start_fight`, `lobby_skip_tips` and `F11` are reserved. `GetLabels(action)` gives keycap labels, so hints use the live keys: `ControlsScreen.Rows` (read by the lobby) and the character select key bars are built from it. On the controls screen ENTER / click listens for a key (ESC cancels, the screen takes every key while listening), DEL clears a slot, RESET KEYS restores the defaults. The slots set `UiFx.NoFlash` so the global button flash leaves their look alone.
 
 ### `MainMenu.cs`
 `playButton.GrabFocus()` focuses Play so Godot's `ui_up`, `ui_down` and `ui_accept` actions can move and press buttons from the keyboard. Those actions are remapped in `project.godot` to add W, S and Enter. While an overlay is open the menu is hidden, and the `onClosed` callback shows it again.
@@ -181,7 +184,7 @@ fighter.MaxHealth = PracticeHealth;   // 9999, so nobody is knocked out in the l
 
 The door is an `Area2D` named `Door`, 64 px wide and touching the right wall, so a fighter cannot run past it. `BodyEntered` and `BodyExited` call `SetInDoor`, which marks that player ready (and fades them) or not ready. When both players are inside, `BeginMatch` locks both fighters, waits 0.8 s, and calls `GameManager.EnterMatch()`. Esc goes back to map select. Rematch skips the lobby and goes straight to the match.
 
-The layout follows the lobby wireframe (frame 12). Each player's panel lists the keys from `ControlsScreen.Rows` as keycaps, so changing a key there updates both screens. The door art switches to its dark version while anyone is inside.
+The layout follows the lobby wireframe (frame 12). Each player's panel lists the keys from `ControlsScreen.Rows` as keycaps, which come from the player's current bindings. The door art switches to its dark version while anyone is inside.
 
 The tips box at the bottom (`ui_tutorial_box`) shows one tip from the `Tips` array, with a dot per tip. It moves on every 4 seconds; `Enter` (`menu_start`) shows the next tip and `Tab` (`lobby_skip_tips`) hides or shows the box. These are handled in `_UnhandledInput`, and nothing in the lobby takes keyboard focus, so player keys like Space never press a button. Add the ability tip once abilities exist.
 

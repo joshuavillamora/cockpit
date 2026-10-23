@@ -47,6 +47,8 @@ Loading ─► Main Menu ─► Character Select ─► Map Select ─► Lobby 
 | Air dash | planned | planned |
 | Ability | planned | planned |
 
+Players can change these keys in **Settings > Controls**: every action has two key slots, and a key taken from another action moves over (the other action loses it). `Esc`, `P`, `Enter`, `Tab`, `F1` and `F11` are reserved. Custom keys are saved, and every key hint in the game (character select, lobby) shows the current keys.
+
 Hold a direction while pressing Attack to choose the attack: neutral, side, up or down, on the ground or in the air.
 
 **Menus:** `W`/`S` or the arrow keys move, `Enter` or `Space` selects, `Esc` goes back. On character select each player uses their own keys (up/down to choose, attack to confirm, jump to cancel), then `Enter` goes on to map select. On map select either player moves with left/right and `Enter` continues to the lobby. In the lobby, walk both chickens into the door to start the match, or press `Esc` to go back to map select. `F11` toggles fullscreen.
