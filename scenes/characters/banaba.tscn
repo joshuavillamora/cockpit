@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b55yl8grvgela" path="res://scenes/characters/fighter.tscn" id="1_idp20"]
 [ext_resource type="Texture2D" uid="uid://cdtm5h2wy5jej" path="res://assets/characters/banaba/banaba_attack.png" id="2_m7p1d"]
+[ext_resource type="Texture2D" uid="uid://binxordao0jte" path="res://assets/characters/banaba/banaba_block.png" id="2_qfgj4"]
 [ext_resource type="Texture2D" uid="uid://byqka4vqlfjpr" path="res://assets/characters/banaba/banaba_hurt.png" id="3_3ulhx"]
 [ext_resource type="Texture2D" uid="uid://0wk5t0jdlhqg" path="res://assets/characters/banaba/banaba_idle.png" id="3_8kerm"]
 [ext_resource type="Texture2D" uid="uid://dpbgnlb254bl7" path="res://assets/characters/banaba/banaba_down_attack.png" id="3_bkf0j"]
@@ -12,6 +13,14 @@
 [ext_resource type="Texture2D" uid="uid://ca4f3yud720v2" path="res://assets/characters/banaba/banaba_walk.png" id="10_2l2mh"]
 [ext_resource type="Texture2D" uid="uid://cwinyhirkudlq" path="res://assets/characters/banaba/banaba_side_attack.png" id="10_etcxn"]
 [ext_resource type="Texture2D" uid="uid://ba0st4b120tyt" path="res://assets/characters/banaba/banaba_up_attack.png" id="11_7mj3p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhrvn"]
+atlas = ExtResource("2_qfgj4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ow2m"]
+atlas = ExtResource("2_qfgj4")
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jko6h"]
 atlas = ExtResource("2_m7p1d")
@@ -259,6 +268,17 @@ region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_47mej"]
 animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_hhrvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ow2m")
+}],
+"loop": 0,
+"name": &"block",
+"speed": 30.0
+}, {
 "frames": [{
 "duration": 12.0,
 "texture": SubResource("AtlasTexture_jko6h")
@@ -577,15 +597,13 @@ size = Vector2(36, 32)
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
-animation = &"up_attack"
-frame = 0
-frame_progress = 0.19101503
+animation = &"block"
+frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 shape = SubResource("RectangleShape2D_bkf0j")
 
 [node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
-visible = false
 position = Vector2(0, 16)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=38610296]

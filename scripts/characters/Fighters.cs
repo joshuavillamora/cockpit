@@ -432,9 +432,7 @@ public partial class Fighters : CharacterBody2D {
 		if (block == isBlocking) return;
 		isBlocking = block;
 
-		animatedSprite.SelfModulate = block ? new Color(0.6f, 0.8f, 1f) : Colors.White;
-
-		if (block && animatedSprite.SpriteFrames.HasAnimation("block")) {
+		if (block) {
 			animatedSprite.Play("block");
 		} else if (!block && animatedSprite.Animation == "block") {
 			animatedSprite.Play("idle");
