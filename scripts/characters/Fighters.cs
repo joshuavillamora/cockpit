@@ -67,7 +67,7 @@ public partial class Fighters : CharacterBody2D {
 		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(52, 44), new Vector2(0, 12),  1, 1, 5,  0.8f, 0.8f, new Vector2(150, -100), 0.60f, 0.15f) },
 		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(36, 18), new Vector2(50, 10), 1, 1, 7,  0.4f, 0.6f, new Vector2(220, -120), 0.70f, 0.15f) },
 		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18), 1, 1, 6,  0.4f, 0.6f, new Vector2(40, -280),  0.70f, 0.15f) },
-		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(0, 40),  1, 1, 10, 0.1f, 0.3f, new Vector2(60, 250),  0.80f, 0.15f) },
+		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(12, 28),  1, 6, 8, 0.1f, 0.3f, new Vector2(60, 250),  0.80f, 0.15f) },
 	};
 
 	private AnimatedSprite2D animatedSprite;

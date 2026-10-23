@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://byqka4vqlfjpr" path="res://assets/characters/banaba/banaba_hurt.png" id="3_3ulhx"]
 [ext_resource type="Texture2D" uid="uid://0wk5t0jdlhqg" path="res://assets/characters/banaba/banaba_idle.png" id="3_8kerm"]
 [ext_resource type="Texture2D" uid="uid://dpbgnlb254bl7" path="res://assets/characters/banaba/banaba_down_attack.png" id="3_bkf0j"]
+[ext_resource type="Texture2D" uid="uid://d3br8gp5epuw5" path="res://assets/characters/banaba/banaba_down_air.png" id="3_p8dv5"]
 [ext_resource type="Texture2D" uid="uid://ui556xfyqmxf" path="res://assets/characters/banaba/banaba_run.png" id="4_8kerm"]
 [ext_resource type="Texture2D" uid="uid://cvhxp1ysjbyb" path="res://assets/characters/banaba/banaba_jump.png" id="4_hdv25"]
 [ext_resource type="Texture2D" uid="uid://ltt0s1hh0tw" path="res://assets/characters/banaba/banaba_knockout.png" id="6_8wnwh"]
@@ -22,17 +23,21 @@ region = Rect2(64, 0, 64, 64)
 atlas = ExtResource("2_qfgj4")
 region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jko6h"]
-atlas = ExtResource("2_m7p1d")
-region = Rect2(0, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_57nl7"]
+atlas = ExtResource("3_p8dv5")
+region = Rect2(128, 0, 128, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m7p1d"]
-atlas = ExtResource("2_m7p1d")
-region = Rect2(0, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_nudwl"]
+atlas = ExtResource("3_p8dv5")
+region = Rect2(0, 64, 128, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iv7gr"]
-atlas = ExtResource("2_m7p1d")
-region = Rect2(0, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gosy"]
+atlas = ExtResource("3_p8dv5")
+region = Rect2(128, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhde0"]
+atlas = ExtResource("3_p8dv5")
+region = Rect2(0, 0, 128, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m3btr"]
 atlas = ExtResource("3_bkf0j")
@@ -166,6 +171,18 @@ region = Rect2(384, 128, 192, 64)
 atlas = ExtResource("6_8wnwh")
 region = Rect2(192, 128, 192, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jko6h"]
+atlas = ExtResource("2_m7p1d")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7p1d"]
+atlas = ExtResource("2_m7p1d")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iv7gr"]
+atlas = ExtResource("2_m7p1d")
+region = Rect2(0, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_g3n8x"]
 atlas = ExtResource("7_u3jka")
 region = Rect2(0, 0, 128, 64)
@@ -280,14 +297,29 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 12.0,
-"texture": SubResource("AtlasTexture_jko6h")
-}, {
 "duration": 8.0,
-"texture": SubResource("AtlasTexture_m7p1d")
+"texture": SubResource("AtlasTexture_57nl7")
 }, {
-"duration": 20.0,
-"texture": SubResource("AtlasTexture_iv7gr")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_nudwl")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_2gosy")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_nudwl")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_2gosy")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_nudwl")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_2gosy")
+}, {
+"duration": 12.0,
+"texture": SubResource("AtlasTexture_fhde0")
 }],
 "loop": 0,
 "name": &"down_air",
@@ -597,18 +629,24 @@ size = Vector2(36, 32)
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
-animation = &"block"
+animation = &"down_air"
+frame = 7
 frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
+visible = false
 shape = SubResource("RectangleShape2D_bkf0j")
 
 [node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
+visible = false
 position = Vector2(0, 16)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=38610296]
 position = Vector2(0, 6)
 
-[node name="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1989035223) index="0" unique_id=826217368]
+[node name="Hurtbox" parent="." index="3" unique_id=1989035223]
+visible = false
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0" unique_id=826217368]
 position = Vector2(0.5, 11)
 shape = SubResource("RectangleShape2D_7mj3p")
