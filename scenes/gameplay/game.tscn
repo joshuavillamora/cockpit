@@ -43,6 +43,7 @@ position = Vector2(320.00003, 257.0001)
 shape = SubResource("WorldBoundaryShape2D_1438b")
 
 [node name="Wall" type="StaticBody2D" parent="." unique_id=777238615]
+collision_layer = 2
 
 [node name="Left" type="CollisionShape2D" parent="Wall" unique_id=2139905109]
 rotation = 1.5707964
