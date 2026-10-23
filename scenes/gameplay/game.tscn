@@ -13,7 +13,7 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gx6lm"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vxo0c"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mwwos"]
 texture = ExtResource("6_mwwos")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
@@ -26,9 +26,8 @@ texture = ExtResource("6_mwwos")
 2:0/0/physics_layer_0/polygon_0/one_way = true
 
 [sub_resource type="TileSet" id="TileSet_37n2d"]
-physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 2
-sources/0 = SubResource("TileSetAtlasSource_vxo0c")
+physics_layer_0/collision_layer = 2
+sources/0 = SubResource("TileSetAtlasSource_mwwos")
 
 [node name="Game" type="Node2D" unique_id=229146293]
 
@@ -37,6 +36,7 @@ position = Vector2(320, 180)
 texture = ExtResource("2_yqjtg")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=439591632]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=2128874581]
 position = Vector2(320.00003, 257.0001)

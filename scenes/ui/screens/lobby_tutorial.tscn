@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cbqicgof10igl"]
 
-[ext_resource type="Script" path="res://scripts/core/LobbyController.cs" id="1_lobby"]
-[ext_resource type="Texture2D" path="res://assets/arenas/main/background.png" id="2_bg"]
+[ext_resource type="Script" uid="uid://b3uce452xp570" path="res://scripts/core/LobbyController.cs" id="1_lobby"]
+[ext_resource type="Texture2D" uid="uid://d2vmg0hhebutt" path="res://assets/arenas/main/background.png" id="2_bg"]
 [ext_resource type="PackedScene" path="res://scenes/gameplay/training_dummy.tscn" id="3_dummy"]
-[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_lobby_door.png" id="4_door"]
-[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_counter_frame.png" id="5_plate"]
+[ext_resource type="Texture2D" uid="uid://7pcbacysb206" path="res://assets/ui/hud/ui_lobby_door.png" id="4_door"]
+[ext_resource type="Texture2D" uid="uid://bdynkfshyeg65" path="res://assets/ui/hud/ui_counter_frame.png" id="5_plate"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_floor"]
 
@@ -15,45 +15,46 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
 size = Vector2(64, 68)
 
-[node name="LobbyTutorial" type="Node2D"]
+[node name="LobbyTutorial" type="Node2D" unique_id=891211959]
 script = ExtResource("1_lobby")
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="." unique_id=442550251]
 position = Vector2(320, 180)
 texture = ExtResource("2_bg")
 
-[node name="Floor" type="StaticBody2D" parent="."]
+[node name="Floor" type="StaticBody2D" parent="." unique_id=2026949200]
+collision_layer = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=351792263]
 position = Vector2(320, 257)
 shape = SubResource("WorldBoundaryShape2D_floor")
 
-[node name="Wall" type="StaticBody2D" parent="."]
+[node name="Wall" type="StaticBody2D" parent="." unique_id=1552331276]
 
-[node name="Left" type="CollisionShape2D" parent="Wall"]
+[node name="Left" type="CollisionShape2D" parent="Wall" unique_id=1731470940]
 rotation = 1.5707964
 shape = SubResource("WorldBoundaryShape2D_left")
 
-[node name="Right" type="CollisionShape2D" parent="Wall"]
+[node name="Right" type="CollisionShape2D" parent="Wall" unique_id=1856832093]
 position = Vector2(640, 0)
 rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_right")
 
-[node name="SpawnP1" type="Marker2D" parent="."]
+[node name="SpawnP1" type="Marker2D" parent="." unique_id=159352691]
 position = Vector2(130, 220)
 
-[node name="SpawnP2" type="Marker2D" parent="."]
+[node name="SpawnP2" type="Marker2D" parent="." unique_id=873388951]
 position = Vector2(200, 220)
 
-[node name="Dummy" parent="." instance=ExtResource("3_dummy")]
+[node name="Dummy" parent="." unique_id=1914534946 instance=ExtResource("3_dummy")]
 position = Vector2(340, 257)
 
-[node name="Door" type="Area2D" parent="."]
+[node name="Door" type="Area2D" parent="." unique_id=1147480922]
 unique_name_in_owner = true
 position = Vector2(608, 257)
 collision_layer = 0
 
-[node name="Art" type="TextureRect" parent="Door"]
+[node name="Art" type="TextureRect" parent="Door" unique_id=1387373274]
 unique_name_in_owner = true
 offset_left = -32.0
 offset_top = -68.0
@@ -61,7 +62,7 @@ offset_right = 32.0
 mouse_filter = 2
 texture = ExtResource("4_door")
 
-[node name="Sign" type="Label" parent="Door"]
+[node name="Sign" type="Label" parent="Door" unique_id=170239948]
 offset_left = -20.0
 offset_top = -44.0
 offset_right = 20.0
@@ -70,14 +71,14 @@ theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
 text = "GO"
 horizontal_alignment = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=582573767]
 position = Vector2(0, -34)
 shape = SubResource("RectangleShape2D_door")
 
-[node name="Ui" type="CanvasLayer" parent="."]
+[node name="Ui" type="CanvasLayer" parent="." unique_id=1129880341]
 layer = 5
 
-[node name="Root" type="Control" parent="Ui"]
+[node name="Root" type="Control" parent="Ui" unique_id=1535662441]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -86,7 +87,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Title" type="Label" parent="Ui/Root"]
+[node name="Title" type="Label" parent="Ui/Root" unique_id=228916860]
 layout_mode = 0
 offset_left = 144.0
 offset_top = 4.0
@@ -96,16 +97,16 @@ text = "TRAINING LOBBY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BackHint" type="Control" parent="Ui/Root"]
+[node name="BackHint" type="Control" parent="Ui/Root" unique_id=2103036560]
 unique_name_in_owner = true
-layout_mode = 0
+anchors_preset = 0
 offset_left = 8.0
 offset_top = 6.0
 offset_right = 104.0
 offset_bottom = 22.0
 mouse_filter = 2
 
-[node name="P1Panel" type="Panel" parent="Ui/Root"]
+[node name="P1Panel" type="Panel" parent="Ui/Root" unique_id=1878338874]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 8.0
@@ -115,7 +116,7 @@ offset_bottom = 188.0
 mouse_filter = 2
 theme_type_variation = &"InfoPanel"
 
-[node name="P2Panel" type="Panel" parent="Ui/Root"]
+[node name="P2Panel" type="Panel" parent="Ui/Root" unique_id=1978825602]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 372.0
@@ -125,20 +126,19 @@ offset_bottom = 188.0
 mouse_filter = 2
 theme_type_variation = &"InfoPanel"
 
-[node name="HitPlate" type="NinePatchRect" parent="Ui/Root"]
+[node name="HitPlate" type="NinePatchRect" parent="Ui/Root" unique_id=1753850955]
 layout_mode = 0
 offset_left = 272.0
 offset_top = 152.0
 offset_right = 368.0
 offset_bottom = 184.0
-mouse_filter = 2
 texture = ExtResource("5_plate")
 patch_margin_left = 8
 patch_margin_top = 8
 patch_margin_right = 8
 patch_margin_bottom = 8
 
-[node name="HitLabel" type="Label" parent="Ui/Root/HitPlate"]
+[node name="HitLabel" type="Label" parent="Ui/Root/HitPlate" unique_id=1163641826]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -154,7 +154,7 @@ DUMMY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TipsBox" type="Panel" parent="Ui/Root"]
+[node name="TipsBox" type="Panel" parent="Ui/Root" unique_id=1169822898]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 80.0
@@ -164,7 +164,7 @@ offset_bottom = 340.0
 mouse_filter = 2
 theme_type_variation = &"TutorialBox"
 
-[node name="TipLabel" type="Label" parent="Ui/Root/TipsBox"]
+[node name="TipLabel" type="Label" parent="Ui/Root/TipsBox" unique_id=1839861707]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 18.0
@@ -174,7 +174,7 @@ offset_bottom = 42.0
 text = "TIP"
 autowrap_mode = 2
 
-[node name="TipDots" type="HBoxContainer" parent="Ui/Root/TipsBox"]
+[node name="TipDots" type="HBoxContainer" parent="Ui/Root/TipsBox" unique_id=585815085]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 18.0
@@ -184,7 +184,7 @@ offset_bottom = 66.0
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="TipKeys" type="HBoxContainer" parent="Ui/Root/TipsBox"]
+[node name="TipKeys" type="HBoxContainer" parent="Ui/Root/TipsBox" unique_id=1396871841]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 222.0
@@ -195,7 +195,7 @@ mouse_filter = 2
 theme_override_constants/separation = 3
 alignment = 2
 
-[node name="DoorStatus" type="Label" parent="Ui/Root"]
+[node name="DoorStatus" type="Label" parent="Ui/Root" unique_id=1862358912]
 unique_name_in_owner = true
 layout_mode = 0
 offset_top = 342.0

@@ -15,20 +15,22 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gx6lm"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vxo0c"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5gx0m"]
 texture = ExtResource("6_7y8vt")
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
+0:0/0/physics_layer_0/polygon_0/one_way = true
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
 1:0/0/physics_layer_0/polygon_0/one_way = true
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
+2:0/0/physics_layer_0/polygon_0/one_way = true
 
-[sub_resource type="TileSet" id="TileSet_37n2d"]
+[sub_resource type="TileSet" id="TileSet_ngn2o"]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 2
-sources/0 = SubResource("TileSetAtlasSource_vxo0c")
+sources/0 = SubResource("TileSetAtlasSource_5gx0m")
 
 [node name="Game" type="Node2D" unique_id=229146293]
 
@@ -37,6 +39,7 @@ position = Vector2(320, 180)
 texture = ExtResource("1_g3rpp")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=439591632]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=2128874581]
 position = Vector2(320.00003, 257.0001)
@@ -65,10 +68,10 @@ position = Vector2(455, 222)
 
 [node name="PauseMenu" parent="." unique_id=178616233 instance=ExtResource("4_ngn2o")]
 
-[node name="MatchController" type="Node" parent="." unique_id=872889439]
+[node name="MatchController" type="Node" parent="." unique_id=935998966]
 script = ExtResource("5_jc2n5")
 
-[node name="Platforms" type="TileMapLayer" parent="." unique_id=941803799]
+[node name="Platforms" type="TileMapLayer" parent="." unique_id=1109315185]
 position = Vector2(1, 0)
 tile_map_data = PackedByteArray("AAASAAgAAAABAAAAAAATAAgAAAABAAAAAAAUAAgAAAABAAAAAAAVAAgAAAABAAAAAAAWAAgAAAABAAAAAAAXAAgAAAABAAAAAAARAAgAAAABAAAAAAAQAAgAAAABAAAAAAAPAAgAAAAAAAAAAAAYAAgAAAACAAAAAAAFAAwAAAABAAAAAAAGAAwAAAABAAAAAAAHAAwAAAABAAAAAAAIAAwAAAABAAAAAAAJAAwAAAABAAAAAAAKAAwAAAABAAAAAAALAAwAAAABAAAAAAAcAAwAAAABAAAAAAAdAAwAAAABAAAAAAAeAAwAAAABAAAAAAAfAAwAAAABAAAAAAAgAAwAAAABAAAAAAAhAAwAAAABAAAAAAAiAAwAAAABAAAAAAAjAAwAAAACAAAAAAAMAAwAAAACAAAAAAAEAAwAAAAAAAAAAAAbAAwAAAAAAAAAAAA=")
-tile_set = SubResource("TileSet_37n2d")
+tile_set = SubResource("TileSet_ngn2o")

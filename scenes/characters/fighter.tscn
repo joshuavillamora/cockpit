@@ -59,8 +59,8 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hnnho"]
-radius = 7.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dpxq6"]
+size = Vector2(44, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hnnho"]
 size = Vector2(21.25, 20)
@@ -68,25 +68,27 @@ size = Vector2(21.25, 20)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_d2soj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1438b"]
-size = Vector2(23, 36)
+size = Vector2(36, 26)
 
 [node name="Fighter" type="CharacterBody2D" unique_id=460291919]
+collision_mask = 2
 script = ExtResource("1_d2soj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_yqjtg")
-animation = &"attack"
+animation = &"idle"
+frame = 1
+frame_progress = 0.16170564
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1785863898]
-position = Vector2(0, 9)
-shape = SubResource("CircleShape2D_hnnho")
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_dpxq6")
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=1993799062]
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=38610296]
-position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_hnnho")
 
 [node name="HitboxVisual" type="Sprite2D" parent="AttackHitbox" unique_id=471564784]
@@ -98,5 +100,5 @@ collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=826217368]
-position = Vector2(0.5, 14)
+position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_1438b")
