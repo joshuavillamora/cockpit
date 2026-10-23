@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 // Each player has their own column of chickens (P1 left, P2 right), moves with up/down,
 // confirms with attack and cancels with jump. The picks stand on name boxes in the middle ("box vs box").
@@ -276,7 +277,10 @@ public partial class CharacterSelect : Control {
 
 	// Three even columns, keycaps above the word: MOVE / OK / BACK in the player's colour
 	private Control BuildKeyBar(int player) {
-		string[][] keys = { new[] { "W", "S", "J", "K" }, new[] { Keycap.Up, Keycap.Down, "M", "N" } };
+		// The player's current first key for each action, so custom bindings show up here
+		string prefix = $"p{player + 1}_";
+		string[] keys = { "up", "down", "attack", "jump" };
+		keys = keys.Select(a => InputBindings.Instance.GetLabels(prefix + a).FirstOrDefault() ?? "?").ToArray();
 		var bar = new Panel { Position = new Vector2(0, BarTop), Size = new Vector2(StageWidth, BarHeight), MouseFilter = MouseFilterEnum.Ignore };
 		bar.AddThemeStyleboxOverride("panel", Box(Fill, Edge, 2));
 
@@ -285,9 +289,9 @@ public partial class CharacterSelect : Control {
 		bar.AddChild(columns);
 
 		(string[] Keys, string Word)[] groups = {
-			(new[] { keys[player][0], keys[player][1] }, "MOVE"),
-			(new[] { keys[player][2] }, "OK"),
-			(new[] { keys[player][3] }, "BACK"),
+			(new[] { keys[0], keys[1] }, "MOVE"),
+			(new[] { keys[2] }, "OK"),
+			(new[] { keys[3] }, "BACK"),
 		};
 		for (int g = 0; g < groups.Length; g++) {
 			var column = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, Alignment = BoxContainer.AlignmentMode.Center };
