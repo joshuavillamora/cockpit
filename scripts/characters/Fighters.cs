@@ -196,8 +196,18 @@ public partial class Fighters : CharacterBody2D {
 		if (!stunned) Jump();
 
 		MoveAndSlide();
-		if (IsOnFloor() && !isAttacking && hitstunTimer <= 0f && !isBlocking) {
-			if (animatedSprite.Animation == "jump") {
+		if (IsOnFloor()) {
+			if (isAttacking && currentAttack.Animation.EndsWith("_air")) {
+				bool isActive = animatedSprite.Frame >= currentAttack.StartFrame
+					&& animatedSprite.Frame <= currentAttack.EndFrame;
+
+				if (!isActive) {
+					CancelAttack();
+					animatedSprite.Play("idle");
+				}
+			}
+
+			if (!isAttacking && hitstunTimer <= 0f && !isBlocking && animatedSprite.Animation == "jump") {
 				animatedSprite.Play("idle");
 			}
 		}
