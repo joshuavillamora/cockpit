@@ -249,11 +249,15 @@ size = Vector2(21.25, 20)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_d2soj"]
 
-[node name="s" unique_id=460291919 instance=ExtResource("1_20cxu")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jny6k"]
+size = Vector2(36, 33)
+
+[node name="Joloano" unique_id=460291919 instance=ExtResource("1_20cxu")]
 PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
+animation = &"down_air"
 frame = 0
 frame_progress = 0.0
 
@@ -269,3 +273,7 @@ shape = SubResource("RectangleShape2D_hnnho")
 
 [node name="HitboxVisual" parent="AttackHitbox" index="1" unique_id=471564784]
 texture = SubResource("PlaceholderTexture2D_d2soj")
+
+[node name="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1989035223) index="0" unique_id=826217368]
+position = Vector2(0.5, 10.5)
+shape = SubResource("RectangleShape2D_jny6k")
