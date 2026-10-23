@@ -16,12 +16,14 @@
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vxo0c"]
 texture = ExtResource("6_mwwos")
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
+0:0/0/physics_layer_0/polygon_0/one_way = true
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
 1:0/0/physics_layer_0/polygon_0/one_way = true
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.4749136, -8, -6.4749136)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
+2:0/0/physics_layer_0/polygon_0/one_way = true
 
 [sub_resource type="TileSet" id="TileSet_37n2d"]
 physics_layer_0/collision_layer = 1
