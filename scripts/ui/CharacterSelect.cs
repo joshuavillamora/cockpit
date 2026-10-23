@@ -76,15 +76,20 @@ public partial class CharacterSelect : Control {
 	public override void _UnhandledInput(InputEvent @event) {
 		if (@event.IsActionPressed("ui_cancel")) {
 			GetViewport().SetInputAsHandled();
+			AudioManager.Instance?.PlaySfx(Sfx.MenuBack);
 			SceneFlow.Instance.GoTo(GameManager.MainMenuScene);
 		}
 	}
 
 	public override void _Process(double delta) {
 		// Enter moves on once both players have confirmed
-		if (confirmed[0] && confirmed[1] && Input.IsActionJustPressed("menu_start")) {
-			GoToMapSelect();
-			return;
+		if (Input.IsActionJustPressed("menu_start")) {
+			if (confirmed[0] && confirmed[1]) {
+				AudioManager.Instance?.PlaySfx(Sfx.MatchStart);
+				GoToMapSelect();
+				return;
+			}
+			AudioManager.Instance?.PlaySfx(Sfx.Error);   // someone hasn't picked yet
 		}
 
 		for (int p = 0; p < 2; p++) {
@@ -99,9 +104,11 @@ public partial class CharacterSelect : Control {
 				if (!confirmed[p]) {
 					confirmed[p] = true;
 					FlashFrames(p);
+					AudioManager.Instance?.PlaySfx(Sfx.Ready);
 				}
-			} else if (Input.IsActionJustPressed(prefix + "jump")) {
+			} else if (Input.IsActionJustPressed(prefix + "jump") && confirmed[p]) {
 				confirmed[p] = false;
+				AudioManager.Instance?.PlaySfx(Sfx.Unready);
 			}
 		}
 
@@ -114,6 +121,7 @@ public partial class CharacterSelect : Control {
 		for (int step = 0; step < count; step++) {
 			index = (index + direction + count) % count;
 			if (characters[index].Playable) {
+				if (index != cursor[player]) AudioManager.Instance?.PlaySfx(Sfx.SelectMove, 0.05f);
 				cursor[player] = index;
 				return;
 			}

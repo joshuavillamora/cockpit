@@ -17,5 +17,6 @@ public partial class VictoryOverlay : CanvasLayer {
 		GetNode<Label>("%Winner").Text = $"PLAYER {winner} WINS";
 		root.Visible = true;
 		rematchButton.GrabFocus();
+		AudioManager.Instance?.PlaySfx(Sfx.Victory);
 	}
 }

@@ -77,6 +77,9 @@ Currently unused by any screen: `ui_menu_rooster_left/right`, `ui_emblem_p1/p2`,
 | Change intro / K.O. / Deathmatch text | `GameHud.cs` (`PlayRoundIntro`, `ShowKo`) |
 | Change what happens on KO / round end | `MatchController.cs` (`OnFighterDied`) |
 | Change the lobby tips | `LobbyController.cs` (`Tips`) |
+| Swap a sound | Replace the file in `assets/audio/sfx/` (keep the name) and update `CREDITS.md` |
+| Change a sound's loudness | `AudioManager.cs` (`Volumes`) |
+| Change the music | `assets/audio/music/main.mp3` |
 | Move or resize the lobby door | `lobby_tutorial.tscn` → `Door` (and its `CollisionShape2D`) |
 | Change health bar color | `GameHud.SetHealth` |
 | Change volume / fullscreen behavior | `SettingsManager.cs` |

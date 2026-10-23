@@ -1,9 +1,11 @@
 using Godot;
 
 // First screen: preloads the game's scenes and data in the background, then waits for "press start".
+// When loading is done the rooster calls (BAKAWK!) and the music starts.
 public partial class LoadingScreen : Control {
 	private const float MinShowTime = 1.2f;
 	private const float BlinkInterval = 0.5f;
+	private const float MusicDelay = 1.2f;   // let the rooster call finish first
 
 	private static readonly string[] Preload = {
 		GameManager.MainMenuScene,
@@ -63,6 +65,8 @@ public partial class LoadingScreen : Control {
 				GetNode<Control>("%LoadingBarFrame").Visible = false;
 				status.Visible = false;
 				pressStart.Visible = true;
+				AudioManager.Instance?.PlaySfx(Sfx.Bakawk);
+				StartMusicLater();
 			}
 			return;
 		}
@@ -75,7 +79,13 @@ public partial class LoadingScreen : Control {
 		if (!ready || leaving || @event.IsEcho() || !@event.IsPressed()) return;
 		if (@event is InputEventKey || @event is InputEventJoypadButton) {
 			leaving = true;
+			AudioManager.Instance?.PlaySfx(Sfx.MenuConfirm);
 			SceneFlow.Instance.GoTo(GameManager.MainMenuScene);
 		}
+	}
+
+	private async void StartMusicLater() {
+		await ToSignal(GetTree().CreateTimer(MusicDelay), SceneTreeTimer.SignalName.Timeout);
+		AudioManager.Instance?.PlayMusic(Music.Main);   // the autoload outlives this screen
 	}
 }

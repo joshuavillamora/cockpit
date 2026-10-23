@@ -12,6 +12,8 @@ public partial class GameHud : CanvasLayer {
 	private const string DarkPath = "res://assets/ui/dark/";
 	private const float FlashSeconds = 0.15f;
 	private const float PulseSeconds = 0.25f;   // how often the full meter swaps gold <-> dark gold
+	private const int BlockChipMax = 3;         // a blocked hit only takes 20% (1-3 HP); real hits take 4 or more
+	private const float MatchMusicDb = -6f;     // music sits under the fight
 
 	private readonly TextureProgressBar[] bars = new TextureProgressBar[2];
 	private readonly TextureProgressBar[] meters = new TextureProgressBar[2];
@@ -19,6 +21,7 @@ public partial class GameHud : CanvasLayer {
 	private readonly Label[] names = new Label[2];
 	private readonly HBoxContainer[] markerBoxes = new HBoxContainer[2];
 	private readonly bool[] meterFull = new bool[2];
+	private readonly int[] lastHealth = new int[2];
 	private readonly bool[][] markerFilled = { new bool[GameManager.RoundsToWin], new bool[GameManager.RoundsToWin] };
 
 	private TextureRect counterFrame;
@@ -101,10 +104,12 @@ public partial class GameHud : CanvasLayer {
 			portraits[i].Texture = characters[i].HudPortrait;
 			names[i].Text = characters[i].DisplayName;
 			SetMeter(i, 1f);   // placeholder: always full until abilities exist
+			lastHealth[i] = fighters[i].Health;
 			SetHealth(i, fighters[i].Health, fighters[i].MaxHealth, false);
 			fighters[i].HealthChanged += (current, max) => SetHealth(index, current, max, true);
 		}
 		UpdateScore(false);
+		AudioManager.Instance?.SetMusicLevel(MatchMusicDb);
 	}
 
 	// ratio 0..1. A full meter shows the gold fill and pulses; anything less shows the normal fill.
@@ -137,6 +142,7 @@ public partial class GameHud : CanvasLayer {
 	}
 
 	public async Task PlayRoundIntro(int round, bool deathmatch) {
+		AudioManager.Instance?.PlaySfx(deathmatch ? Sfx.Deathmatch : Sfx.RoundStart);
 		if (deathmatch) {
 			await ShowBanner(roundBanner, blankRoundBanner, "DEATHMATCH", 24, 1.6f, true);
 		} else if (round >= 1 && round <= roundBanners.Length) {
@@ -144,10 +150,12 @@ public partial class GameHud : CanvasLayer {
 		} else {
 			await ShowBanner(roundBanner, blankRoundBanner, $"ROUND {round}", 32, 1.0f, false);   // no drawn banner past 3
 		}
+		AudioManager.Instance?.PlaySfx(Sfx.Fight);
 		await ShowBanner(roundBanner, fightBanner, null, 0, 0.6f, false);
 	}
 
 	public async Task ShowKo(bool draw) {
+		AudioManager.Instance?.PlaySfx(draw ? Sfx.Draw : Sfx.Ko);
 		if (draw) {
 			await ShowBanner(koBanner, blankKoBanner, "DRAW", 40, 1.8f, true);
 		} else {
@@ -158,6 +166,10 @@ public partial class GameHud : CanvasLayer {
 	private void SetHealth(int player, int current, int max, bool animate) {
 		float ratio = max > 0 ? (float)current / max : 0f;
 		TextureProgressBar bar = bars[player];
+		int lost = lastHealth[player] - current;
+		lastHealth[player] = current;
+		// Hit sounds come from health changes, so Fighters.cs needs no audio code
+		if (animate && lost > 0) AudioManager.Instance?.PlaySfx(lost <= BlockChipMax ? Sfx.Block : Sfx.Hit, 0.1f);
 		if (animate) {
 			CreateTween().TweenProperty(bar, "value", ratio * 100.0, 0.15);
 		} else {

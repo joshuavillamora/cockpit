@@ -4,7 +4,7 @@
 
 Pick your chicken, choose an arena, and fight a friend on the same keyboard. Land ground and aerial attacks, win rounds, and take the match. Cockpit is built with Godot 4 and C# in pixel art, as our entry to the **Level Up 3.0 Esports Game Dev Challenge** (Philippine Games and Sports theme).
 
-> **Status:** work in progress. The complete game flow is playable with two chickens. Art and audio are still placeholders, and some moves and abilities are not built yet. See [Current status](#current-status).
+> **Status:** work in progress. The complete game flow is playable with two chickens. Art is partly placeholder, and some moves and abilities are not built yet. See [Current status](#current-status).
 
 ## Contents
 
@@ -118,7 +118,7 @@ To jump straight into a match while developing, open `scenes/gameplay/game.tscn`
 
 **Placeholder or not built yet**
 - Final art: the UI and menus use a placeholder skin, and the second arena is the first with a tint
-- Audio: no music or sound effects yet
+- Audio: background music, menu and banner sounds, and hit / block / KO sounds. Jump, attack swing and glide are still silent. Sources are listed in [CREDITS.md](CREDITS.md).
 - Moves: run, double jump, glide, wall moves, air dash, block, and the four abilities
 - Paraokan and Da Chik, controller support, and a tutorial screen
 
@@ -154,6 +154,10 @@ This README covers the game. The team documents live in [`docs/`](docs/README.md
 - [Godot Engine](https://godotengine.org/) 4.7 (.NET) and C#
 - Pixel art and UI by the Cockpit design team
 - NES Cyrillic font for in-game text
+
+## Credits
+
+Music: "I Want It All" by Peachwood. UI sounds: JDSherbert (Ultimate UI SFX Pack) and Nathan Gibson (Universal UI Soundpack, CC BY 4.0). Rooster sounds generated with ElevenLabs. Hit, block and feather sounds from SFXMint (CC0). Full list in [CREDITS.md](CREDITS.md).
 
 ## Team
 
