@@ -44,11 +44,14 @@ public partial class GameManager : Node {
 		SceneFlow.Instance.GoTo(MapSelectScene);
 	}
 
-	// Map select -> lobby (a new series starts here)
+	// Map select -> lobby (a new series starts here, unless the players came from REMATCH: CHARACTER SELECT)
 	public void SelectArena(ArenaData arena) {
 		SelectedArena = arena;
-		MatchWins[0] = 0;
-		MatchWins[1] = 0;
+		if (!keepScore) {
+			MatchWins[0] = 0;
+			MatchWins[1] = 0;
+		}
+		keepScore = false;
 		ResetScores();
 		SceneFlow.Instance.GoTo(LobbyScene);
 	}
@@ -58,9 +61,26 @@ public partial class GameManager : Node {
 		SceneFlow.Instance.GoTo(GameScene);
 	}
 
+	private bool keepScore;
+
 	public void Rematch() {
 		ResetScores();
 		SceneFlow.Instance.GoTo(GameScene);
+	}
+
+	// Victory -> character select: pick new chickens (and map) but keep the match score
+	public void RematchToSelect() {
+		ResetScores();
+		keepScore = true;
+		SceneFlow.Instance.GoTo(CharacterSelectScene);
+	}
+
+	// The main menu always starts a fresh series
+	public void ClearSeries() {
+		keepScore = false;
+		MatchWins[0] = 0;
+		MatchWins[1] = 0;
+		ResetScores();
 	}
 
 	public void ReturnToMenu() {

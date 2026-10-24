@@ -17,6 +17,7 @@ public partial class MainMenu : Control {
 		// Already playing if we came from the loading screen; full volume again after a match
 		AudioManager.Instance?.PlayMusic(Music.Main);
 		AudioManager.Instance?.SetMusicLevel(0f);
+		GameManager.Instance.ClearSeries();   // a score kept for a rematch ends at the menu
 	}
 
 	public override void _Input(InputEvent @event) {
