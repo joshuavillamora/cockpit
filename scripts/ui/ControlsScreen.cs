@@ -12,7 +12,6 @@ public partial class ControlsScreen : OverlayScreen {
 	private const float LabelWidth = 92f;
 	private static readonly Vector2 SlotSize = new(78, 18);
 	private const float BlinkSpeed = 6f;
-	private static readonly Color SoonColor = new(0.6f, 0.58f, 0.52f);
 	private static readonly Color EmptyColor = new(0.45f, 0.45f, 0.42f);
 	private static readonly Color Gold = new(1f, 0.85f, 0.3f);
 
@@ -24,7 +23,7 @@ public partial class ControlsScreen : OverlayScreen {
 		("JUMP", AllKeys(1, "jump"), AllKeys(2, "jump")),
 		("ATTACK", AllKeys(1, "attack"), AllKeys(2, "attack")),
 		("BLOCK", AllKeys(1, "block"), AllKeys(2, "block")),
-		("ABILITY", null, null),
+		("ABILITY", AllKeys(1, "ability"), AllKeys(2, "ability")),
 		("PAUSE", new[] { "ESC", "P" }, new[] { "ESC", "P" }),
 	};
 
@@ -102,7 +101,7 @@ public partial class ControlsScreen : OverlayScreen {
 		InputBindings.Instance.Save();
 	}
 
-	// PLAYER N, one row per rebindable action (label + two slots), then ABILITY and PAUSE (read-only)
+	// PLAYER N, one row per rebindable action (label + two slots), then PAUSE (read-only)
 	private void BuildColumn(Control column, int player) {
 		column.AddChild(new Label { Text = $"PLAYER {player}", HorizontalAlignment = HorizontalAlignment.Center });
 
@@ -118,12 +117,6 @@ public partial class ControlsScreen : OverlayScreen {
 			}
 			column.AddChild(row);
 		}
-
-		HBoxContainer ability = Row("ABILITY");
-		var soon = new Label { Text = "SOON", CustomMinimumSize = SlotSize, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
-		soon.AddThemeColorOverride("font_color", SoonColor);
-		ability.AddChild(soon);
-		column.AddChild(ability);
 
 		HBoxContainer pause = Row("PAUSE");
 		foreach (string key in new[] { "ESC", "P" }) pause.AddChild(SlotContent(key, CenteredBox()));

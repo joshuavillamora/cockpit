@@ -23,6 +23,7 @@ public partial class InputBindings : Node {
 		("p{0}_jump", "JUMP"),
 		("p{0}_attack", "ATTACK"),
 		("p{0}_block", "BLOCK"),
+		("p{0}_ability", "ABILITY"),
 	};
 
 	// Keys owned by these actions (plus F11 for fullscreen) can't be given to a player

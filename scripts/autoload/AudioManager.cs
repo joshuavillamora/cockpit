@@ -27,6 +27,8 @@ public static class Sfx {
 	public const string SwingAir = "swing_air";       // aerial attack starts
 	public const string Block = "block";
 	public const string Ko = "ko";
+	public const string AbilityReady = "ability_ready";   // the ability meter fills (no file yet: silent)
+	public const string AbilityUse = "ability_use";       // a fighter uses its ability (no file yet: silent)
 	public const string Draw = "draw";
 	public const string Victory = "victory";
 
