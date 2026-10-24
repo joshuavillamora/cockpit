@@ -16,6 +16,7 @@ public partial class MainMenu : Control {
 
 		// Already playing if we came from the loading screen; full volume again after a match
 		AudioManager.Instance?.PlayMusic(Music.Main);
+		AudioManager.Instance?.PlayCalm();
 		AudioManager.Instance?.SetMusicLevel(0f);
 	}
 

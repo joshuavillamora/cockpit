@@ -64,6 +64,7 @@ public partial class LobbyController : Node2D {
 		GetNode<TrainingDummy>("Dummy").Hit += (hits, damage) => AudioManager.Instance?.PlaySfx(Sfx.Hit, 0.1f);
 		AudioManager.Instance?.PlayMusic(Music.Main);
 		AudioManager.Instance?.SetMusicLevel(0f);
+		AudioManager.Instance?.PlayIntense();
 
 		var door = GetNode<Area2D>("%Door");
 		door.BodyEntered += body => SetInDoor(body, true);

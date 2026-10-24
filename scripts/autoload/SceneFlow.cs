@@ -40,6 +40,7 @@ public partial class SceneFlow : CanvasLayer {
 		}
 		busy = true;
 		switched = false;
+		AudioManager.Instance?.FadeOutSfx("namecall_");   // a chicken's name call never carries into the next screen
 		target = path;
 		fade.MouseFilter = Control.MouseFilterEnum.Stop;
 
