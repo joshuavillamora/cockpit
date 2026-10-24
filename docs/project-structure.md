@@ -36,8 +36,8 @@ cockpit/
 | Controls (popup) | `controls_screen.tscn` | `ControlsScreen.cs` | theme, `ui_keycap`, `ui_keycap_wide` |
 | Character Select | `character_select.tscn` | `CharacterSelect.cs` | `ui_portrait_*`, `ui_select_frame_*`, `ui_info_panel`, `ui_tag_ability/passive`, keycaps |
 | Map Select | `map_select.tscn` | `MapSelect.cs` | `ui_map_frame`, `ui_map_thumb_*` |
-| Lobby | `lobby_tutorial.tscn` | `scripts/core/LobbyController.cs` | arena background, `ui_info_panel`, `ui_counter_frame` (HITS plate), `ui_lobby_door`, `ui_tutorial_box`, `ui_round_marker_*` (tip dots), keycaps |
-| Training dummy (in the lobby) | `scenes/gameplay/training_dummy.tscn` | `scripts/core/TrainingDummy.cs` | none (placeholder boxes) |
+| Lobby | `lobby_tutorial.tscn` | `scripts/core/LobbyController.cs` | `assets/arenas/lobby/` (background, ground from tileset, door), `ui_hud_portrait_*`, `ui_tutorial_box`, `ui_round_marker_*` (tip dots), keycaps |
+| Training dummy (in the lobby) | `scenes/gameplay/training_dummy.tscn` | `scripts/core/TrainingDummy.cs` | `assets/characters/dummy/dummy.png` |
 | Match | `scenes/gameplay/game.tscn` | `scripts/core/MatchController.cs` | arena background |
 | HUD | `game_hud.tscn` | `GameHud.cs` | `ui_healthbar_*`, `ui_meter_*`, `ui_counter_frame`, `ui_round_marker_*`, `ui_hud_portrait_*`, `ui_banner_round_1/2/3`, `ui_banner_fight`, `ui_banner_ko`; the blank `ui_banner_round` and `ui_banner_blank_ko` carry the DEATHMATCH and DRAW text |
 | Pause | `pause_menu.tscn` | `PauseMenu.cs` | theme (`ui_popup_panel`) |
@@ -80,7 +80,7 @@ Currently unused by any screen: `ui_menu_rooster_left/right`, `ui_emblem_p1/p2`,
 | Swap a sound | Replace the file in `assets/audio/sfx/` (keep the name) and update `CREDITS.md` |
 | Change a sound's loudness | `AudioManager.cs` (`Volumes`) |
 | Change the music | `assets/audio/music/main.mp3` |
-| Move or resize the lobby door | `lobby_tutorial.tscn` → `Door` (and its `CollisionShape2D`) |
+| Move or resize the lobby door | `lobby_tutorial.tscn` → `Door` (and its `CollisionShape2D`), `DoorArt`, and the right `Wall` |
 | Change health bar color | `GameHud.SetHealth` |
 | Change volume / fullscreen behavior | `SettingsManager.cs` |
 | Change combat, damage, movement | `scripts/characters/Fighters.cs` (backend's file) |
