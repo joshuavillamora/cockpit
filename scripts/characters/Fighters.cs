@@ -97,7 +97,16 @@ public partial class Fighters : CharacterBody2D {
 	private int lastTapDir = 0;
 	private double lastTapTime = -1.0;
 	private float accelBonus = 200f;
+	private Ability ability;
+	private StringName abilityKey;
 	
+	public bool FacingRight => facingRight;
+	public void Face(bool right) => SetFacing(right);
+	public Vector2 GetAimInput() => new Vector2(Input.GetAxis(moveLeft, moveRight), Input.GetAxis(upKey, downKey));
+	public void SetTint(Color c) => animatedSprite.SelfModulate = c;
+	public void PlayAnim(string anim) {
+		if (animatedSprite.SpriteFrames.HasAnimation(anim)) animatedSprite.Play(anim);
+	}
 	
 	public override void _Ready() {
 		moveLeft = $"p{PlayerId}_move_left";
@@ -107,6 +116,11 @@ public partial class Fighters : CharacterBody2D {
 		upKey = $"p{PlayerId}_up";
 		downKey = $"p{PlayerId}_down";
 		blockKey = $"p{PlayerId}_block";
+		abilityKey = $"p{PlayerId}_ability";
+
+		foreach (Node child in GetChildren()) {
+			if (child is Ability a) { ability = a; a.Bind(this); }
+		}
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		attackHitbox = GetNode<Area2D>("AttackHitbox");
@@ -132,6 +146,8 @@ public partial class Fighters : CharacterBody2D {
 	
 	public override void _PhysicsProcess(double delta) {
 		Vector2 velocity = Velocity;
+
+		if (Input.IsActionJustPressed(abilityKey)) GD.Print($"{Name}: ability button, Active={ability?.Active}");
 
 		// Gravity
 		if (!IsOnFloor()) {
@@ -161,6 +177,17 @@ public partial class Fighters : CharacterBody2D {
 			}
 		}
 		bool stunned = hitstunTimer > 0f;
+
+		if (ability != null) {
+			bool canStart = !stunned && !isAttacking && !isBlocking;
+			if (Input.IsActionJustPressed(abilityKey) && (ability.Active || canStart)) ability.OnPressed();
+
+			if (ability.Active) {
+				ability.Tick((float)delta);
+				MoveAndSlide();
+				return;
+			}
+		}
 
 		// Blocking
 		Blocking(Input.IsActionPressed(blockKey) && IsOnFloor() && !isAttacking && !stunned);
@@ -393,6 +420,11 @@ public partial class Fighters : CharacterBody2D {
 	public void TakeHit(int damage, Vector2 knockback, float hitstun, float hitstop) {
 		if (Health <= 0) return;
 
+		if (ability != null) {
+			if (ability.Invulnerable) return;   // dashing = can't be hit
+			ability.Cancel();                   // hit while aiming interrupts it
+		}
+
 		if (isBlocking) {
 			int chip = Mathf.Max(1, Mathf.RoundToInt(damage * BlockDamageMultiplier));
 			Velocity = new Vector2(knockback.X * BlockKnockbackMultiplier, Velocity.Y);
@@ -447,6 +479,15 @@ public partial class Fighters : CharacterBody2D {
 		} else if (!block && animatedSprite.Animation == "block") {
 			animatedSprite.Play("idle");
 		}
+	}
+
+	public float AnimLength(string anim, float fallback) {
+		SpriteFrames sf = animatedSprite.SpriteFrames;
+		if (!sf.HasAnimation(anim)) return fallback;
+
+		float total = 0f;
+		for (int i = 0; i < sf.GetFrameCount(anim); i++) total += sf.GetFrameDuration(anim, i);
+		return total / (float)sf.GetAnimationSpeed(anim);
 	}
 
 	private void Die() {
