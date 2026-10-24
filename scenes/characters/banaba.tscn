@@ -349,6 +349,10 @@ region = Rect2(0, 64, 64, 64)
 atlas = ExtResource("11_7mj3p")
 region = Rect2(64, 64, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkxkv"]
+atlas = ExtResource("11_7mj3p")
+region = Rect2(128, 64, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_3o5uj"]
 atlas = ExtResource("10_2l2mh")
 region = Rect2(0, 0, 64, 64)
@@ -712,8 +716,11 @@ animations = [{
 "duration": 4.0,
 "texture": SubResource("AtlasTexture_vksuj")
 }, {
-"duration": 8.0,
+"duration": 4.0,
 "texture": SubResource("AtlasTexture_gxfsc")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_vkxkv")
 }, {
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_vksuj")
@@ -756,8 +763,9 @@ size = Vector2(36, 32)
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
-animation = &"neutral_air"
-frame_progress = 0.65863115
+animation = &"up_attack"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 visible = false
