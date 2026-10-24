@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken4_unavailable.png" id="5"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_chicken4.png" id="7"]
 
+[ext_resource type="Texture2D" path="res://assets/characters/da_chik/da_chik.png" id="8"]
+[ext_resource type="PackedScene" path="res://scenes/characters/da_chik.tscn" id="6"]
 
 [resource]
 script = ExtResource("1")
@@ -14,11 +16,13 @@ Id = "da_chik"
 DisplayName = "DA CHIK"
 Portrait = ExtResource("2")
 HudPortrait = ExtResource("7")
+SelectSprite = ExtResource("8")
 AbilityReady = ExtResource("3")
 AbilityCooling = ExtResource("4")
 AbilityUnavailable = ExtResource("5")
 
-Playable = false
+Scene = ExtResource("6")
+Playable = true
 AbilityName = "ZOOOOOM"
 AbilityText = "DASH ANY DIRECTION"
 PassiveName = "PASSIVE TBD"
