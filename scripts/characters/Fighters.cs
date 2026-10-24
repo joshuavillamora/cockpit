@@ -13,6 +13,11 @@ public partial class Fighters : CharacterBody2D {
 	public const float AttackDecelMultiplier = 0.1f;
 	private const float AttackBufferTime = 0.15f;
 
+	[Signal] public delegate void AbilityChargeChangedEventHandler(float ratio);
+	[Signal] public delegate void AbilityUsedEventHandler();
+
+	[Export] public float MaxAbilityCharge = 100f;
+	[Export] public float ChargePerHit = 10f;
 	[Export] public int PlayerId = 1;
 	[Export] public int MaxHealth = 100;
 	[Export] public bool StartFacingRight = true;
@@ -99,6 +104,7 @@ public partial class Fighters : CharacterBody2D {
 	private float accelBonus = 200f;
 	private Ability ability;
 	private StringName abilityKey;
+	private float abilityCharge = 0f;
 	
 	public bool FacingRight => facingRight;
 	public void Face(bool right) => SetFacing(right);
@@ -147,8 +153,6 @@ public partial class Fighters : CharacterBody2D {
 	public override void _PhysicsProcess(double delta) {
 		Vector2 velocity = Velocity;
 
-		if (Input.IsActionJustPressed(abilityKey)) GD.Print($"{Name}: ability button, Active={ability?.Active}");
-
 		// Gravity
 		if (!IsOnFloor()) {
 			bool isGliding = Input.IsActionPressed(jumpKey) && Velocity.Y > 0;
@@ -180,7 +184,14 @@ public partial class Fighters : CharacterBody2D {
 
 		if (ability != null) {
 			bool canStart = !stunned && !isAttacking && !isBlocking;
-			if (Input.IsActionJustPressed(abilityKey) && (ability.Active || canStart)) ability.OnPressed();
+			if (Input.IsActionJustPressed(abilityKey)) {
+				if (ability.Active) {
+					ability.OnPressed();
+				} else if (canStart && HasFullAbilityCharge()) {
+					ConsumeAbilityCharge();
+					ability.OnPressed();
+				}
+			}
 
 			if (ability.Active) {
 				ability.Tick((float)delta);
@@ -385,6 +396,7 @@ public partial class Fighters : CharacterBody2D {
 			Vector2 kb = currentAttack.Knockback;
 			kb.X *= facingRight ? 1 : -1;
 			victim.TakeHit(currentAttack.Damage, kb, currentAttack.Hitstun, currentAttack.Hitstop);
+			AddAbilityCharge(ChargePerHit);
 		} else if (target.HasMethod("TakeDamage")) {
 			target.Call("TakeDamage", currentAttack.Damage);
 		}
@@ -488,6 +500,34 @@ public partial class Fighters : CharacterBody2D {
 		float total = 0f;
 		for (int i = 0; i < sf.GetFrameCount(anim); i++) total += sf.GetFrameDuration(anim, i);
 		return total / (float)sf.GetAnimationSpeed(anim);
+	}
+
+	private void AddAbilityCharge(float amount) {
+		abilityCharge = Mathf.Clamp(
+			abilityCharge + amount,
+			0f,
+			MaxAbilityCharge
+		);
+
+		EmitSignal(
+			SignalName.AbilityChargeChanged,
+			abilityCharge / MaxAbilityCharge
+		);
+	}
+
+	private bool HasFullAbilityCharge() {
+		return abilityCharge >= MaxAbilityCharge;
+	}
+
+	private void ConsumeAbilityCharge() {
+		abilityCharge = 0f;
+
+		EmitSignal(
+			SignalName.AbilityChargeChanged,
+			0f
+		);
+
+		EmitSignal(SignalName.AbilityUsed);
 	}
 
 	private void Die() {

@@ -1097,4 +1097,3 @@ position = Vector2(0, 12)
 shape = SubResource("CircleShape2D_kqvlu")
 
 [node name="Crosshair" type="Sprite2D" parent="Ability" index="1" unique_id=1257582946]
-visible = false
