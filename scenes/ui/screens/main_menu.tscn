@@ -18,25 +18,11 @@ layout_mode = 1
 
 [node name="Logo" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 176.0
-offset_top = 40.0
-offset_right = 464.0
-offset_bottom = 88.0
+offset_left = 124.0
+offset_top = 24.0
+offset_right = 516.0
+offset_bottom = 84.0
 texture = ExtResource("3")
-
-[node name="LogoLabel" type="Label" parent="Logo" unique_id=490669707]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.05, 0.05, 0.1, 1)
-theme_override_constants/outline_size = 0
-theme_override_font_sizes/font_size = 32
-text = "COCKPIT"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Menu" type="VBoxContainer" parent="." unique_id=63000233]
 unique_name_in_owner = true
