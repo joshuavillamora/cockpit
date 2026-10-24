@@ -2,23 +2,23 @@ using Godot;
 
 // Training lobby, shown after map select. Both players can test movement and attacks (and hit the
 // dummy), then both walk into the door to start the match. Nobody can be knocked out here.
-// Layout follows the designer's lobby wireframe (frame 12): a keys panel per player, the dummy's
-// HITS plate between them, the door art on the right, and a tips box along the bottom.
+// Layout follows the designers' coop art (wireframe 13): background, tile ground and the PIT door,
+// each player's keys written into one of the coop's two windows (behind the fighters), the dummy
+// between them, and a tips box on the ground.
 public partial class LobbyController : Node2D {
 	private const int PracticeHealth = 9999;
 	private const float StartDelay = 0.8f;
 	private const float TipInterval = 4f;
-	private const float RowTop = 30f;
+	private const float RowTop = 36f;
 	private const float RowPitch = 16f;
-	private const float KeysLeft = 96f;
-	private const string DoorPath = "res://assets/ui/hud/ui_lobby_door.png";
-	private const string DoorDarkPath = "res://assets/ui/dark/ui_lobby_door_dark.png";
+	private const float RowLeft = 10f;
+	private const float KeysLeft = 78f;
+	private static readonly Color DoorWaiting = new(0.55f, 0.55f, 0.55f);   // the door darkens while someone is inside
 	private const string DotFullPath = "res://assets/ui/hud/ui_round_marker_full.png";
 	private const string DotEmptyPath = "res://assets/ui/hud/ui_round_marker_empty.png";
 	private static readonly Color ReadyColor = new(0.6f, 1f, 0.6f);
 	private static readonly Color SoonColor = new(0.6f, 0.58f, 0.52f);
 
-	// Add the ability tip once abilities exist in Fighters.cs
 	private static readonly string[] Tips = {
 		"HOLD UP OR DOWN WITH ATTACK FOR DIFFERENT HITS",
 		"ATTACK IN THE AIR FOR AERIALS",
@@ -26,7 +26,7 @@ public partial class LobbyController : Node2D {
 		"HOLD JUMP WHILE FALLING TO GLIDE",
 		"HOLD BLOCK ON THE GROUND TO TAKE LESS DAMAGE",
 		"HIT THE DUMMY TO TEST DAMAGE",
-		"ABILITIES COME SOON",
+		"PRESS ABILITY WHEN THE METER IS FULL",
 	};
 
 	private readonly Fighters[] fighters = new Fighters[2];
@@ -35,11 +35,8 @@ public partial class LobbyController : Node2D {
 	private TextureRect[] tipDots;
 	private Label doorStatus;
 	private Label tipLabel;
-	private Label hitLabel;
 	private Control tipsBox;
-	private TextureRect doorArt;
-	private Texture2D doorLight;
-	private Texture2D doorDark;
+	private Sprite2D doorArt;
 	private Texture2D dotFull;
 	private Texture2D dotEmpty;
 	private double tipTimer;
@@ -52,24 +49,19 @@ public partial class LobbyController : Node2D {
 
 		doorStatus = GetNode<Label>("%DoorStatus");
 		tipLabel = GetNode<Label>("%TipLabel");
-		hitLabel = GetNode<Label>("%HitLabel");
 		tipsBox = GetNode<Control>("%TipsBox");
-		doorArt = GetNode<TextureRect>("%Art");
-		doorLight = GD.Load<Texture2D>(DoorPath);
-		doorDark = GD.Load<Texture2D>(DoorDarkPath);
+		doorArt = GetNode<Sprite2D>("%DoorArt");
+		playerStatus[0] = GetNode<Label>("%P1Status");
+		playerStatus[1] = GetNode<Label>("%P2Status");
 
-		BuildPanel(GetNode<Control>("%P1Panel"), 0);
-		BuildPanel(GetNode<Control>("%P2Panel"), 1);
+		BuildPanel(GetNode<Control>("%P1Panel"), 0, gm.Selected[0]);
+		BuildPanel(GetNode<Control>("%P2Panel"), 1, gm.Selected[1]);
 		BuildBackHint(GetNode<Control>("%BackHint"));
 		BuildTips();
 
-		ApplyArena(gm.SelectedArena);
 		SpawnFighters(gm);
 
-		GetNode<TrainingDummy>("Dummy").Hit += (hits, damage) => {
-			hitLabel.Text = $"HITS {hits}\nDMG {damage}";
-			AudioManager.Instance?.PlaySfx(Sfx.Hit, 0.1f);
-		};
+		GetNode<TrainingDummy>("Dummy").Hit += (hits, damage) => AudioManager.Instance?.PlaySfx(Sfx.Hit, 0.1f);
 		AudioManager.Instance?.PlayMusic(Music.Main);
 		AudioManager.Instance?.SetMusicLevel(0f);
 
@@ -101,12 +93,6 @@ public partial class LobbyController : Node2D {
 			tipsBox.Visible = !tipsBox.Visible;
 			AudioManager.Instance?.PlaySfx(Sfx.TipsToggle);
 		}
-	}
-
-	private void ApplyArena(ArenaData arena) {
-		var background = GetNode<Sprite2D>("Background");
-		background.Texture = arena.Background;
-		background.Modulate = arena.BackgroundTint;
 	}
 
 	private void SpawnFighters(GameManager gm) {
@@ -152,7 +138,7 @@ public partial class LobbyController : Node2D {
 		}
 
 		// The door goes dark while someone is waiting inside it
-		doorArt.Texture = inDoor[0] || inDoor[1] ? doorDark : doorLight;
+		doorArt.Modulate = inDoor[0] || inDoor[1] ? DoorWaiting : Colors.White;
 
 		if (starting) doorStatus.Text = "STARTING...";
 		else if (inDoor[0]) doorStatus.Text = "P1 READY - WAITING FOR P2";
@@ -167,13 +153,20 @@ public partial class LobbyController : Node2D {
 		for (int i = 0; i < tipDots.Length; i++) tipDots[i].Texture = i == tipIndex ? dotFull : dotEmpty;
 	}
 
-	// Heading, one row per action from the controls table (keys as keycaps), then the door status
-	private void BuildPanel(Control panel, int player) {
+	// Chicken icon and heading, then one row per action from the controls table (keys as keycaps).
+	// The panel sits inside one of the coop's windows; the status line hangs under the window.
+	private static void BuildPanel(Control panel, int player, CharacterData chicken) {
+		panel.AddChild(new TextureRect {
+			Texture = chicken.HudPortrait,
+			Position = new Vector2(RowLeft, 2),
+			Size = new Vector2(32, 32),
+			FlipH = player == 1,   // P2 faces left, like on the HUD
+			MouseFilter = Control.MouseFilterEnum.Ignore,
+		});
 		panel.AddChild(new Label {
 			Text = $"PLAYER {player + 1}",
-			Position = new Vector2(14, 10),
-			Size = new Vector2(panel.Size.X - 28, 16),
-			HorizontalAlignment = HorizontalAlignment.Center,
+			Position = new Vector2(RowLeft + 38, 10),
+			Size = new Vector2(panel.Size.X - RowLeft - 38, 16),
 		});
 
 		int row = 0;
@@ -182,8 +175,8 @@ public partial class LobbyController : Node2D {
 			float y = RowTop + row++ * RowPitch;
 			panel.AddChild(new Label {
 				Text = action == "UP/DOWN" ? "AIM" : action,
-				Position = new Vector2(14, y),
-				Size = new Vector2(80, 16),
+				Position = new Vector2(RowLeft, y),
+				Size = new Vector2(KeysLeft - RowLeft, 16),
 				VerticalAlignment = VerticalAlignment.Center,
 			});
 
@@ -203,13 +196,6 @@ public partial class LobbyController : Node2D {
 				x += cap.Size.X + 3;
 			}
 		}
-
-		playerStatus[player] = new Label {
-			Position = new Vector2(14, RowTop + row * RowPitch + 4),
-			Size = new Vector2(panel.Size.X - 28, 16),
-			HorizontalAlignment = HorizontalAlignment.Center,
-		};
-		panel.AddChild(playerStatus[player]);
 	}
 
 	private static void BuildBackHint(Control area) {

@@ -14,6 +14,8 @@ public partial class GameHud : CanvasLayer {
 	private const float PulseSeconds = 0.25f;   // how often the full meter swaps gold <-> dark gold
 	private const int BlockChipMax = 3;         // a blocked hit only takes 20% (1-3 HP); real hits take 4 or more
 	private const float MatchMusicDb = -6f;     // music sits under the fight
+	private const string AbilityChargeSignal = "AbilityChargeChanged";   // Fighters: (float ratio 0..1)
+	private const string AbilityUsedSignal = "AbilityUsed";              // Fighters: ()
 
 	private readonly TextureProgressBar[] bars = new TextureProgressBar[2];
 	private readonly TextureProgressBar[] meters = new TextureProgressBar[2];
@@ -103,13 +105,32 @@ public partial class GameHud : CanvasLayer {
 			int index = i;
 			portraits[i].Texture = characters[i].HudPortrait;
 			names[i].Text = characters[i].DisplayName;
-			SetMeter(i, 1f);   // placeholder: always full until abilities exist
+			BindAbility(index, fighters[i]);
 			lastHealth[i] = fighters[i].Health;
 			SetHealth(i, fighters[i].Health, fighters[i].MaxHealth, false);
 			fighters[i].HealthChanged += (current, max) => SetHealth(index, current, max, true);
 		}
 		UpdateScore(false);
 		AudioManager.Instance?.SetMusicLevel(MatchMusicDb);
+	}
+
+	// The meter follows the fighter's ability charge once Fighters.cs has the two ability signals
+	// (see docs/backend-integration.md). Until then it stays full, as a placeholder.
+	private void BindAbility(int player, Fighters fighter) {
+		if (!fighter.HasSignal(AbilityChargeSignal)) {
+			SetMeter(player, 1f);
+			return;
+		}
+
+		SetMeter(player, 0f);
+		fighter.Connect(AbilityChargeSignal, Callable.From<float>(ratio => {
+			bool wasFull = meterFull[player];
+			SetMeter(player, ratio);
+			if (meterFull[player] && !wasFull) AudioManager.Instance?.PlaySfx(Sfx.AbilityReady);
+		}));
+		if (fighter.HasSignal(AbilityUsedSignal)) {
+			fighter.Connect(AbilityUsedSignal, Callable.From(() => AudioManager.Instance?.PlaySfx(Sfx.AbilityUse)));
+		}
 	}
 
 	// ratio 0..1. A full meter shows the gold fill and pulses; anything less shows the normal fill.

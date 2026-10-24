@@ -30,7 +30,21 @@ The training lobby (`LobbyController`) spawns the same fighters before the match
 
 ## Ability meter on the HUD
 
-Each player has an ability meter under their health bar. `GameHud.SetMeter(int player, float ratio)` sets it: `player` is 0 for P1 and 1 for P2, `ratio` is 0 to 1. P1's meter fills left to right and P2's right to left. A full meter shows the gold fill and pulses (it swaps with the dark gold fill). It currently always shows full, so call `SetMeter` from your ability code once charge or cooldown exists. The HUD has no ability icon in the final design (`ui_ability_*` is imported but not shown).
+Each player has an ability meter under their health bar. P1's meter fills left to right and P2's right to left; a full meter shows the gold fill and pulses. The HUD has no ability icon in the final design (`ui_ability_*` is imported but not shown).
+
+**The ability key already exists:** `p1_ability` (default `L`) and `p2_ability` (default `.`), rebindable like every other key. Read it in `Fighters.cs` the same way as the other actions: `$"p{PlayerId}_ability"`.
+
+**To connect your abilities to the HUD, add two signals to `Fighters` and emit them; nothing else is needed:**
+
+```csharp
+[Signal] public delegate void AbilityChargeChangedEventHandler(float ratio);   // 0 = empty, 1 = ready
+[Signal] public delegate void AbilityUsedEventHandler();
+
+EmitSignal(SignalName.AbilityChargeChanged, charge / chargeMax);   // whenever the charge or cooldown changes
+EmitSignal(SignalName.AbilityUsed);                                 // when the ability fires
+```
+
+`GameHud.Bind` checks for these signals every round. While they don't exist, the meter stays full as a placeholder. Once they do, the meter starts empty and follows `AbilityChargeChanged`. The `ability_ready` sound plays when it fills and `ability_use` when `AbilityUsed` fires (both are silent until their files are added to `assets/audio/sfx/`). `GameHud.SetMeter(int player, float ratio)` still works if you'd rather drive the meter directly.
 
 The HUD now uses y 0-76 of the screen (chicken names sit above the bars). Keep the stage ceiling, platforms and anything important below y 76.
 

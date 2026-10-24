@@ -113,6 +113,7 @@ Where sounds are triggered:
 - **Loading screen:** the rooster call when PRESS START appears; music starts 1.2 s later.
 - **Character and map select, lobby:** cursor moves, ready / unready, tips, door, match start.
 - **`GameHud`:** the banners, plus hit and block. It plays these from `HealthChanged`, so `Fighters.cs` has no audio code: a loss of 1-3 HP is a blocked hit (20 % chip damage), anything more is a hit.
+- **Attack swings:** `AudioManager` hooks every `Fighters` node as it is added and listens to its `AnimatedSprite2D` changing animation. A ground attack animation (`neutral_attack`, `side_attack`, `up_attack`, `down_attack`) plays `swing`, an aerial (`neutral_air`, `side_air`, `up_air`, `down_air`) plays `swing_air`. If the backend renames an attack animation, update `GroundAttacks` / `AirAttacks` in `AudioManager.cs`.
 
 ### `scripts/autoload/SettingsManager.cs` (saved options)
 
@@ -182,13 +183,13 @@ fighter.MaxHealth = PracticeHealth;   // 9999, so nobody is knocked out in the l
 ```
 `SpawnFighters` works like the match version, but with practice HP and no round logic.
 
-The door is an `Area2D` named `Door`, 64 px wide and touching the right wall, so a fighter cannot run past it. `BodyEntered` and `BodyExited` call `SetInDoor`, which marks that player ready (and fades them) or not ready. When both players are inside, `BeginMatch` locks both fighters, waits 0.8 s, and calls `GameManager.EnterMatch()`. Esc goes back to map select. Rematch skips the lobby and goes straight to the match.
+The door is an `Area2D` named `Door`, 64 px wide over the opening of the PIT door art, and the right wall stands at its right edge (x 620), so a fighter stops inside it. The walls and floor are on collision layer 2, the layer fighters collide with. `BodyEntered` and `BodyExited` call `SetInDoor`, which marks that player ready (and fades them) or not ready. When both players are inside, `BeginMatch` locks both fighters, waits 0.8 s, and calls `GameManager.EnterMatch()`. Esc goes back to map select. Rematch skips the lobby and goes straight to the match.
 
-The layout follows the lobby wireframe (frame 12). Each player's panel lists the keys from `ControlsScreen.Rows` as keycaps, which come from the player's current bindings. The door art switches to its dark version while anyone is inside.
+The layout follows the designers' coop art (wireframe 13): `assets/arenas/lobby/background.png`, the ground strip `ground.png` (built from the 16×16 `tileset.png`, top surface row then fill rows) from y 262, and `door.png`, drawn in that order. Each player's chicken icon (`HudPortrait`, flipped for P2) and keys from `ControlsScreen.Rows` are written into one of the coop's two windows; they are world nodes, not UI, so the fighters pass in front of them. The READY line hangs under each window, TRAINING LOBBY sits on the roof sign, and the door darkens while anyone is inside.
 
 The tips box at the bottom (`ui_tutorial_box`) shows one tip from the `Tips` array, with a dot per tip. It moves on every 4 seconds; `Enter` (`menu_start`) shows the next tip and `Tab` (`lobby_skip_tips`) hides or shows the box. These are handled in `_UnhandledInput`, and nothing in the lobby takes keyboard focus, so player keys like Space never press a button. Add the ability tip once abilities exist.
 
-`TrainingDummy` shows how to make something a fighter can hit. A fighter's attack hitbox calls `TakeDamage` on the parent of any hurtbox (layer 4) it touches, so the dummy only needs a `Hurtbox` `Area2D` child on layer 4 and a public `TakeDamage(int)` method. It counts hits, emits `Hit(hits, damage)` (the lobby shows it on the HITS plate between the panels), and leans back with a spring.
+`TrainingDummy` shows how to make something a fighter can hit. A fighter's attack hitbox calls `TakeDamage` on the parent of any hurtbox (layer 4) it touches, so the dummy only needs a `Hurtbox` `Area2D` child on layer 4 and a public `TakeDamage(int)` method. It shows HITS n above its head, pops each hit's damage as a rising number, emits `Hit(hits, damage)` (the lobby plays the hit sound), and leans back with a spring. Its sprite is `assets/characters/dummy/dummy.png`.
 
 ## 6. The match
 

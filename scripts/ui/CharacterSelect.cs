@@ -106,6 +106,7 @@ public partial class CharacterSelect : Control {
 					confirmed[p] = true;
 					FlashFrames(p);
 					AudioManager.Instance?.PlaySfx(Sfx.Ready);
+					AudioManager.Instance?.PlaySfx(Sfx.NameCall(characters[cursor[p]].Id));
 				}
 			} else if (Input.IsActionJustPressed(prefix + "jump") && confirmed[p]) {
 				confirmed[p] = false;
