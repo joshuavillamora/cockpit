@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bp88qci2krx1r" path="res://assets/characters/joloano/joloano_side_attack.png" id="7_3p67v"]
 [ext_resource type="Texture2D" uid="uid://1llrunfmavub" path="res://assets/characters/joloano/joloano_knockout.png" id="7_kkvew"]
 [ext_resource type="Texture2D" uid="uid://3hiwl1a6oyc2" path="res://assets/characters/joloano/joloano_up_attack.png" id="7_ypswa"]
+[ext_resource type="Texture2D" uid="uid://c15amddoodcp2" path="res://assets/characters/joloano/joloano_side_air.png" id="10_ks305"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c33rs"]
 atlas = ExtResource("2_n0ig7")
@@ -188,6 +189,50 @@ region = Rect2(256, 0, 128, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lmuqw"]
 atlas = ExtResource("6_cs3ic")
 region = Rect2(384, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqd2w"]
+atlas = ExtResource("10_ks305")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yqf4"]
+atlas = ExtResource("10_ks305")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ja2rn"]
+atlas = ExtResource("10_ks305")
+region = Rect2(256, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jncko"]
+atlas = ExtResource("10_ks305")
+region = Rect2(384, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saora"]
+atlas = ExtResource("10_ks305")
+region = Rect2(0, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gifno"]
+atlas = ExtResource("10_ks305")
+region = Rect2(128, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78olo"]
+atlas = ExtResource("10_ks305")
+region = Rect2(256, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jln2p"]
+atlas = ExtResource("10_ks305")
+region = Rect2(384, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q05h4"]
+atlas = ExtResource("10_ks305")
+region = Rect2(0, 128, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hktdb"]
+atlas = ExtResource("10_ks305")
+region = Rect2(128, 128, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5q0x"]
+atlas = ExtResource("10_ks305")
+region = Rect2(256, 128, 128, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8qodl"]
 atlas = ExtResource("7_3p67v")
@@ -445,14 +490,41 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_vqd2w")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_8yqf4")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ja2rn")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_jncko")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_saora")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_gifno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78olo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jln2p")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_q05h4")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_hktdb")
+}, {
 "duration": 8.0,
-"texture": SubResource("AtlasTexture_d2hy4")
+"texture": SubResource("AtlasTexture_jncko")
 }, {
-"duration": 6.0,
-"texture": SubResource("AtlasTexture_d2hy4")
-}, {
-"duration": 16.0,
-"texture": SubResource("AtlasTexture_d2hy4")
+"duration": 8.0,
+"texture": SubResource("AtlasTexture_u5q0x")
 }],
 "loop": 0,
 "name": &"side_air",
@@ -552,14 +624,16 @@ PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
-animation = &"knockout"
-frame = 14
-frame_progress = 1.0
+animation = &"side_air"
+frame = 0
+frame_progress = 0.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
+visible = false
 shape = SubResource("RectangleShape2D_hs73c")
 
 [node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
+visible = false
 position = Vector2(0, 24)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0" unique_id=38610296]
@@ -569,6 +643,9 @@ shape = SubResource("RectangleShape2D_hnnho")
 [node name="HitboxVisual" parent="AttackHitbox" index="1" unique_id=471564784]
 texture = SubResource("PlaceholderTexture2D_d2soj")
 
-[node name="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1989035223) index="0" unique_id=826217368]
+[node name="Hurtbox" parent="." index="3" unique_id=1989035223]
+visible = false
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0" unique_id=826217368]
 position = Vector2(0.5, 10.5)
 shape = SubResource("RectangleShape2D_jny6k")
