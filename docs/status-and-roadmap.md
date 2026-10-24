@@ -19,7 +19,7 @@ Competition submission: **October 25, 2026**. Feature freeze: **October 23**.
 | Menu backgrounds | Flat sky and field colors (`scenes/ui/components/menu_background.tscn`). |
 | Logo | A gray placeholder box with the text "COCKPIT" drawn on top. |
 | Second arena | Uses the first arena's background with a tint. Set `Background` in `resources/arenas/*.tres` when new arenas exist. |
-| Paraokan, Da Chik | Shown as "SOON". They need sprites and scenes. |
+| Paraoakan, Da Chik | Shown as "SOON". They need sprites and scenes. |
 | Ability meter on the HUD | Always full (gold, pulsing) until abilities exist. Call `GameHud.SetMeter` when charge exists. |
 | Ability icons (`ui_ability_*`) | Final art imported, but no wireframe places them yet. |
 | Passive text | Character select shows "PASSIVE TBD" until the final passive names and descriptions are set in `resources/characters/*.tres`. |

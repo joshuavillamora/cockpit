@@ -373,7 +373,7 @@ animations = [
 "speed": 30.0
 }]
 
-[node name="Paraokan" instance=ExtResource("1_fighter")]
+[node name="Paraoakan" instance=ExtResource("1_fighter")]
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_still")

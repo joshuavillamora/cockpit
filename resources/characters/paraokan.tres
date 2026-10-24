@@ -13,7 +13,7 @@
 [resource]
 script = ExtResource("1")
 Id = "paraokan"
-DisplayName = "PARAOKAN"
+DisplayName = "PARAOAKAN"
 Portrait = ExtResource("2")
 HudPortrait = ExtResource("7")
 SelectSprite = ExtResource("8")
