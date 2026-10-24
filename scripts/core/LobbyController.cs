@@ -18,7 +18,6 @@ public partial class LobbyController : Node2D {
 	private static readonly Color ReadyColor = new(0.6f, 1f, 0.6f);
 	private static readonly Color SoonColor = new(0.6f, 0.58f, 0.52f);
 
-	// Add the ability tip once abilities exist in Fighters.cs
 	private static readonly string[] Tips = {
 		"HOLD UP OR DOWN WITH ATTACK FOR DIFFERENT HITS",
 		"ATTACK IN THE AIR FOR AERIALS",
@@ -26,7 +25,7 @@ public partial class LobbyController : Node2D {
 		"HOLD JUMP WHILE FALLING TO GLIDE",
 		"HOLD BLOCK ON THE GROUND TO TAKE LESS DAMAGE",
 		"HIT THE DUMMY TO TEST DAMAGE",
-		"ABILITIES COME SOON",
+		"PRESS ABILITY WHEN THE METER IS FULL",
 	};
 
 	private readonly Fighters[] fighters = new Fighters[2];
