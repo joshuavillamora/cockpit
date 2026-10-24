@@ -27,6 +27,9 @@ public static class Sfx {
 	public const string Ko = "ko";
 	public const string Draw = "draw";
 	public const string Victory = "victory";
+
+	// A chicken's voiced name, played when a player confirms it: namecall_<CharacterData.Id>
+	public static string NameCall(string characterId) => "namecall_" + characterId;
 }
 
 // Music names. Files live in assets/audio/music/<name>.(ogg|mp3|wav). Music loops.
@@ -53,7 +56,7 @@ public partial class AudioManager : Node {
 	private static readonly Dictionary<string, float> Volumes = new() {
 		{ Sfx.MenuMove, -12f }, { Sfx.MenuConfirm, -9f }, { Sfx.MenuBack, -9f },
 		{ Sfx.PopupOpen, -10f }, { Sfx.PopupClose, -10f }, { Sfx.SelectMove, -10f },
-		{ Sfx.Ready, -6f }, { Sfx.Unready, -8f }, { Sfx.Error, -8f }, { Sfx.Tip, -12f }, { Sfx.TipsToggle, -12f },
+		{ Sfx.Ready, -10f }, { Sfx.Unready, -8f }, { Sfx.Error, -8f }, { Sfx.Tip, -12f }, { Sfx.TipsToggle, -12f },
 		{ Sfx.Door, -6f }, { Sfx.MatchStart, -4f }, { Sfx.RoundStart, -3f }, { Sfx.Deathmatch, -3f },
 		{ Sfx.Hit, -4f }, { Sfx.Block, -6f }, { Sfx.Draw, -4f }, { Sfx.Victory, -3f },
 	};
