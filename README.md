@@ -59,7 +59,7 @@ Press `Esc` or `P` at any time during a match to pause.
 | Block (on the ground) | `H` | `,` |
 | Pause | `Esc` or `P` | `Esc` or `P` |
 | Air dash | coming soon | coming soon |
-| Ability | coming soon | coming soon |
+| Ability (key ready, abilities in development) | `L` | `.` |
 
 **Menus:** `W`/`S` or the arrow keys move, `Enter` or `Space` selects, `Esc` goes back.
 **Character select:** each player uses their own keys. Up/down chooses, Attack confirms, Jump cancels. Press `Enter` when both are ready.

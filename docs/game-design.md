@@ -45,7 +45,7 @@ Loading ─► Main Menu ─► Character Select ─► Map Select ─► Lobby 
 | Block (on the ground) | `H` | `,` |
 | Pause | `Esc` or `P` | `Esc` or `P` |
 | Air dash | planned | planned |
-| Ability | planned | planned |
+| Ability (in development) | `L` | `.` |
 
 Players can change these keys in **Settings > Controls**: every action has two key slots, and a key taken from another action moves over (the other action loses it). `Esc`, `P`, `Enter`, `Tab`, `F1` and `F11` are reserved. Custom keys are saved, and every key hint in the game (character select, lobby) shows the current keys.
 
