@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArenaData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/ArenaData.cs" id="1"]
+[ext_resource type="Texture2D" path="res://assets/arenas/death_chamber/thumb.png" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/arenas/death_chamber.tscn" id="3"]
+
+[resource]
+script = ExtResource("1")
+Id = "death_chamber"
+DisplayName = "DEATH CHAMBER"
+Thumbnail = ExtResource("2")
+Scene = ExtResource("3")
+Size = Vector2(640, 360)

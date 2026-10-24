@@ -8,25 +8,34 @@ public partial class MatchController : Node {
 
 	private readonly Fighters[] fighters = new Fighters[2];
 	private GameHud hud;
+	private Node2D arena;
+	private MatchCamera camera;
 	private bool roundActive;
 
 	public override void _Ready() {
 		GameManager.Instance.EnsureSelection();
 		hud = GetNode<GameHud>("../HUD");
-		ApplyArena();
-		CallDeferred(MethodName.StartRound);   // parent is still setting up its children
+		CallDeferred(MethodName.LoadArena);    // parent is still setting up its children
+		CallDeferred(MethodName.StartRound);
 	}
 
-	private void ApplyArena() {
-		ArenaData arena = GameManager.Instance.SelectedArena;
-		var background = GetNode<Sprite2D>("../Background");
-		background.Texture = arena.Background;
-		background.Modulate = arena.BackgroundTint;
+	// The chosen arena scene (art, floor, walls, platforms, spawns) goes behind everything else,
+	// plus the camera that follows the fighters on arenas bigger than the screen
+	private void LoadArena() {
+		ArenaData data = GameManager.Instance.SelectedArena;
+		arena = data.Scene.Instantiate<Node2D>();
+		GetParent().AddChild(arena);
+		GetParent().MoveChild(arena, 0);
+
+		camera = new MatchCamera();
+		GetParent().AddChild(camera);
+		camera.Setup(data.Size);
 	}
 
 	private async void StartRound() {
 		GameManager gm = GameManager.Instance;
 		SpawnFighters(gm);
+		camera.Track(fighters[0], fighters[1]);
 		hud.Bind(fighters[0], fighters[1], gm.Selected[0], gm.Selected[1]);
 
 		await hud.PlayRoundIntro(gm.Round, gm.IsDeathmatch);
@@ -44,7 +53,7 @@ public partial class MatchController : Node {
 			fighter.PlayerId = i + 1;
 			fighter.StartFacingRight = i == 0;
 			fighter.InputLocked = true;
-			fighter.Position = GetNode<Marker2D>(i == 0 ? "../SpawnP1" : "../SpawnP2").Position;
+			fighter.Position = arena.GetNode<Marker2D>(i == 0 ? "SpawnP1" : "SpawnP2").Position;
 			GetParent().AddChild(fighter);
 
 			int index = i;

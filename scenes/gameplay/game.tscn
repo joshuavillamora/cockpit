@@ -1,64 +1,11 @@
 [gd_scene format=4 uid="uid://yicge48108e0"]
 
-[ext_resource type="Texture2D" uid="uid://d2vmg0hhebutt" path="res://assets/arenas/main/background.png" id="2_yqjtg"]
 [ext_resource type="Script" uid="uid://b7uvckya3ofi1" path="res://scripts/core/MatchController.cs" id="3_match"]
 [ext_resource type="PackedScene" path="res://scenes/ui/screens/game_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/screens/pause_menu.tscn" id="5_pause"]
-[ext_resource type="Texture2D" uid="uid://cryffn0klhsaw" path="res://assets/arenas/main/platforms.png" id="6_mwwos"]
 [ext_resource type="PackedScene" path="res://scenes/ui/screens/victory_overlay.tscn" id="6_victory"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1438b"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hnnho"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gx6lm"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mwwos"]
-texture = ExtResource("6_mwwos")
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
-0:0/0/physics_layer_0/polygon_0/one_way = true
-1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
-1:0/0/physics_layer_0/polygon_0/one_way = true
-2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -6.903737, -8, -6.903737)
-2:0/0/physics_layer_0/polygon_0/one_way = true
-
-[sub_resource type="TileSet" id="TileSet_37n2d"]
-physics_layer_0/collision_layer = 2
-sources/0 = SubResource("TileSetAtlasSource_mwwos")
-
 [node name="Game" type="Node2D" unique_id=229146293]
-
-[node name="Background" type="Sprite2D" parent="." unique_id=2013801293]
-position = Vector2(320, 180)
-texture = ExtResource("2_yqjtg")
-
-[node name="Floor" type="StaticBody2D" parent="." unique_id=439591632]
-collision_layer = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=2128874581]
-position = Vector2(320.00003, 257.0001)
-shape = SubResource("WorldBoundaryShape2D_1438b")
-
-[node name="Wall" type="StaticBody2D" parent="." unique_id=777238615]
-collision_layer = 2
-
-[node name="Left" type="CollisionShape2D" parent="Wall" unique_id=2139905109]
-rotation = 1.5707964
-shape = SubResource("WorldBoundaryShape2D_hnnho")
-
-[node name="Right" type="CollisionShape2D" parent="Wall" unique_id=1085051610]
-position = Vector2(640, 0)
-rotation = -1.5707964
-shape = SubResource("WorldBoundaryShape2D_gx6lm")
-
-[node name="SpawnP1" type="Marker2D" parent="." unique_id=558587907]
-position = Vector2(197, 220)
-
-[node name="SpawnP2" type="Marker2D" parent="." unique_id=590775518]
-position = Vector2(427, 220)
 
 [node name="HUD" parent="." unique_id=52922464 instance=ExtResource("4_hud")]
 
@@ -68,8 +15,3 @@ position = Vector2(427, 220)
 
 [node name="MatchController" type="Node" parent="." unique_id=872889439]
 script = ExtResource("3_match")
-
-[node name="Platforms" type="TileMapLayer" parent="." unique_id=941803799]
-position = Vector2(1, 0)
-tile_map_data = PackedByteArray("AAASAAgAAAABAAAAAAATAAgAAAABAAAAAAAUAAgAAAABAAAAAAAVAAgAAAABAAAAAAAWAAgAAAABAAAAAAAXAAgAAAABAAAAAAARAAgAAAABAAAAAAAQAAgAAAABAAAAAAAPAAgAAAAAAAAAAAAYAAgAAAACAAAAAAAFAAwAAAABAAAAAAAGAAwAAAABAAAAAAAHAAwAAAABAAAAAAAIAAwAAAABAAAAAAAJAAwAAAABAAAAAAAKAAwAAAABAAAAAAALAAwAAAABAAAAAAAcAAwAAAABAAAAAAAdAAwAAAABAAAAAAAeAAwAAAABAAAAAAAfAAwAAAABAAAAAAAgAAwAAAABAAAAAAAhAAwAAAABAAAAAAAiAAwAAAABAAAAAAAjAAwAAAACAAAAAAAMAAwAAAACAAAAAAAEAAwAAAAAAAAAAAAbAAwAAAAAAAAAAAA=")
-tile_set = SubResource("TileSet_37n2d")

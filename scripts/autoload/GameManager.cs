@@ -34,7 +34,7 @@ public partial class GameManager : Node {
 	public void EnsureSelection() {
 		Selected[0] ??= GD.Load<CharacterData>("res://resources/characters/banaba.tres");
 		Selected[1] ??= GD.Load<CharacterData>("res://resources/characters/joloano.tres");
-		SelectedArena ??= GD.Load<ArenaData>("res://resources/arenas/backyard.tres");
+		SelectedArena ??= GD.Load<ArenaData>("res://resources/arenas/thepit_day.tres");
 	}
 
 	// Character select -> map select
