@@ -126,6 +126,7 @@ public partial class GameHud : CanvasLayer {
 		}
 		UpdateScore(false);
 		AudioManager.Instance?.SetMusicLevel(MatchMusicDb);
+		AudioManager.Instance?.PlayIntense();
 	}
 
 	// The meter follows the fighter's ability charge once Fighters.cs has the two ability signals

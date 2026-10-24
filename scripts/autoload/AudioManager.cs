@@ -51,6 +51,11 @@ public partial class AudioManager : Node {
 	private const ulong SliderGapMs = 70;    // don't click on every tiny slider step
 	private const ulong FocusQuietMs = 100;  // no focus click right after another sound
 	private const float MusicDb = -10f;        // the track is mastered loud; keep it under the effects
+	// The lobby and matches jump to the song's driving part and loop it, so a fight never drops into the quiet intro
+	private const float IntenseStart = 70f;    // seconds into "I Want It All" (the build into the second chorus)
+	private const float IntenseEnd = 158f;     // loops back to IntenseStart here
+	private const float SectionFadeSeconds = 0.35f;
+	private const float VoiceFadeSeconds = 0.15f;
 	private const float MusicFadeSeconds = 0.6f;
 	private static readonly string[] Extensions = { "ogg", "wav", "mp3" };
 	private static readonly string[] BackButtons = { "QuitButton", "MenuButton" };
@@ -76,6 +81,10 @@ public partial class AudioManager : Node {
 	private AudioStreamPlayer[] voices;
 	private AudioStreamPlayer musicPlayer;
 	private Tween musicFade;
+	private string[] voiceNames;
+	private float musicTargetDb = MusicDb;
+	private bool intense;
+	private bool switchingSection;
 	private string currentMusic = "";
 	private int nextVoice;
 	private ulong lastSliderMs;
@@ -116,6 +125,8 @@ public partial class AudioManager : Node {
 		if (stream == null) return;
 
 		AudioStreamPlayer voice = FreeVoice();
+		voiceNames ??= new string[voices.Length];
+		voiceNames[System.Array.IndexOf(voices, voice)] = name;
 		voice.Stream = stream;
 		voice.PitchScale = 1f + (float)GD.RandRange(-pitchVariation, pitchVariation);
 		voice.VolumeDb = Volumes.TryGetValue(name, out float db) ? db : 0f;
@@ -143,9 +154,55 @@ public partial class AudioManager : Node {
 
 	// offsetDb is added to the normal music level, e.g. -6 to sit under a fight. Fades smoothly.
 	public void SetMusicLevel(float offsetDb) {
+		musicTargetDb = MusicDb + offsetDb;
+		if (switchingSection) return;   // the section crossfade ends at the new level
 		musicFade?.Kill();
 		musicFade = CreateTween();
-		musicFade.TweenProperty(musicPlayer, "volume_db", MusicDb + offsetDb, MusicFadeSeconds);
+		musicFade.TweenProperty(musicPlayer, "volume_db", musicTargetDb, MusicFadeSeconds);
+	}
+
+	// Lobby and matches: crossfade to the intense part of the song (does nothing if already there)
+	public void PlayIntense() {
+		if (intense) return;
+		intense = true;
+		JumpMusic(IntenseStart);
+	}
+
+	// Menus: back to the start of the song
+	public void PlayCalm() {
+		if (!intense) return;
+		intense = false;
+		JumpMusic(0f);
+	}
+
+	private void JumpMusic(float seconds) {
+		if (!musicPlayer.Playing) return;
+		if (verbose) GD.Print($"[audio] music jumps to {seconds}s");
+		switchingSection = true;
+		musicFade?.Kill();
+		musicFade = CreateTween();
+		musicFade.TweenProperty(musicPlayer, "volume_db", -40f, SectionFadeSeconds);
+		musicFade.TweenCallback(Callable.From(() => musicPlayer.Seek(seconds)));
+		musicFade.TweenProperty(musicPlayer, "volume_db", musicTargetDb, SectionFadeSeconds * 2);
+		musicFade.TweenCallback(Callable.From(() => switchingSection = false));
+	}
+
+	// Fades out every sound whose name starts with prefix (the name calls when the screen changes)
+	public void FadeOutSfx(string prefix) {
+		if (voiceNames == null) return;
+		for (int i = 0; i < voices.Length; i++) {
+			AudioStreamPlayer voice = voices[i];
+			if (!voice.Playing || voiceNames[i] == null || !voiceNames[i].StartsWith(prefix)) continue;
+			Tween fadeOut = CreateTween();
+			fadeOut.TweenProperty(voice, "volume_db", -40f, VoiceFadeSeconds);
+			fadeOut.TweenCallback(Callable.From(voice.Stop));
+		}
+	}
+
+	public override void _Process(double delta) {
+		if (intense && !switchingSection && musicPlayer.Playing && musicPlayer.GetPlaybackPosition() >= IntenseEnd) {
+			musicPlayer.Seek(IntenseStart);
+		}
 	}
 
 	public void StopMusic() {
