@@ -1063,6 +1063,14 @@ size = Vector2(36, 32)
 radius = 24.0
 
 [node name="Banaba" unique_id=460291919 instance=ExtResource("1_idp20")]
+MaxAbilityCharge = null
+ChargePerHit = null
+PlayerId = null
+MaxHealth = null
+StartFacingRight = null
+BlockDamageMultiplier = null
+RunSpeed = null
+FeetOffset = null
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_47mej")
@@ -1085,6 +1093,17 @@ shape = SubResource("RectangleShape2D_7mj3p")
 
 [node name="Ability" type="Node2D" parent="." index="4" unique_id=749972441]
 script = ExtResource("17_1nmrd")
+TransformTimeFallback = null
+RevertTimeFallback = null
+AimTimeLimit = null
+DashDistance = null
+DashTime = null
+Cooldown = null
+ExitSpeed = null
+Damage = null
+KnockbackForce = null
+HitstunTime = null
+HitstopTime = null
 CrosshairAim = ExtResource("22_qfeo7")
 CrosshairConfirm = ExtResource("23_x6y5v")
 

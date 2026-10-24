@@ -23,6 +23,7 @@ public partial class Fighters : CharacterBody2D {
 	[Export] public bool StartFacingRight = true;
 	[Export] public float BlockDamageMultiplier = 0.2f;
 	[Export] public float RunSpeed = 250f;
+	[Export] public float FeetOffset = 32f;
 
 	// UI / match flow hooks (HUD and MatchController listen to these)
 	[Signal] public delegate void HealthChangedEventHandler(int current, int max);
@@ -105,6 +106,7 @@ public partial class Fighters : CharacterBody2D {
 	private Ability ability;
 	private StringName abilityKey;
 	private float abilityCharge = 0f;
+	private Vector2 spriteBasePos;
 	
 	public bool FacingRight => facingRight;
 	public void Face(bool right) => SetFacing(right);
@@ -133,6 +135,7 @@ public partial class Fighters : CharacterBody2D {
 		hitboxShape = attackHitbox.GetNode<CollisionShape2D>("CollisionShape2D");
 		hitboxVisual = attackHitbox.GetNode<Sprite2D>("HitboxVisual");
 		Health = MaxHealth;
+		spriteBasePos = animatedSprite.Position;
 
 		// Hitbox area
 		hitboxRect = new RectangleShape2D();
@@ -528,6 +531,11 @@ public partial class Fighters : CharacterBody2D {
 		);
 
 		EmitSignal(SignalName.AbilityUsed);
+	}
+
+	public void SetSpriteScale(float s) {
+		animatedSprite.Scale = new Vector2(s, s);
+		animatedSprite.Position = spriteBasePos - new Vector2(0, (s - 1f) * FeetOffset);   // grow upward from the feet
 	}
 
 	private void Die() {
