@@ -113,6 +113,7 @@ Where sounds are triggered:
 - **Loading screen:** the rooster call when PRESS START appears; music starts 1.2 s later.
 - **Character and map select, lobby:** cursor moves, ready / unready, tips, door, match start.
 - **`GameHud`:** the banners, plus hit and block. It plays these from `HealthChanged`, so `Fighters.cs` has no audio code: a loss of 1-3 HP is a blocked hit (20 % chip damage), anything more is a hit.
+- **Attack swings:** `AudioManager` hooks every `Fighters` node as it is added and listens to its `AnimatedSprite2D` changing animation. A ground attack animation (`neutral_attack`, `side_attack`, `up_attack`, `down_attack`) plays `swing`, an aerial (`neutral_air`, `side_air`, `up_air`, `down_air`) plays `swing_air`. If the backend renames an attack animation, update `GroundAttacks` / `AirAttacks` in `AudioManager.cs`.
 
 ### `scripts/autoload/SettingsManager.cs` (saved options)
 
