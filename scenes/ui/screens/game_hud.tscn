@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_banner_round_1.png" id="9"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_banner_ko.png" id="10"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_box.png" id="11_box"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_frame.png" id="11_frame"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -58,10 +59,21 @@ texture = ExtResource("11_box")
 [node name="P1Portrait" type="TextureRect" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
+offset_left = 19.0
+offset_top = 27.0
+offset_right = 45.0
+offset_bottom = 53.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="P1PortraitFrame" type="TextureRect" parent="Root"]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 24.0
 offset_right = 48.0
 offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("11_frame")
 
 [node name="P1BarBack" type="TextureRect" parent="Root"]
 layout_mode = 0
@@ -232,11 +244,22 @@ texture = ExtResource("11_box")
 [node name="P2Portrait" type="TextureRect" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
+offset_left = 595.0
+offset_top = 27.0
+offset_right = 621.0
+offset_bottom = 53.0
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="P2PortraitFrame" type="TextureRect" parent="Root"]
+layout_mode = 0
 offset_left = 592.0
 offset_top = 24.0
 offset_right = 624.0
 offset_bottom = 56.0
-flip_h = true
+mouse_filter = 2
+texture = ExtResource("11_frame")
 
 [node name="Dim" type="ColorRect" parent="Root"]
 unique_name_in_owner = true
