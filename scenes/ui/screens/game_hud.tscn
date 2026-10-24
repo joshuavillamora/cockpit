@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_meter_fill_ready.png" id="8"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_banner_round_1.png" id="9"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_banner_ko.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_box.png" id="11_box"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 10
@@ -44,6 +45,15 @@ offset_bottom = 22.0
 text = "JOLOANO"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="P1PortraitBox" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 24.0
+offset_right = 48.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("11_box")
 
 [node name="P1Portrait" type="TextureRect" parent="Root"]
 unique_name_in_owner = true
@@ -210,6 +220,15 @@ offset_bottom = 68.0
 mouse_filter = 2
 theme_override_constants/separation = 8
 
+[node name="P2PortraitBox" type="TextureRect" parent="Root"]
+layout_mode = 0
+offset_left = 592.0
+offset_top = 24.0
+offset_right = 624.0
+offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("11_box")
+
 [node name="P2Portrait" type="TextureRect" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 0
@@ -217,6 +236,7 @@ offset_left = 592.0
 offset_top = 24.0
 offset_right = 624.0
 offset_bottom = 56.0
+flip_h = true
 
 [node name="Dim" type="ColorRect" parent="Root"]
 unique_name_in_owner = true
