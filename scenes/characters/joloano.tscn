@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b55yl8grvgela" path="res://scenes/characters/fighter.tscn" id="1_20cxu"]
 [ext_resource type="Texture2D" uid="uid://d06vaobs42lld" path="res://assets/characters/joloano/joloano_down_air.png" id="2_n0ig7"]
+[ext_resource type="Texture2D" uid="uid://djm6spfacee1" path="res://assets/characters/joloano/joloano_block.png" id="2_yjefx"]
 [ext_resource type="Texture2D" uid="uid://d4gixwld3frmf" path="res://assets/characters/joloano/joloano_idle.png" id="3_44b8t"]
 [ext_resource type="Texture2D" uid="uid://7ttg8joiwuiu" path="res://assets/characters/joloano/joloano_hurt.png" id="3_hs73c"]
 [ext_resource type="Texture2D" uid="uid://baci5subw4j7w" path="res://assets/characters/joloano/joloano_down_attack.png" id="3_v2vb1"]
@@ -14,6 +15,14 @@
 [ext_resource type="Texture2D" uid="uid://dndn6kgwiv3pf" path="res://assets/characters/joloano/joloano_neutral_air.png" id="8_4h8lt"]
 [ext_resource type="Texture2D" uid="uid://c15amddoodcp2" path="res://assets/characters/joloano/joloano_side_air.png" id="10_ks305"]
 [ext_resource type="Texture2D" uid="uid://df7epnwaflpl7" path="res://assets/characters/joloano/joloano_up_air.png" id="12_4h8lt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jd0e0"]
+atlas = ExtResource("2_yjefx")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j36gx"]
+atlas = ExtResource("2_yjefx")
+region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c33rs"]
 atlas = ExtResource("2_n0ig7")
@@ -353,6 +362,17 @@ region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_20cxu"]
 animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_jd0e0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j36gx")
+}],
+"loop": 0,
+"name": &"block",
+"speed": 30.0
+}, {
 "frames": [{
 "duration": 8.0,
 "texture": SubResource("AtlasTexture_c33rs")
@@ -708,8 +728,8 @@ PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
-animation = &"up_air"
-frame_progress = 0.79279894
+animation = &"block"
+frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 visible = false
