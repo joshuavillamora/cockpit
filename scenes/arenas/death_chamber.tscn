@@ -1,0 +1,112 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/arenas/death_chamber/background.png" id="1_art"]
+[ext_resource type="Texture2D" path="res://assets/arenas/death_chamber/walls.png" id="2_art"]
+[ext_resource type="Texture2D" path="res://assets/arenas/death_chamber/platforms.png" id="3_art"]
+[ext_resource type="Texture2D" path="res://assets/arenas/death_chamber/tiles.png" id="4_art"]
+[ext_resource type="Texture2D" path="res://assets/arenas/death_chamber/lights.png" id="5_art"]
+
+[sub_resource type="WorldBoundaryShape2D" id="floor"]
+
+[sub_resource type="WorldBoundaryShape2D" id="wall_left"]
+
+[sub_resource type="WorldBoundaryShape2D" id="wall_right"]
+
+[sub_resource type="RectangleShape2D" id="platform_0"]
+size = Vector2(160, 8)
+
+[sub_resource type="RectangleShape2D" id="platform_1"]
+size = Vector2(160, 8)
+
+[sub_resource type="RectangleShape2D" id="platform_2"]
+size = Vector2(160, 8)
+
+[sub_resource type="RectangleShape2D" id="platform_3"]
+size = Vector2(80, 8)
+
+[sub_resource type="RectangleShape2D" id="platform_4"]
+size = Vector2(80, 8)
+
+[sub_resource type="RectangleShape2D" id="platform_5"]
+size = Vector2(80, 8)
+
+[node name="Arena" type="Node2D"]
+
+[node name="BackgroundArt" type="Sprite2D" parent="."]
+texture = ExtResource("1_art")
+centered = false
+
+[node name="WallsArt" type="Sprite2D" parent="."]
+texture = ExtResource("2_art")
+centered = false
+
+[node name="PlatformsArt" type="Sprite2D" parent="."]
+texture = ExtResource("3_art")
+centered = false
+
+[node name="TilesArt" type="Sprite2D" parent="."]
+texture = ExtResource("4_art")
+centered = false
+
+[node name="LightsArt" type="Sprite2D" parent="."]
+z_index = 5
+texture = ExtResource("5_art")
+centered = false
+
+[node name="Floor" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(320, 296)
+shape = SubResource("floor")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+rotation = 1.5707964
+shape = SubResource("wall_left")
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(640, 0)
+rotation = -1.5707964
+shape = SubResource("wall_right")
+
+[node name="Platforms" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="Platform1" type="CollisionShape2D" parent="Platforms"]
+position = Vector2(136, 116)
+shape = SubResource("platform_0")
+one_way_collision = true
+
+[node name="Platform2" type="CollisionShape2D" parent="Platforms"]
+position = Vector2(504, 116)
+shape = SubResource("platform_1")
+one_way_collision = true
+
+[node name="Platform3" type="CollisionShape2D" parent="Platforms"]
+position = Vector2(320, 164)
+shape = SubResource("platform_2")
+one_way_collision = true
+
+[node name="Platform4" type="CollisionShape2D" parent="Platforms"]
+position = Vector2(192, 208)
+shape = SubResource("platform_3")
+one_way_collision = true
+
+[node name="Platform5" type="CollisionShape2D" parent="Platforms"]
+position = Vector2(448, 208)
+shape = SubResource("platform_4")
+one_way_collision = true
+
+[node name="Platform6" type="CollisionShape2D" parent="Platforms"]
+position = Vector2(320, 252)
+shape = SubResource("platform_5")
+one_way_collision = true
+
+[node name="SpawnP1" type="Marker2D" parent="."]
+position = Vector2(180, 260)
+
+[node name="SpawnP2" type="Marker2D" parent="."]
+position = Vector2(460, 260)
