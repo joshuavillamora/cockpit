@@ -23,6 +23,8 @@ public static class Sfx {
 	public const string Deathmatch = "deathmatch";
 	public const string Fight = "fight";
 	public const string Hit = "hit";
+	public const string Swing = "swing";              // ground attack starts
+	public const string SwingAir = "swing_air";       // aerial attack starts
 	public const string Block = "block";
 	public const string Ko = "ko";
 	public const string Draw = "draw";
@@ -47,6 +49,9 @@ public partial class AudioManager : Node {
 	private const float MusicFadeSeconds = 0.6f;
 	private static readonly string[] Extensions = { "ogg", "wav", "mp3" };
 	private static readonly string[] BackButtons = { "QuitButton", "MenuButton" };
+	// Attack animation names, as Fighters.Attacks plays them
+	private static readonly string[] GroundAttacks = { "neutral_attack", "side_attack", "up_attack", "down_attack" };
+	private static readonly string[] AirAttacks = { "neutral_air", "side_air", "up_air", "down_air" };
 
 	// Loudness balance in dB. The files are all peak-normalized, so UI clicks are pulled down
 	// and the big moments (banners, KO, the startup call) stay loud. Missing = 0 dB.
@@ -56,6 +61,7 @@ public partial class AudioManager : Node {
 		{ Sfx.Ready, -6f }, { Sfx.Unready, -8f }, { Sfx.Error, -8f }, { Sfx.Tip, -12f }, { Sfx.TipsToggle, -12f },
 		{ Sfx.Door, -6f }, { Sfx.MatchStart, -4f }, { Sfx.RoundStart, -3f }, { Sfx.Deathmatch, -3f },
 		{ Sfx.Hit, -4f }, { Sfx.Block, -6f }, { Sfx.Draw, -4f }, { Sfx.Victory, -3f },
+		{ Sfx.Swing, -9f }, { Sfx.SwingAir, -9f },
 	};
 
 	public static AudioManager Instance { get; private set; }
@@ -190,6 +196,20 @@ public partial class AudioManager : Node {
 				lastSliderMs = now;
 				PlaySfx(Sfx.MenuMove);
 			};
+		} else if (node is Fighters fighter) {
+			fighter.Ready += () => HookFighter(fighter);   // its sprite is ready once the fighter is
 		}
+	}
+
+	// Attack swings come from the fighter's sprite starting an attack animation, so Fighters.cs needs
+	// no audio code. Covers matches, the lobby and the test fight.
+	private void HookFighter(Fighters fighter) {
+		var sprite = fighter.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+		if (sprite == null) return;
+		sprite.AnimationChanged += () => {
+			string anim = sprite.Animation;
+			if (System.Array.IndexOf(GroundAttacks, anim) >= 0) PlaySfx(Sfx.Swing, 0.1f);
+			else if (System.Array.IndexOf(AirAttacks, anim) >= 0) PlaySfx(Sfx.SwingAir, 0.1f);
+		};
 	}
 }

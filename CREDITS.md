@@ -16,7 +16,7 @@
 
 **Rooster squawk** generated with [ElevenLabs](https://elevenlabs.io) Sound Effects.
 
-**[SFXMint](https://sfxmint.com).** [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/), no credit required (listed anyway): Solid Punch Impact 70 (`impact-punch-70`), Small Bird Wings Flapping 03 (`animal-wing-flap-03`), Soft Body Heavy Thud 04 (`impact-thud-04`), Flock Wingbeats 01 (`flock-wingbeats-01`).
+**[SFXMint](https://sfxmint.com).** [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/), no credit required (listed anyway): Solid Punch Impact 70 (`impact-punch-70`), Small Bird Wings Flapping 03 (`animal-wing-flap-03`), Soft Body Heavy Thud 04 (`impact-thud-04`), Flock Wingbeats 01 (`flock-wingbeats-01`), Throw Whoosh 04 (`throw-whoosh-04`).
 
 The clips were trimmed, peak-normalized, pitch-shifted or layered in a few cases, and converted to Ogg. Each file in `assets/audio/sfx/` is named after its role in the game:
 
@@ -38,6 +38,8 @@ The clips were trimmed, peak-normalized, pitch-shifted or layered in a few cases
 | `fight` | FIGHT! banner | ElevenLabs rooster squawk (first squawk) |
 | `hit` | A fighter or the lobby dummy takes a hit | SFXMint Solid Punch Impact 70, layered with Small Bird Wings Flapping 03 (feathers) |
 | `block` | A blocked hit (chip damage) | SFXMint Soft Body Heavy Thud 04 |
+| `swing` | A ground attack starts | SFXMint Throw Whoosh 04 |
+| `swing_air` | An aerial attack starts | SFXMint Throw Whoosh 04 (higher pitch), layered with Small Bird Wings Flapping 03 |
 | `ko` | KO banner | ElevenLabs rooster squawk (final crow, lower pitch), layered with SFXMint Flock Wingbeats 01 (feather burst) |
 | `draw` | DRAW banner | JDSherbert, Error 1 (lower pitch) |
 | `victory` | Victory screen | Nathan Gibson, Modern 16 |
