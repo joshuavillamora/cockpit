@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="Texture2D" path="res://assets/ui/menus/ui_title_bg.png" id="1_bg"]
+
 [node name="MenuBackground" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -9,25 +11,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Sky" type="ColorRect" parent="."]
+[node name="Art" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 640.0
-offset_bottom = 210.0
-mouse_filter = 2
-color = Color(0.5, 0.74, 0.9, 1)
-
-[node name="Field" type="ColorRect" parent="."]
-layout_mode = 0
-offset_top = 210.0
 offset_right = 640.0
 offset_bottom = 360.0
 mouse_filter = 2
-color = Color(0.38, 0.6, 0.27, 1)
-
-[node name="Horizon" type="ColorRect" parent="."]
-layout_mode = 0
-offset_top = 206.0
-offset_right = 640.0
-offset_bottom = 214.0
-mouse_filter = 2
-color = Color(0.3, 0.5, 0.22, 1)
+texture = ExtResource("1_bg")
