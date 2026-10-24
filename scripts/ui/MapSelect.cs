@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 // Either player can move the cursor and continue (the arena is a shared choice).
 // Layout follows the team's map selection design: three framed thumbnails with a numbered name box
-// under each, and an instruction bar along the bottom. Number keys 1-3 jump to a map.
+// under each, an instruction bar along the bottom and an ESC BACK hint in the top left corner (as on character
+// select). Number keys 1-3 jump to a map.
 public partial class MapSelect : Control {
 	private static readonly string[] ArenaPaths = {
+		"res://resources/arenas/death_chamber.tres",
 		"res://resources/arenas/thepit_day.tres",
 		"res://resources/arenas/thepit_night.tres",
-		"res://resources/arenas/death_chamber.tres",
 	};
 
 	private static readonly Vector2 ThumbSize = new(168, 104);
@@ -18,6 +19,7 @@ public partial class MapSelect : Control {
 	private const float NameHeight = 24f;
 	private static readonly Color Gold = new(1f, 0.85f, 0.3f);
 	private static readonly Color Dimmed = new(0.5f, 0.5f, 0.5f);
+	private static readonly Color Muted = new(0.54f, 0.59f, 0.61f);
 
 	private readonly List<ArenaData> arenas = new();
 	private readonly List<Control> cards = new();
@@ -74,6 +76,7 @@ public partial class MapSelect : Control {
 		}
 
 		BuildInstructions(GetNode<HBoxContainer>("%Instructions"));
+		BuildEscHint(GetNode<Control>("%EscHint"));
 		Refresh();
 	}
 
@@ -131,7 +134,7 @@ public partial class MapSelect : Control {
 		}
 	}
 
-	// Arrow keys MOVE, ENTER CONFIRM, ESC BACK, 1 2 3 JUMP TO MAP
+	// Arrow keys MOVE, ENTER CONFIRM, 1 2 3 JUMP TO MAP
 	private static void BuildInstructions(HBoxContainer bar) {
 		void Keys(string word, params string[] keys) {
 			foreach (string k in keys) {
@@ -147,8 +150,21 @@ public partial class MapSelect : Control {
 		Gap();
 		Keys("CONFIRM", "ENTER");
 		Gap();
-		Keys("BACK", "ESC");
-		Gap();
 		Keys("JUMP TO MAP", "1", "2", "3");
+	}
+
+	private static void BuildEscHint(Control area) {
+		Keycap esc = Keycap.Create("ESC");
+		area.AddChild(esc);
+		var back = new Label {
+			Text = "BACK",
+			Position = new Vector2(esc.Size.X + 4, 0),
+			Size = new Vector2(40, 16),
+			VerticalAlignment = VerticalAlignment.Center,
+		};
+		back.AddThemeConstantOverride("outline_size", 0);
+		back.AddThemeFontSizeOverride("font_size", 16);
+		back.AddThemeColorOverride("font_color", Muted);
+		area.AddChild(back);
 	}
 }
