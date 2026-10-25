@@ -16,6 +16,19 @@
 [ext_resource type="Texture2D" uid="uid://c15amddoodcp2" path="res://assets/characters/joloano/joloano_side_air.png" id="10_ks305"]
 [ext_resource type="Texture2D" uid="uid://dkoq4botaf731" path="res://assets/characters/joloano/joloano_run.png" id="11_fj44k"]
 [ext_resource type="Texture2D" uid="uid://df7epnwaflpl7" path="res://assets/characters/joloano/joloano_up_air.png" id="12_4h8lt"]
+[ext_resource type="Script" uid="uid://bc566aypo2ib8" path="res://scripts/characters/JoloanoStomp.cs" id="17_fj44k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdt14"]
+atlas = ExtResource("3_44b8t")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghxgc"]
+atlas = ExtResource("3_v2vb1")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exrh7"]
+atlas = ExtResource("3_v2vb1")
+region = Rect2(128, 64, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jd0e0"]
 atlas = ExtResource("2_yjefx")
@@ -100,10 +113,6 @@ region = Rect2(192, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fj44k"]
 atlas = ExtResource("3_hs73c")
 region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pdt14"]
-atlas = ExtResource("3_44b8t")
-region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hs73c"]
 atlas = ExtResource("3_44b8t")
@@ -375,6 +384,33 @@ region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_20cxu"]
 animations = [{
+"frames": [{
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_pdt14")
+}],
+"loop": 0,
+"name": &"ability_grow",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_pdt14")
+}],
+"loop": 0,
+"name": &"ability_shrink",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_ghxgc")
+}, {
+"duration": 12.0,
+"texture": SubResource("AtlasTexture_exrh7")
+}],
+"loop": 0,
+"name": &"ability_stomp",
+"speed": 24.0
+}, {
 "frames": [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_jd0e0")
@@ -755,7 +791,7 @@ PlayerId = 2
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
-animation = &"run"
+animation = &"ability_shrink"
 frame = 0
 frame_progress = 0.0
 
@@ -775,3 +811,12 @@ texture = SubResource("PlaceholderTexture2D_d2soj")
 [node name="CollisionShape2D" parent="Hurtbox" parent_id_path=PackedInt32Array(1989035223) index="0" unique_id=826217368]
 position = Vector2(0.5, 10.5)
 shape = SubResource("RectangleShape2D_jny6k")
+
+[node name="Ability" type="Node2D" parent="." index="5" unique_id=1508706186]
+script = ExtResource("17_fj44k")
+
+[node name="StompHitbox" type="Area2D" parent="Ability" index="0" unique_id=501779047]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ability/StompHitbox" index="0" unique_id=1987935853]
