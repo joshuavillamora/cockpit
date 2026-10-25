@@ -1,11 +1,27 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://c15irqw2h7ujo"]
 
-[ext_resource type="PackedScene" path="res://scenes/characters/fighter.tscn" id="1_fighter"]
-[ext_resource type="Texture2D" path="res://assets/characters/paraokan/paraokan.png" id="2_still"]
+[ext_resource type="PackedScene" uid="uid://b55yl8grvgela" path="res://scenes/characters/fighter.tscn" id="1_fighter"]
+[ext_resource type="Texture2D" uid="uid://ccbnbq8wqg4jm" path="res://assets/characters/paraokan/paraokan.png" id="2_still"]
+[ext_resource type="Texture2D" uid="uid://dfitl8q6ab634" path="res://assets/characters/paraokan/ParaokanJump-Sheet.png" id="3_5qbp5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4057x"]
+atlas = ExtResource("3_5qbp5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3qoc"]
+atlas = ExtResource("3_5qbp5")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugnlm"]
+atlas = ExtResource("3_5qbp5")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipg14"]
+atlas = ExtResource("3_5qbp5")
+region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_still"]
-animations = [
-{
+animations = [{
 "frames": [{
 "duration": 2.0,
 "texture": ExtResource("2_still")
@@ -111,19 +127,16 @@ animations = [
 }, {
 "frames": [{
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_4057x")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_k3qoc")
 }, {
-"duration": 6.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_ugnlm")
 }, {
-"duration": 6.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 6.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_ipg14")
 }],
 "loop": 1,
 "name": &"jump",
@@ -373,17 +386,19 @@ animations = [
 "speed": 30.0
 }]
 
-[node name="Paraoakan" instance=ExtResource("1_fighter")]
+[node name="Paraoakan" unique_id=2043841611 instance=ExtResource("1_fighter")]
 
-[node name="AnimatedSprite2D" parent="." index="0"]
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_still")
-animation = &"idle"
+animation = &"jump"
+frame = 2
+frame_progress = 0.21075803
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 visible = false
 
-[node name="AttackHitbox" parent="." index="2"]
+[node name="AttackHitbox" parent="." index="2" unique_id=1993799062]
 visible = false
 
-[node name="Hurtbox" parent="." index="3"]
+[node name="Hurtbox" parent="." index="3" unique_id=1989035223]
 visible = false
