@@ -67,14 +67,14 @@ public partial class Fighters : CharacterBody2D {
 	}
 
 	private static readonly Dictionary<AttackType, AttackData> Defaults = new() {
-		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(24, 8),  1, 2, 4,  0.8f, 0.7f, new Vector2(100, -40),  0.50f, 0.10f) },
-		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(40, 16), new Vector2(36, 12), 3, 6, 8,  0.4f, 0.5f, new Vector2(220, -120), 0.70f, 0.15f) },
-		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 30), new Vector2(0, -12), 3, 3, 7,  0.4f, 0.4f, new Vector2(40, -300),  0.80f, 0.15f) },
-		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(32, 20), new Vector2(28, 22), 2, 7, 14, 0.1f, 0.2f, new Vector2(100, -150), 1.00f, 0.25f) },
-		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(44, 36), new Vector2(12, 20),  2, 5, 5,  0.8f, 0.8f, new Vector2(150, -100), 0.60f, 0.15f) },
-		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(32, 16), new Vector2(28, 24), 2, 7, 7,  0.4f, 0.6f, new Vector2(220, -120), 0.70f, 0.15f) },
-		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18), 3, 6, 7,  0.4f, 0.6f, new Vector2(40, -280),  0.70f, 0.15f) },
-		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(12, 28),  1, 6, 8, 0.1f, 0.3f, new Vector2(60, 250),  0.80f, 0.15f) },
+		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(24, -4),  2, 2, 4,  0.8f, 0.7f, new Vector2(100, -40),  0.25f, 0.10f) },
+		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(40, 16), new Vector2(38, 2), 3, 4, 8,  0.4f, 0.5f, new Vector2(220, -120), 0.35f, 0.15f) },
+		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(22, 30), new Vector2(11, -15), 3, 3, 7,  0.4f, 0.4f, new Vector2(40, -300),  0.40f, 0.15f) },
+		{ AttackType.DownAttack,    new AttackData("down_attack",    new Vector2(32, 20), new Vector2(28, 22), 3, 4, 14, 0.1f, 0.2f, new Vector2(100, -150), 0.75f, 0.25f) },
+		{ AttackType.NeutralAir,    new AttackData("neutral_air",    new Vector2(32, 40), new Vector2(16, -4),  3, 4, 5,  0.8f, 0.8f, new Vector2(150, -100), 0.30f, 0.15f) },
+		{ AttackType.SideAir,       new AttackData("side_air",       new Vector2(32, 22), new Vector2(30, 14), 4, 5, 7,  0.4f, 0.6f, new Vector2(220, -120), 0.35f, 0.15f) },
+		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(22, 40), new Vector2(7, -24), 3, 4, 7,  0.4f, 0.6f, new Vector2(40, -280),  0.35f, 0.15f) },
+		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(32, 16), new Vector2(12, 28),  3, 4, 8, 0.1f, 0.3f, new Vector2(60, 250),  0.40f, 0.15f) },
 	};
 
 	protected Dictionary<AttackType, AttackData> Attacks;
