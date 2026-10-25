@@ -7,18 +7,22 @@
 [ext_resource type="Texture2D" path="res://assets/ui/icons/ui_ability_chicken2_unavailable.png" id="5"]
 [ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_chicken2.png" id="7"]
 
+[ext_resource type="Texture2D" path="res://assets/characters/paraokan/paraokan.png" id="8"]
+[ext_resource type="PackedScene" path="res://scenes/characters/paraokan.tscn" id="6"]
 
 [resource]
 script = ExtResource("1")
 Id = "paraokan"
-DisplayName = "PARAOKAN"
+DisplayName = "PARAOAKAN"
 Portrait = ExtResource("2")
 HudPortrait = ExtResource("7")
+SelectSprite = ExtResource("8")
 AbilityReady = ExtResource("3")
 AbilityCooling = ExtResource("4")
 AbilityUnavailable = ExtResource("5")
 
-Playable = false
+Scene = ExtResource("6")
+Playable = true
 AbilityName = "CHICKBALANG"
 AbilityText = "HORSE-HEAD STRIKES"
 PassiveName = "PASSIVE TBD"

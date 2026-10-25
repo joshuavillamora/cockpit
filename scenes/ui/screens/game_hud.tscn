@@ -1,16 +1,17 @@
 [gd_scene format=3 uid="uid://cofskyat5t8h6"]
 
-[ext_resource type="Script" uid="uid://b4r50cay3834m" path="res://scripts/ui/GameHud.cs" id="1"]
-[ext_resource type="Texture2D" uid="uid://dl4ng7eybotcp" path="res://assets/ui/hud/ui_healthbar_frame.png" id="2"]
-[ext_resource type="Texture2D" uid="uid://c1movn04ec2io" path="res://assets/ui/hud/ui_healthbar_fill.png" id="3"]
-[ext_resource type="Texture2D" uid="uid://bt3d78ah4jkh8" path="res://assets/ui/hud/ui_healthbar_back.png" id="4"]
-[ext_resource type="Texture2D" uid="uid://bdynkfshyeg65" path="res://assets/ui/hud/ui_counter_frame.png" id="5"]
-[ext_resource type="Texture2D" uid="uid://vmg0aybtk601" path="res://assets/ui/hud/ui_meter_frame.png" id="6"]
-[ext_resource type="Texture2D" uid="uid://56ynbt47hpov" path="res://assets/ui/hud/ui_meter_back.png" id="7"]
-[ext_resource type="Texture2D" uid="uid://ux5gg8cj2x8n" path="res://assets/ui/hud/ui_meter_fill_ready.png" id="8"]
-[ext_resource type="Texture2D" uid="uid://cvuqo3jnae5x3" path="res://assets/ui/hud/ui_banner_round_1.png" id="9"]
-[ext_resource type="Texture2D" uid="uid://cmqp07sw1coo6" path="res://assets/ui/hud/ui_banner_ko.png" id="10"]
-[ext_resource type="Texture2D" uid="uid://bkpefso8s7s5q" path="res://assets/ui/hud/ui_hud_portrait_box.png" id="11_box"]
+[ext_resource type="Script" path="res://scripts/ui/GameHud.cs" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_healthbar_frame.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_healthbar_fill.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_healthbar_back.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_counter_frame.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_meter_frame.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_meter_back.png" id="7"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_meter_fill_ready.png" id="8"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_banner_round_1.png" id="9"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_banner_ko.png" id="10"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_box.png" id="11_box"]
+[ext_resource type="Texture2D" path="res://assets/ui/hud/ui_hud_portrait_frame.png" id="11_frame"]
 
 [node name="HUD" type="CanvasLayer" unique_id=494181502]
 layer = 10
@@ -58,10 +59,21 @@ texture = ExtResource("11_box")
 [node name="P1Portrait" type="TextureRect" parent="Root" unique_id=599029475]
 unique_name_in_owner = true
 layout_mode = 0
+offset_left = 19.0
+offset_top = 27.0
+offset_right = 45.0
+offset_bottom = 53.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="P1PortraitFrame" type="TextureRect" parent="Root"]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 24.0
 offset_right = 48.0
 offset_bottom = 56.0
+mouse_filter = 2
+texture = ExtResource("11_frame")
 
 [node name="P1BarBack" type="TextureRect" parent="Root" unique_id=597853468]
 layout_mode = 0
@@ -232,11 +244,22 @@ texture = ExtResource("11_box")
 [node name="P2Portrait" type="TextureRect" parent="Root" unique_id=1755823039]
 unique_name_in_owner = true
 layout_mode = 0
+offset_left = 595.0
+offset_top = 27.0
+offset_right = 621.0
+offset_bottom = 53.0
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="P2PortraitFrame" type="TextureRect" parent="Root"]
+layout_mode = 0
 offset_left = 592.0
 offset_top = 24.0
 offset_right = 624.0
 offset_bottom = 56.0
-flip_h = true
+mouse_filter = 2
+texture = ExtResource("11_frame")
 
 [node name="Dim" type="ColorRect" parent="Root" unique_id=1305120436]
 unique_name_in_owner = true

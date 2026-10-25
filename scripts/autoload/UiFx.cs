@@ -1,7 +1,7 @@
 using Godot;
 
 // Small UI effects that apply on every screen. Registered as an autoload (see project.godot).
-//  - ui_cursor.png is the mouse pointer everywhere.
+//  - ui_cursor.png is the mouse pointer everywhere (hidden during play, back whenever a menu is up).
 //  - The same art is drawn beside whichever button or slider has keyboard focus.
 //  - Every button flashes its dark version (ui_button_normal_dark.png) briefly when it is pressed.
 public partial class UiFx : CanvasLayer {
@@ -46,12 +46,22 @@ public partial class UiFx : CanvasLayer {
 		Control focus = GetViewport().GuiGetFocusOwner();
 		bool show = focus != null && focus.IsVisibleInTree() && (focus is BaseButton || focus is Slider);
 		pointer.Visible = show;
+		UpdateMouseVisibility(focus != null && focus.IsVisibleInTree());
 		if (!show) return;
 
 		Rect2 rect = focus.GetGlobalRect();
 		pointer.Position = new Vector2(
 			rect.Position.X - cursorTexture.GetWidth() - PointerGap,
 			rect.Position.Y + (rect.Size.Y - cursorTexture.GetHeight()) / 2f);
+	}
+
+	// The mouse is hidden while players fight (lobby, match, test fight) and comes back whenever a menu
+	// is up there (pause, settings, controls, victory), which is when something on screen has focus
+	private void UpdateMouseVisibility(bool menuOpen) {
+		string scene = GetTree().CurrentScene?.SceneFilePath ?? "";
+		bool playing = scene == GameManager.LobbyScene || scene.StartsWith("res://scenes/gameplay/");
+		var mode = playing && !menuOpen ? Input.MouseModeEnum.Hidden : Input.MouseModeEnum.Visible;
+		if (Input.MouseMode != mode) Input.MouseMode = mode;
 	}
 
 	// The mouse pointer is a real OS cursor, so scale it up with the window (the game is 640x360)

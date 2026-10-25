@@ -26,32 +26,18 @@ layout_mode = 1
 
 [node name="Logo" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 176.0
-offset_top = 40.0
-offset_right = 464.0
-offset_bottom = 88.0
+offset_left = 124.0
+offset_top = 24.0
+offset_right = 516.0
+offset_bottom = 84.0
 texture = ExtResource("3")
-
-[node name="LogoLabel" type="Label" parent="Logo"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.05, 0.05, 0.1, 1)
-theme_override_constants/outline_size = 0
-theme_override_font_sizes/font_size = 32
-text = "COCKPIT"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="StatusLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 244.0
+offset_top = 286.0
 offset_right = 640.0
-offset_bottom = 268.0
+offset_bottom = 310.0
 text = "LOADING..."
 horizontal_alignment = 1
 
@@ -59,9 +45,9 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 230.0
-offset_top = 276.0
+offset_top = 316.0
 offset_right = 410.0
-offset_bottom = 292.0
+offset_bottom = 332.0
 texture = ExtResource("6")
 
 [node name="LoadingBar" type="TextureProgressBar" parent="."]
@@ -69,9 +55,9 @@ unique_name_in_owner = true
 material = SubResource("ShaderMaterial_blue")
 layout_mode = 0
 offset_left = 230.0
-offset_top = 276.0
+offset_top = 316.0
 offset_right = 410.0
-offset_bottom = 292.0
+offset_bottom = 332.0
 step = 0.1
 texture_progress = ExtResource("5")
 
@@ -79,9 +65,9 @@ texture_progress = ExtResource("5")
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 226.0
-offset_top = 272.0
+offset_top = 312.0
 offset_right = 414.0
-offset_bottom = 296.0
+offset_bottom = 336.0
 mouse_filter = 2
 texture = ExtResource("4")
 
@@ -89,9 +75,9 @@ texture = ExtResource("4")
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_top = 276.0
+offset_top = 316.0
 offset_right = 640.0
-offset_bottom = 300.0
+offset_bottom = 340.0
 text = "PRESS START"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -23,8 +23,9 @@ public partial class LoadingScreen : Control {
 		"res://resources/characters/paraokan.tres",
 		"res://resources/characters/joloano.tres",
 		"res://resources/characters/da_chik.tres",
-		"res://resources/arenas/backyard.tres",
-		"res://resources/arenas/backyard_night.tres",
+		"res://resources/arenas/thepit_day.tres",
+		"res://resources/arenas/thepit_night.tres",
+		"res://resources/arenas/death_chamber.tres",
 	};
 
 	private TextureProgressBar bar;

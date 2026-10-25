@@ -24,6 +24,16 @@ public partial class GameHud : CanvasLayer {
 	private readonly HBoxContainer[] markerBoxes = new HBoxContainer[2];
 	private readonly bool[] meterFull = new bool[2];
 	private readonly int[] lastHealth = new int[2];
+	private readonly Label[] comboLabels = new Label[2];
+	private readonly int[] combo = new int[2];
+	private readonly ulong[] lastHitMs = new ulong[2];
+	private const ulong ComboWindowMs = 1000;   // hits closer together than this keep the combo going
+	private const float ComboFadeSeconds = 0.4f;
+	private static readonly Color ComboColor = new(1f, 0.85f, 0.3f);
+	private static readonly Vector2 ComboLabelSize = new(80, 16);
+	private const float ComboSideOffset = 26f;   // from the fighter's centre to the side of its body, before camera zoom
+	private const float ComboHeightOffset = -14f;
+	private Fighters[] boundFighters;
 	private readonly bool[][] markerFilled = { new bool[GameManager.RoundsToWin], new bool[GameManager.RoundsToWin] };
 
 	private TextureRect counterFrame;
@@ -55,6 +65,7 @@ public partial class GameHud : CanvasLayer {
 		portraits[1] = GetNode<TextureRect>("%P2Portrait");
 		names[0] = GetNode<Label>("%P1Name");
 		names[1] = GetNode<Label>("%P2Name");
+		BuildComboLabels();
 		markerBoxes[0] = GetNode<HBoxContainer>("%P1Markers");
 		markerBoxes[1] = GetNode<HBoxContainer>("%P2Markers");
 		counterFrame = GetNode<TextureRect>("%CounterFrame");
@@ -91,6 +102,8 @@ public partial class GameHud : CanvasLayer {
 
 	// The full meter pulses by alternating the gold fill and its dark version
 	public override void _Process(double delta) {
+		FadeCombos(delta);
+		FollowFighters();
 		bool dark = (int)(Time.GetTicksMsec() / (ulong)(PulseSeconds * 1000)) % 2 == 1;
 		for (int p = 0; p < 2; p++) {
 			if (meterFull[p]) meters[p].TextureProgress = dark ? meterReadyDark : meterReady;
@@ -99,6 +112,7 @@ public partial class GameHud : CanvasLayer {
 
 	public void Bind(Fighters p1, Fighters p2, CharacterData c1, CharacterData c2) {
 		Fighters[] fighters = { p1, p2 };
+		boundFighters = fighters;
 		CharacterData[] characters = { c1, c2 };
 
 		for (int i = 0; i < 2; i++) {
@@ -112,6 +126,7 @@ public partial class GameHud : CanvasLayer {
 		}
 		UpdateScore(false);
 		AudioManager.Instance?.SetMusicLevel(MatchMusicDb);
+		AudioManager.Instance?.PlayIntense();
 	}
 
 	// The meter follows the fighter's ability charge once Fighters.cs has the two ability signals
@@ -184,6 +199,60 @@ public partial class GameHud : CanvasLayer {
 		}
 	}
 
+	// "3 HIT COMBO" beside the attacking chicken, like the dummy's hit counter in the lobby: hits that land
+	// within a second of each other (attacks and, once they exist, abilities; blocked chip damage doesn't
+	// count). It fades out when the combo ends.
+	private void BuildComboLabels() {
+		for (int p = 0; p < 2; p++) {
+			comboLabels[p] = new Label {
+				Size = ComboLabelSize,
+				Modulate = new Color(1, 1, 1, 0),
+			};
+			comboLabels[p].AddThemeColorOverride("font_color", ComboColor);
+			GetNode<Control>("Root").AddChild(comboLabels[p]);
+		}
+	}
+
+	private void CountHit(int attacker) {
+		ulong now = Time.GetTicksMsec();
+		combo[attacker] = now - lastHitMs[attacker] <= ComboWindowMs ? combo[attacker] + 1 : 1;
+		lastHitMs[attacker] = now;
+		if (combo[attacker] < 2) return;
+
+		Label label = comboLabels[attacker];
+		label.Text = $"{combo[attacker]} HIT COMBO";
+		label.Modulate = Colors.White;
+		label.PivotOffset = ComboLabelSize / 2;
+		label.Scale = new Vector2(1.3f, 1.3f);
+		CreateTween().TweenProperty(label, "scale", Vector2.One, 0.12);
+	}
+
+	// The label sits on the side of the chicken that faces the middle of the screen, so it never goes off
+	// the edge. The canvas transform includes the match camera's zoom and scroll.
+	private void FollowFighters() {
+		if (boundFighters == null) return;
+		for (int p = 0; p < 2; p++) {
+			Label label = comboLabels[p];
+			if (label.Modulate.A <= 0f || !IsInstanceValid(boundFighters[p])) continue;
+			Fighters fighter = boundFighters[p];
+			Vector2 centre = fighter.GetGlobalTransformWithCanvas().Origin;
+			bool onRight = centre.X < 320f;
+			// Only the camera's zoom scales the offset, not the fighter's own flip when it turns around
+			Vector2 side = centre + fighter.GetCanvasTransform().Scale * new Vector2(onRight ? ComboSideOffset : -ComboSideOffset, ComboHeightOffset);
+			label.HorizontalAlignment = onRight ? HorizontalAlignment.Left : HorizontalAlignment.Right;
+			label.Position = new Vector2(onRight ? side.X : side.X - ComboLabelSize.X, side.Y - ComboLabelSize.Y / 2);
+		}
+	}
+
+	private void FadeCombos(double delta) {
+		for (int p = 0; p < 2; p++) {
+			if (comboLabels[p] == null || comboLabels[p].Modulate.A <= 0f) continue;
+			if (Time.GetTicksMsec() - lastHitMs[p] <= ComboWindowMs) continue;
+			float alpha = Mathf.MoveToward(comboLabels[p].Modulate.A, 0f, (float)delta / ComboFadeSeconds);
+			comboLabels[p].Modulate = new Color(1, 1, 1, alpha);
+		}
+	}
+
 	private void SetHealth(int player, int current, int max, bool animate) {
 		float ratio = max > 0 ? (float)current / max : 0f;
 		TextureProgressBar bar = bars[player];
@@ -191,6 +260,7 @@ public partial class GameHud : CanvasLayer {
 		lastHealth[player] = current;
 		// Hit sounds come from health changes, so Fighters.cs needs no audio code
 		if (animate && lost > 0) AudioManager.Instance?.PlaySfx(lost <= BlockChipMax ? Sfx.Block : Sfx.Hit, 0.1f);
+		if (animate && lost > BlockChipMax) CountHit(1 - player);   // the other player landed it
 		if (animate) {
 			CreateTween().TweenProperty(bar, "value", ratio * 100.0, 0.15);
 		} else {

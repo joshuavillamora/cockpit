@@ -10,6 +10,7 @@ public partial class VictoryOverlay : CanvasLayer {
 		rematchButton = GetNode<Button>("%RematchButton");
 
 		rematchButton.Pressed += () => GameManager.Instance.Rematch();
+		GetNode<Button>("%SelectButton").Pressed += () => GameManager.Instance.RematchToSelect();
 		GetNode<Button>("%MenuButton").Pressed += () => GameManager.Instance.ReturnToMenu();
 	}
 

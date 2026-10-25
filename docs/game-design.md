@@ -58,11 +58,11 @@ Hold a direction while pressing Attack to choose the attack: neutral, side, up o
 | Chicken | Style | Ability (planned) |
 |---------|-------|-------------------|
 | **Banaba** | Master of aerial attacks, stays in the air longer, weaker on the ground | *Wak-a-Doodle-Doo*: aim at an area and slice through platforms and opponents |
-| **Paraokan** | Tall and intimidating, slow, decent glider | *Chickbalang*: stretches into a controllable horse head with strong beak attacks |
+| **Paraoakan** | Tall and intimidating, slow, decent glider | *Chickbalang*: stretches into a controllable horse head with strong beak attacks |
 | **Joloano** | Long legs, strong ground attacks, slow, good range | *Bernardo's Feet*: grows for a short time with stronger ground attacks and knockback |
 | **Da Chik** | Small, fast, good wall mobility, lower health | *Zooooom*: dashes in any direction, keeping momentum; resets on landing |
 
-Banaba and Joloano are playable now. Paraokan and Da Chik appear as "SOON" on character select.
+Banaba and Joloano are playable now. Paraoakan and Da Chik appear as "SOON" on character select.
 
 ## Moves
 

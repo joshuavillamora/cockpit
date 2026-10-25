@@ -2,27 +2,58 @@ using Godot;
 
 // A punching bag for the lobby. A fighter's attack hitbox calls TakeDamage() on the parent
 // of any hurtbox it touches, so this node only needs that method and a "Hurtbox" Area2D child.
-// It counts hits above its head and pops each hit's damage as a rising number.
+// Above its head it shows the current combo (hits within a second of each other) and the damage per
+// second over the last two seconds, and it pops each hit's damage as a rising number.
 public partial class TrainingDummy : Node2D {
 	[Signal] public delegate void HitEventHandler(int hits, int damage);
 
 	private const float PopupRise = 18f;
 	private const float PopupSeconds = 0.6f;
+	private const ulong ComboWindowMs = 1000;
+	private const ulong DpsWindowMs = 2000;
 	private static readonly Color PopupColor = new(1f, 0.85f, 0.3f);
 
+	private readonly System.Collections.Generic.Queue<(ulong At, int Damage)> recent = new();
 	private Node2D body;
 	private Label hitLabel;
+	private Label dpsLabel;
 	private int hits;
+	private int combo;
+	private ulong lastHitMs;
 	private bool leanRight = true;
 
 	public override void _Ready() {
 		body = GetNode<Node2D>("Body");
 		hitLabel = GetNode<Label>("HitLabel");
+		dpsLabel = new Label {
+			Position = hitLabel.Position - new Vector2(0, 14),
+			Size = hitLabel.Size,
+			HorizontalAlignment = HorizontalAlignment.Center,
+		};
+		dpsLabel.AddThemeColorOverride("font_color", PopupColor);
+		AddChild(dpsLabel);
+	}
+
+	// DPS keeps updating (and drops back to nothing) after the hits stop
+	public override void _Process(double delta) {
+		ulong now = Time.GetTicksMsec();
+		while (recent.Count > 0 && now - recent.Peek().At > DpsWindowMs) recent.Dequeue();
+		int total = 0;
+		foreach (var hit in recent) total += hit.Damage;
+		dpsLabel.Text = total > 0 ? $"DPS {Mathf.RoundToInt(total * 1000f / DpsWindowMs)}" : "";
+		if (combo > 0 && now - lastHitMs > ComboWindowMs) {
+			combo = 0;
+			hitLabel.Text = "HIT ME!";
+		}
 	}
 
 	public void TakeDamage(int damage) {
+		ulong now = Time.GetTicksMsec();
 		hits++;
-		hitLabel.Text = $"HITS {hits}";
+		combo = now - lastHitMs <= ComboWindowMs ? combo + 1 : 1;
+		lastHitMs = now;
+		recent.Enqueue((now, damage));
+		hitLabel.Text = combo > 1 ? $"{combo} HITS" : "1 HIT";   // short: the dummy stands in a narrow gap
 		EmitSignal(SignalName.Hit, hits, damage);
 		PopDamage(damage);
 

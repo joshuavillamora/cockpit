@@ -73,11 +73,11 @@ Press `Esc` or `P` at any time during a match to pause.
 | Chicken | Style | Signature ability (planned) |
 |---------|-------|-----------------------------|
 | **Banaba** | Master of aerial attacks, stays in the air longer, weaker on the ground | *Wak-a-Doodle-Doo*: aim at an area and slice through platforms and opponents |
-| **Paraokan** | Tall and intimidating, slow, decent glider | *Chickbalang*: stretches into a controllable horse head with strong beak attacks |
+| **Paraoakan** | Tall and intimidating, slow, decent glider | *Chickbalang*: stretches into a controllable horse head with strong beak attacks |
 | **Joloano** | Long legs, strong ground attacks, slow, good range | *Bernardo's Feet*: grows for a short time with stronger ground attacks and knockback |
 | **Da Chik** | Small, fast, good wall mobility, lower health | *Zooooom*: dashes in any direction, keeping momentum; resets on landing |
 
-**Playable now:** Banaba and Joloano. Paraokan and Da Chik appear as "SOON" on the character select screen.
+**Playable now:** Banaba and Joloano. Paraoakan and Da Chik appear as "SOON" on the character select screen.
 
 ## Game screens
 
@@ -120,7 +120,7 @@ To jump straight into a match while developing, open `scenes/gameplay/game.tscn`
 - Final art: the UI and menus use a placeholder skin, and the second arena is the first with a tint
 - Audio: background music, menu and banner sounds, and hit / block / KO sounds. Jump, attack swing and glide are still silent. Sources are listed in [CREDITS.md](CREDITS.md).
 - Moves: run, double jump, glide, wall moves, air dash, block, and the four abilities
-- Paraokan and Da Chik, controller support, and a tutorial screen
+- Paraoakan and Da Chik, controller support, and a tutorial screen
 
 Deadlines: feature freeze **October 23, 2026**, submission **October 25, 2026**. The full list is in [Status and Roadmap](docs/status-and-roadmap.md).
 

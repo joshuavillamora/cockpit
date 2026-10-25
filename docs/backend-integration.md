@@ -72,10 +72,13 @@ Chickens with `Playable = false` appear as "SOON" and cannot be picked.
 
 ## Adding an arena
 
-1. Create `resources/arenas/<name>.tres` (New Resource → `ArenaData`) and set `DisplayName`, `Thumbnail`, `Background`, and optionally `BackgroundTint`.
-2. Add the path to `MapSelect.ArenaPaths` (`scripts/ui/MapSelect.cs`) and to `LoadingScreen.Preload`.
+Each arena is its own scene in `scenes/arenas/` (`thepit_day`, `thepit_night`, `death_chamber`): its art layers (`*Art` sprites; a layer with a higher `z_index` draws over the fighters, like Death Chamber's lights), a `Floor` and `Walls` on collision layer 2, `Platforms` (one-way `CollisionShape2D`s, 8 px thick, top edge on the plank), and `SpawnP1` / `SpawnP2` markers. `MatchController` adds the chosen arena behind everything and a `MatchCamera`.
 
-Floor, walls and platforms are currently shared by all arenas and live in `scenes/gameplay/game.tscn`.
+1. Make the scene (copy one of the existing arenas) with the floor, walls and platforms matching the art.
+2. Create `resources/arenas/<name>.tres` (`ArenaData`): `DisplayName`, `Thumbnail` (160×90), `Scene`, and `Size` (the arena's world size).
+3. Add the path to `MapSelect.ArenaPaths` and `LoadingScreen.Preload`.
+
+An arena bigger than 640×360 (The Pit is 1280×720) turns on the camera: it follows the middle of the two fighters at normal size while they are close and zooms out (down to the whole arena) as they move apart. A 640×360 arena keeps a still camera.
 
 ## Match rules and where to change them
 

@@ -15,7 +15,7 @@ cockpit/
 ├── scenes/                  Layouts
 │   ├── ui/screens/          One scene per screen
 │   ├── ui/components/       menu_background.tscn
-│   ├── gameplay/game.tscn   Arena, spawns, HUD, pause, victory
+│   ├── gameplay/game.tscn   HUD, pause, victory (the arena scene is added at runtime)
 │   └── characters/          fighter.tscn (base), banaba, joloano
 └── scripts/                 Logic
     ├── autoload/            GameManager, SceneFlow, SettingsManager, UiFx
@@ -38,7 +38,7 @@ cockpit/
 | Map Select | `map_select.tscn` | `MapSelect.cs` | `ui_map_frame`, `ui_map_thumb_*` |
 | Lobby | `lobby_tutorial.tscn` | `scripts/core/LobbyController.cs` | `assets/arenas/lobby/` (background, ground from tileset, door), `ui_hud_portrait_*`, `ui_tutorial_box`, `ui_round_marker_*` (tip dots), keycaps |
 | Training dummy (in the lobby) | `scenes/gameplay/training_dummy.tscn` | `scripts/core/TrainingDummy.cs` | `assets/characters/dummy/dummy.png` |
-| Match | `scenes/gameplay/game.tscn` | `scripts/core/MatchController.cs` | arena background |
+| Match | `scenes/gameplay/game.tscn` | `scripts/core/MatchController.cs`, `MatchCamera.cs` | the chosen arena scene from `scenes/arenas/` |
 | HUD | `game_hud.tscn` | `GameHud.cs` | `ui_healthbar_*`, `ui_meter_*`, `ui_counter_frame`, `ui_round_marker_*`, `ui_hud_portrait_*`, `ui_banner_round_1/2/3`, `ui_banner_fight`, `ui_banner_ko`; the blank `ui_banner_round` and `ui_banner_blank_ko` carry the DEATHMATCH and DRAW text |
 | Pause | `pause_menu.tscn` | `PauseMenu.cs` | theme (`ui_popup_panel`) |
 | Victory | `victory_overlay.tscn` | `VictoryOverlay.cs` | theme |
@@ -71,7 +71,7 @@ Currently unused by any screen: `ui_menu_rooster_left/right`, `ui_emblem_p1/p2`,
 | Change what a screen does | Its script in `scripts/ui/` |
 | Change rounds to win | `GameManager.RoundsToWin` |
 | Add a chicken | New `.tres` in `resources/characters/`, then `CharacterSelect.CharacterPaths` and `LoadingScreen.Preload` |
-| Add a map | New `.tres` in `resources/arenas/`, then `MapSelect.ArenaPaths` and `Preload` |
+| Add a map | New arena scene in `scenes/arenas/` and `.tres` in `resources/arenas/`, then `MapSelect.ArenaPaths` and `Preload` |
 | Change keys | Project Settings → Input Map |
 | Update the controls list (controls screen and lobby) | `ControlsScreen.cs` (`Rows`) |
 | Change intro / K.O. / Deathmatch text | `GameHud.cs` (`PlayRoundIntro`, `ShowKo`) |
