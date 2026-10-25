@@ -9,7 +9,7 @@ public partial class Wakwak : Ability {
 	[Export] public float DashTime = 0.18f;
 	[Export] public float Cooldown = 3.0f;
 	[Export] public float ExitSpeed = 200f;
-	[Export] public int Damage = 12;
+	[Export] public int Damage = 20;
 	[Export] public float KnockbackForce = 400f;
 	[Export] public float HitstunTime = 0.6f;
 	[Export] public float HitstopTime = 0.12f;
