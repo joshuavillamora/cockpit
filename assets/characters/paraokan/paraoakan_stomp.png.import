@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byh7jw4jgdcej"
-path="res://.godot/imported/PARAOAKAN_DOWN_AIR-Sheet.png-cac8c6ff34bf26e725ee0e5117f54a32.ctex"
+uid="uid://chgdbdajjmag8"
+path="res://.godot/imported/paraoakan_stomp.png-1e98b5c02fc98085ab7f9833f603c323.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/paraokan/PARAOAKAN_DOWN_AIR-Sheet.png"
-dest_files=["res://.godot/imported/PARAOAKAN_DOWN_AIR-Sheet.png-cac8c6ff34bf26e725ee0e5117f54a32.ctex"]
+source_file="res://assets/characters/paraokan/paraoakan_stomp.png"
+dest_files=["res://.godot/imported/paraoakan_stomp.png-1e98b5c02fc98085ab7f9833f603c323.ctex"]
 
 [params]
 
