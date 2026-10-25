@@ -107,7 +107,7 @@ public partial class Fighters : CharacterBody2D {
 	private StringName abilityKey;
 	private float abilityCharge = 0f;
 	private Vector2 spriteBasePos;
-	
+
 	public bool FacingRight => facingRight;
 	public void Face(bool right) => SetFacing(right);
 	public Vector2 GetAimInput() => new Vector2(Input.GetAxis(moveLeft, moveRight), Input.GetAxis(upKey, downKey));
@@ -153,6 +153,11 @@ public partial class Fighters : CharacterBody2D {
 		animatedSprite.Play("idle");
 	}
 	
+	public void SetSpriteScale(float s) {
+		animatedSprite.Scale = new Vector2(s, s);
+		animatedSprite.Position = spriteBasePos - new Vector2(0, (s - 1f) * FeetOffset);   // grow upward from the feet
+	}
+
 	public override void _PhysicsProcess(double delta) {
 		Vector2 velocity = Velocity;
 
@@ -531,11 +536,6 @@ public partial class Fighters : CharacterBody2D {
 		);
 
 		EmitSignal(SignalName.AbilityUsed);
-	}
-
-	public void SetSpriteScale(float s) {
-		animatedSprite.Scale = new Vector2(s, s);
-		animatedSprite.Position = spriteBasePos - new Vector2(0, (s - 1f) * FeetOffset);   // grow upward from the feet
 	}
 
 	private void Die() {

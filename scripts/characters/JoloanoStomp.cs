@@ -7,13 +7,13 @@ public partial class JoloanoStomp : Ability {
 	[Export] public float RevertTimeFallback = 0.5f;
 	[Export] public float StompWindup = 0.25f;         // time from stomp start to the impact
 	[Export] public float StompActive = 0.15f;         // how long the shockwave can hit
-	[Export] public float StompRecover = 0.3f;         // pause after the impact
+	[Export] public float StompRecover = 0.35f;         // pause after the impact
 	[Export] public float Cooldown = 5f;
-	[Export] public Vector2 StompSize = new Vector2(220, 60);
+	[Export] public Vector2 StompSize = new Vector2(400, 60);
 	[Export] public int Damage = 20;
 	[Export] public Vector2 Knockback = new Vector2(350, -450);
 	[Export] public float HitstunTime = 0.8f;
-	[Export] public float HitstopTime = 0.2f;
+	[Export] public float HitstopTime = 0.4f;
 
 	private enum State { Ready, Growing, Stomping, Reverting }
 	private State state = State.Ready;
@@ -142,16 +142,5 @@ public partial class JoloanoStomp : Ability {
 			Vector2 kb = new Vector2(Knockback.X * dirX, Knockback.Y);   // knocked away from Joloano
 			victim.TakeHit(Damage, kb, HitstunTime, HitstopTime);
 		}
-	}
-
-	public override void _Draw() {
-		if (state != State.Stomping) return;
-
-		Vector2 center = new Vector2(0, Fighter.FeetOffset - StompSize.Y / 2f);
-		Rect2 rect = new Rect2(center - StompSize / 2f, StompSize);
-
-		Color fill = hitOn ? new Color(1f, 0.2f, 0.2f, 0.45f) : new Color(1f, 1f, 0f, 0.15f);
-		DrawRect(rect, fill, true);
-		DrawRect(rect, new Color(1f, 0.2f, 0.2f, 0.9f), false, 2f);
 	}
 }
