@@ -2,8 +2,38 @@
 
 [ext_resource type="PackedScene" uid="uid://b55yl8grvgela" path="res://scenes/characters/fighter.tscn" id="1_fighter"]
 [ext_resource type="Texture2D" uid="uid://ccbnbq8wqg4jm" path="res://assets/characters/paraokan/paraokan.png" id="2_still"]
+[ext_resource type="Texture2D" uid="uid://cba2abcvs66y1" path="res://assets/characters/paraokan/PARAOAKAN_BLOCK-sheet.png" id="2_ugnlm"]
 [ext_resource type="Texture2D" uid="uid://dfitl8q6ab634" path="res://assets/characters/paraokan/ParaokanJump-Sheet.png" id="3_5qbp5"]
+[ext_resource type="Texture2D" uid="uid://djp8i4hy3e1vc" path="res://assets/characters/paraokan/PARAOAKAN_DOWN_AIR-sheet_Final.png" id="3_ipg14"]
 [ext_resource type="Texture2D" uid="uid://b1urd1s8sfo8h" path="res://assets/characters/paraokan/PARAOAKAN_KO.png" id="4_4057x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6drlq"]
+atlas = ExtResource("2_ugnlm")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dr5qk"]
+atlas = ExtResource("2_ugnlm")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elohf"]
+atlas = ExtResource("3_ipg14")
+region = Rect2(0, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h845o"]
+atlas = ExtResource("3_ipg14")
+region = Rect2(80, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr7sb"]
+atlas = ExtResource("3_ipg14")
+region = Rect2(160, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtd2p"]
+atlas = ExtResource("3_ipg14")
+region = Rect2(240, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dp7p"]
+atlas = ExtResource("3_ipg14")
+region = Rect2(320, 0, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4057x"]
 atlas = ExtResource("3_5qbp5")
@@ -80,40 +110,31 @@ region = Rect2(240, 360, 120, 120)
 [sub_resource type="SpriteFrames" id="SpriteFrames_still"]
 animations = [{
 "frames": [{
-"duration": 2.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_6drlq")
 }, {
-"duration": 1.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_dr5qk")
 }],
 "loop": 0,
 "name": &"block",
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 8.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_elohf")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_h845o")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_kr7sb")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_gtd2p")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 3.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 3.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 12.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_4dp7p")
 }],
 "loop": 0,
 "name": &"down_air",
@@ -444,9 +465,9 @@ animations = [{
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_still")
-animation = &"knockout"
-frame = 13
-frame_progress = 1.0
+animation = &"block"
+frame = 0
+frame_progress = 0.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
 visible = false
