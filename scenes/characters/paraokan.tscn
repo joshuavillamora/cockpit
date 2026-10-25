@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://chgdbdajjmag8" path="res://assets/characters/paraokan/paraoakan_stomp.png" id="4_ipg14"]
 [ext_resource type="Texture2D" uid="uid://de88r6agkgyt5" path="res://assets/characters/paraokan/ParaokanHurt-Sheet.png" id="5_wgrbb"]
 [ext_resource type="Texture2D" uid="uid://bcnn46524mi7o" path="res://assets/characters/paraokan/ParaokanNeutralAir-Sheet.png" id="9_jd4fx"]
+[ext_resource type="Texture2D" uid="uid://d4xetigva1ea" path="res://assets/characters/paraokan/neutral_paraoakan.png" id="10_78jfp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6drlq"]
 atlas = ExtResource("2_ugnlm")
@@ -201,6 +202,18 @@ region = Rect2(960, 0, 120, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sfmpl"]
 atlas = ExtResource("9_jd4fx")
 region = Rect2(1080, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax04o"]
+atlas = ExtResource("10_78jfp")
+region = Rect2(0, 0, 120, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x21f8"]
+atlas = ExtResource("10_78jfp")
+region = Rect2(120, 0, 120, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwe3l"]
+atlas = ExtResource("10_78jfp")
+region = Rect2(240, 0, 120, 120)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_still"]
 animations = [{
@@ -401,17 +414,14 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 4.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_ax04o")
 }, {
-"duration": 2.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_x21f8")
 }, {
-"duration": 2.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 8.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_dwe3l")
 }],
 "loop": 0,
 "name": &"neutral_attack",
@@ -569,8 +579,8 @@ animations = [{
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_still")
-animation = &"neutral_air"
-frame = 8
+animation = &"neutral_attack"
+frame = 2
 frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
