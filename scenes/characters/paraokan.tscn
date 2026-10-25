@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://djp8i4hy3e1vc" path="res://assets/characters/paraokan/PARAOAKAN_DOWN_AIR-sheet_Final.png" id="3_ipg14"]
 [ext_resource type="Texture2D" uid="uid://b1urd1s8sfo8h" path="res://assets/characters/paraokan/PARAOAKAN_KO.png" id="4_4057x"]
 [ext_resource type="Texture2D" uid="uid://chgdbdajjmag8" path="res://assets/characters/paraokan/paraoakan_stomp.png" id="4_ipg14"]
+[ext_resource type="Texture2D" uid="uid://de88r6agkgyt5" path="res://assets/characters/paraokan/ParaokanHurt-Sheet.png" id="5_wgrbb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6drlq"]
 atlas = ExtResource("2_ugnlm")
@@ -75,6 +76,22 @@ region = Rect2(80, 128, 80, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ydrmw"]
 atlas = ExtResource("4_ipg14")
 region = Rect2(160, 128, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5do0"]
+atlas = ExtResource("5_wgrbb")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d60ya"]
+atlas = ExtResource("5_wgrbb")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fem0o"]
+atlas = ExtResource("5_wgrbb")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raixm"]
+atlas = ExtResource("5_wgrbb")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4057x"]
 atlas = ExtResource("3_5qbp5")
@@ -218,22 +235,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_m5do0")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_d60ya")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_fem0o")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 3.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_raixm")
 }],
 "loop": 0,
 "name": &"hurt",
@@ -518,8 +529,8 @@ animations = [{
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_still")
-animation = &"down_attack"
-frame = 9
+animation = &"hurt"
+frame = 3
 frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
