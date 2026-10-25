@@ -376,18 +376,27 @@ region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_20cxu"]
 animations = [{
-"frames": [],
-"loop": 1,
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_jd0e0")
+}],
+"loop": 0,
 "name": &"ability_grow",
 "speed": 24.0
 }, {
-"frames": [],
-"loop": 1,
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_jd0e0")
+}],
+"loop": 0,
 "name": &"ability_shrink",
 "speed": 24.0
 }, {
-"frames": [],
-"loop": 1,
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_jd0e0")
+}],
+"loop": 0,
 "name": &"ability_stomp",
 "speed": 24.0
 }, {
@@ -766,19 +775,14 @@ size = Vector2(21.25, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jny6k"]
 size = Vector2(36, 33)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fj44k"]
+
 [node name="Joloano" unique_id=460291919 instance=ExtResource("1_20cxu")]
-MaxAbilityCharge = null
-ChargePerHit = null
 PlayerId = 2
-MaxHealth = null
-StartFacingRight = null
-BlockDamageMultiplier = null
-RunSpeed = null
-FeetOffset = null
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_20cxu")
-animation = &"ability_stomp"
+animation = &"ability_grow"
 frame = 0
 frame_progress = 0.0
 
@@ -801,19 +805,10 @@ shape = SubResource("RectangleShape2D_jny6k")
 
 [node name="Ability" type="Node2D" parent="." index="5" unique_id=1292975923]
 script = ExtResource("17_fj44k")
-GrowScale = null
-GrowTimeFallback = null
-RevertTimeFallback = null
-StompWindup = null
-StompActive = null
-StompRecover = null
-Cooldown = null
-StompSize = null
-Damage = null
-Knockback = null
-HitstunTime = null
-HitstopTime = null
 
 [node name="StompHitbox" type="Area2D" parent="Ability" index="0" unique_id=1050083821]
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ability/StompHitbox" index="0" unique_id=216482760]
+shape = SubResource("RectangleShape2D_fj44k")
