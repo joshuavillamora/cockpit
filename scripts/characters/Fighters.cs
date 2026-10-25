@@ -13,11 +13,17 @@ public partial class Fighters : CharacterBody2D {
 	public const float AttackDecelMultiplier = 0.1f;
 	private const float AttackBufferTime = 0.15f;
 
+	[Signal] public delegate void AbilityChargeChangedEventHandler(float ratio);
+	[Signal] public delegate void AbilityUsedEventHandler();
+
+	[Export] public float MaxAbilityCharge = 100f;
+	[Export] public float ChargePerHit = 10f;
 	[Export] public int PlayerId = 1;
 	[Export] public int MaxHealth = 100;
 	[Export] public bool StartFacingRight = true;
 	[Export] public float BlockDamageMultiplier = 0.2f;
 	[Export] public float RunSpeed = 250f;
+	[Export] public float FeetOffset = 32f;
 
 	// UI / match flow hooks (HUD and MatchController listen to these)
 	[Signal] public delegate void HealthChangedEventHandler(int current, int max);
@@ -97,7 +103,18 @@ public partial class Fighters : CharacterBody2D {
 	private int lastTapDir = 0;
 	private double lastTapTime = -1.0;
 	private float accelBonus = 200f;
+	private Ability ability;
+	private StringName abilityKey;
+	private float abilityCharge = 0f;
+	private Vector2 spriteBasePos;
 	
+	public bool FacingRight => facingRight;
+	public void Face(bool right) => SetFacing(right);
+	public Vector2 GetAimInput() => new Vector2(Input.GetAxis(moveLeft, moveRight), Input.GetAxis(upKey, downKey));
+	public void SetTint(Color c) => animatedSprite.SelfModulate = c;
+	public void PlayAnim(string anim) {
+		if (animatedSprite.SpriteFrames.HasAnimation(anim)) animatedSprite.Play(anim);
+	}
 	
 	public override void _Ready() {
 		moveLeft = $"p{PlayerId}_move_left";
@@ -107,12 +124,18 @@ public partial class Fighters : CharacterBody2D {
 		upKey = $"p{PlayerId}_up";
 		downKey = $"p{PlayerId}_down";
 		blockKey = $"p{PlayerId}_block";
+		abilityKey = $"p{PlayerId}_ability";
+
+		foreach (Node child in GetChildren()) {
+			if (child is Ability a) { ability = a; a.Bind(this); }
+		}
 
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		attackHitbox = GetNode<Area2D>("AttackHitbox");
 		hitboxShape = attackHitbox.GetNode<CollisionShape2D>("CollisionShape2D");
 		hitboxVisual = attackHitbox.GetNode<Sprite2D>("HitboxVisual");
 		Health = MaxHealth;
+		spriteBasePos = animatedSprite.Position;
 
 		// Hitbox area
 		hitboxRect = new RectangleShape2D();
@@ -161,6 +184,24 @@ public partial class Fighters : CharacterBody2D {
 			}
 		}
 		bool stunned = hitstunTimer > 0f;
+
+		if (ability != null) {
+			bool canStart = !stunned && !isAttacking && !isBlocking;
+			if (Input.IsActionJustPressed(abilityKey)) {
+				if (ability.Active) {
+					ability.OnPressed();
+				} else if (canStart && HasFullAbilityCharge()) {
+					ConsumeAbilityCharge();
+					ability.OnPressed();
+				}
+			}
+
+			if (ability.Active) {
+				ability.Tick((float)delta);
+				MoveAndSlide();
+				return;
+			}
+		}
 
 		// Blocking
 		Blocking(Input.IsActionPressed(blockKey) && IsOnFloor() && !isAttacking && !stunned);
@@ -358,6 +399,7 @@ public partial class Fighters : CharacterBody2D {
 			Vector2 kb = currentAttack.Knockback;
 			kb.X *= facingRight ? 1 : -1;
 			victim.TakeHit(currentAttack.Damage, kb, currentAttack.Hitstun, currentAttack.Hitstop);
+			AddAbilityCharge(ChargePerHit);
 		} else if (target.HasMethod("TakeDamage")) {
 			target.Call("TakeDamage", currentAttack.Damage);
 		}
@@ -392,6 +434,11 @@ public partial class Fighters : CharacterBody2D {
 
 	public void TakeHit(int damage, Vector2 knockback, float hitstun, float hitstop) {
 		if (Health <= 0) return;
+
+		if (ability != null) {
+			if (ability.Invulnerable) return;   // dashing = can't be hit
+			ability.Cancel();                   // hit while aiming interrupts it
+		}
 
 		if (isBlocking) {
 			int chip = Mathf.Max(1, Mathf.RoundToInt(damage * BlockDamageMultiplier));
@@ -447,6 +494,48 @@ public partial class Fighters : CharacterBody2D {
 		} else if (!block && animatedSprite.Animation == "block") {
 			animatedSprite.Play("idle");
 		}
+	}
+
+	public float AnimLength(string anim, float fallback) {
+		SpriteFrames sf = animatedSprite.SpriteFrames;
+		if (!sf.HasAnimation(anim)) return fallback;
+
+		float total = 0f;
+		for (int i = 0; i < sf.GetFrameCount(anim); i++) total += sf.GetFrameDuration(anim, i);
+		return total / (float)sf.GetAnimationSpeed(anim);
+	}
+
+	private void AddAbilityCharge(float amount) {
+		abilityCharge = Mathf.Clamp(
+			abilityCharge + amount,
+			0f,
+			MaxAbilityCharge
+		);
+
+		EmitSignal(
+			SignalName.AbilityChargeChanged,
+			abilityCharge / MaxAbilityCharge
+		);
+	}
+
+	private bool HasFullAbilityCharge() {
+		return abilityCharge >= MaxAbilityCharge;
+	}
+
+	private void ConsumeAbilityCharge() {
+		abilityCharge = 0f;
+
+		EmitSignal(
+			SignalName.AbilityChargeChanged,
+			0f
+		);
+
+		EmitSignal(SignalName.AbilityUsed);
+	}
+
+	public void SetSpriteScale(float s) {
+		animatedSprite.Scale = new Vector2(s, s);
+		animatedSprite.Position = spriteBasePos - new Vector2(0, (s - 1f) * FeetOffset);   // grow upward from the feet
 	}
 
 	private void Die() {

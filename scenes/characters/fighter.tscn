@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dxq0aow5s3qli" path="res://scripts/characters/Fighters.cs" id="1_d2soj"]
 [ext_resource type="Texture2D" uid="uid://ojhpk74q6bqi" path="res://assets/characters/placeholder/dem_chiks.png" id="1_fbifi"]
 [ext_resource type="Texture2D" uid="uid://dcox8nbo5n43d" path="res://assets/characters/banaba/banaba.png" id="3_1n3eb"]
+[ext_resource type="Script" uid="uid://ddjnyva1yuo6n" path="res://scripts/characters/HitboxPreview.cs" id="4_m88ph"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1n3eb"]
 atlas = ExtResource("1_fbifi")
@@ -81,10 +82,12 @@ frame = 1
 frame_progress = 0.16170564
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1785863898]
+visible = false
 position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_dpxq6")
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=1993799062]
+visible = false
 collision_layer = 0
 collision_mask = 4
 
@@ -95,6 +98,7 @@ shape = SubResource("RectangleShape2D_hnnho")
 texture = SubResource("PlaceholderTexture2D_d2soj")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1989035223]
+visible = false
 collision_layer = 4
 collision_mask = 0
 monitoring = false
@@ -102,3 +106,7 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=826217368]
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_1438b")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=945912661]
+visible = false
+script = ExtResource("4_m88ph")
