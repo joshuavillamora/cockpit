@@ -33,7 +33,7 @@ public partial class Fighters : CharacterBody2D {
 
 	// ---------- Attack data (numbers come from the frame data workbook) ----------
 
-	private enum AttackType {
+	protected enum AttackType {
 		NeutralAttack,
 		SideAttack,
 		UpAttack,
@@ -44,7 +44,7 @@ public partial class Fighters : CharacterBody2D {
 		DownAir,
 	}
 
-	private class AttackData {
+	protected class AttackData {
 		public string Animation;
 		public Vector2 Size;
 		public Vector2 Offset;
@@ -63,9 +63,10 @@ public partial class Fighters : CharacterBody2D {
 			Damage = damage; Mobility = mobility; MomentumKeep = momentumKeep; 
 			Knockback = knockback; Hitstun = hitstun; Hitstop = hitstop;
 		}
+		public AttackData Clone() => (AttackData)MemberwiseClone();
 	}
 
-	private static readonly Dictionary<AttackType, AttackData> Attacks = new() {
+	private static readonly Dictionary<AttackType, AttackData> Defaults = new() {
 		{ AttackType.NeutralAttack, new AttackData("neutral_attack", new Vector2(24, 16), new Vector2(24, 8),  1, 2, 4,  0.8f, 0.7f, new Vector2(100, -40),  0.50f, 0.10f) },
 		{ AttackType.SideAttack,    new AttackData("side_attack",    new Vector2(40, 16), new Vector2(36, 12), 3, 6, 8,  0.4f, 0.5f, new Vector2(220, -120), 0.70f, 0.15f) },
 		{ AttackType.UpAttack,      new AttackData("up_attack",      new Vector2(44, 30), new Vector2(0, -12), 3, 3, 7,  0.4f, 0.4f, new Vector2(40, -300),  0.80f, 0.15f) },
@@ -75,6 +76,10 @@ public partial class Fighters : CharacterBody2D {
 		{ AttackType.UpAir,         new AttackData("up_air",         new Vector2(40, 30), new Vector2(0, -18), 3, 6, 7,  0.4f, 0.6f, new Vector2(40, -280),  0.70f, 0.15f) },
 		{ AttackType.DownAir,       new AttackData("down_air",       new Vector2(40, 24), new Vector2(12, 28),  1, 6, 8, 0.1f, 0.3f, new Vector2(60, 250),  0.80f, 0.15f) },
 	};
+
+	protected Dictionary<AttackType, AttackData> Attacks;
+	private AttackData currentAttack;
+	protected virtual void ConfigureAttacks() { }
 
 	private AnimatedSprite2D animatedSprite;
 	private Area2D attackHitbox;
@@ -87,7 +92,6 @@ public partial class Fighters : CharacterBody2D {
 	private readonly HashSet<Node> alreadyHit = new();
 	private bool facingRight = true;
 	private float attackBufferTimer = 0f;
-	private AttackData currentAttack = Attacks[AttackType.NeutralAttack];
 	private StringName moveLeft, moveRight, jumpKey, attackKey, upKey, downKey, blockKey;
 	private float hitstunTimer = 0f;
 	private bool doubleJump = false;
@@ -148,6 +152,11 @@ public partial class Fighters : CharacterBody2D {
 		attackHitbox.AreaEntered += OnHitboxAreaEntered;
 		animatedSprite.FrameChanged += OnFrameChanged;
 		animatedSprite.AnimationFinished += OnAnimationFinished;
+
+		Attacks = new Dictionary<AttackType, AttackData>();
+		foreach (var kv in Defaults) Attacks[kv.Key] = kv.Value.Clone();
+		ConfigureAttacks();
+		currentAttack = Attacks[AttackType.NeutralAttack];
 
 		SetFacing(StartFacingRight);
 		animatedSprite.Play("idle");
