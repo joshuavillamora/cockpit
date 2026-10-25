@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b1urd1s8sfo8h" path="res://assets/characters/paraokan/PARAOAKAN_KO.png" id="4_4057x"]
 [ext_resource type="Texture2D" uid="uid://chgdbdajjmag8" path="res://assets/characters/paraokan/paraoakan_stomp.png" id="4_ipg14"]
 [ext_resource type="Texture2D" uid="uid://de88r6agkgyt5" path="res://assets/characters/paraokan/ParaokanHurt-Sheet.png" id="5_wgrbb"]
+[ext_resource type="Texture2D" uid="uid://bcnn46524mi7o" path="res://assets/characters/paraokan/ParaokanNeutralAir-Sheet.png" id="9_jd4fx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6drlq"]
 atlas = ExtResource("2_ugnlm")
@@ -164,6 +165,42 @@ region = Rect2(120, 360, 120, 120)
 [sub_resource type="AtlasTexture" id="AtlasTexture_tkcfx"]
 atlas = ExtResource("4_4057x")
 region = Rect2(240, 360, 120, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dvdf"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(120, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pykej"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(240, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2ujh"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(360, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x6jvr"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(480, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hlp4j"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(600, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1mqa"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(720, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnwmr"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(840, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhxgw"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(960, 0, 120, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfmpl"]
+atlas = ExtResource("9_jd4fx")
+region = Rect2(1080, 0, 120, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_still"]
 animations = [{
@@ -332,29 +369,32 @@ animations = [{
 "speed": 30.0
 }, {
 "frames": [{
-"duration": 2.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 2.0,
-"texture": ExtResource("2_still")
-}, {
-"duration": 2.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_3dvdf")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_pykej")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_j2ujh")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_x6jvr")
 }, {
 "duration": 3.0,
-"texture": ExtResource("2_still")
+"texture": SubResource("AtlasTexture_hlp4j")
 }, {
-"duration": 12.0,
-"texture": ExtResource("2_still")
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_n1mqa")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_mnwmr")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_vhxgw")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_sfmpl")
 }],
 "loop": 0,
 "name": &"neutral_air",
@@ -529,8 +569,8 @@ animations = [{
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1306085506]
 sprite_frames = SubResource("SpriteFrames_still")
-animation = &"hurt"
-frame = 3
+animation = &"neutral_air"
+frame = 8
 frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1785863898]
