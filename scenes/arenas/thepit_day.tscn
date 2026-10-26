@@ -36,18 +36,19 @@ centered = false
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1051759424]
-position = Vector2(0, 448)
+position = Vector2(480, 448)
 shape = SubResource("floor")
 
 [node name="Walls" type="StaticBody2D" parent="." unique_id=592865821]
 collision_layer = 2
 
 [node name="Left" type="CollisionShape2D" parent="Walls" unique_id=1158474090]
+position = Vector2(20, 0)
 rotation = 1.5707964
 shape = SubResource("wall_left")
 
 [node name="Right" type="CollisionShape2D" parent="Walls" unique_id=1027434178]
-position = Vector2(960, 0)
+position = Vector2(940, 0)
 rotation = -1.5707964
 shape = SubResource("wall_right")
 

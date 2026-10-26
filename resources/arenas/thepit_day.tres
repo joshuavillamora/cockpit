@@ -10,4 +10,4 @@ Id = "thepit_day"
 DisplayName = "THE PIT (DAY)"
 Thumbnail = ExtResource("2")
 Scene = ExtResource("3")
-Size = Vector2(920, 520)
+Size = Vector2(960, 540)
